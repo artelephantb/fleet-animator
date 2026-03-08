@@ -1,0 +1,13 @@
+[gd_resource type="Theme" format=3 uid="uid://yy3xm4qiy0n6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1id7b"]
+bg_color = Color(0.22826847, 0.25755507, 0.29049948, 0.9411765)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0avsd"]
+bg_color = Color(0.11764706, 0.13725491, 0.15686275, 0.9411765)
+
+[resource]
+HSplitContainer/constants/autohide = 0
+HSplitContainer/constants/separation = 6
+HSplitContainer/styles/split_bar_background = SubResource("StyleBoxFlat_1id7b")
+Tree/styles/panel = SubResource("StyleBoxFlat_0avsd")

@@ -5,10 +5,11 @@ extends Tree
 
 
 func _get_drag_data(at_position: Vector2) -> Variant:
-	var mydata = get_selected()
+	var item := get_item_at_position(at_position)
+	if !item: return null
 
 	var preview_label = Label.new()
-	preview_label.text = mydata.get_text(0)
+	preview_label.text = item.get_text(0)
 	set_drag_preview(preview_label)
 
 	drop_mode_flags = 2
