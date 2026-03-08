@@ -1,13 +1,56 @@
 [gd_resource type="Theme" format=3 uid="uid://yy3xm4qiy0n6"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wc0q8"]
+bg_color = Color(0.38681397, 0.41179886, 0.45759523, 0.39215687)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0.23529412)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_78ekx"]
+bg_color = Color(0.29803923, 0.31764707, 0.35686275, 0.39215687)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0.23529412)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7d6gw"]
+bg_color = Color(0.5346772, 0.5602322, 0.61124325, 0.39215687)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0.23529412)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1id7b"]
 bg_color = Color(0.22826847, 0.25755507, 0.29049948, 0.9411765)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wykhr"]
+bg_color = Color(0.11764706, 0.13725491, 0.15686275, 0.9411765)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0avsd"]
 bg_color = Color(0.11764706, 0.13725491, 0.15686275, 0.9411765)
 
 [resource]
+Button/styles/hover = SubResource("StyleBoxFlat_wc0q8")
+Button/styles/normal = SubResource("StyleBoxFlat_78ekx")
+Button/styles/pressed = SubResource("StyleBoxFlat_7d6gw")
 HSplitContainer/constants/autohide = 0
 HSplitContainer/constants/separation = 6
 HSplitContainer/styles/split_bar_background = SubResource("StyleBoxFlat_1id7b")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_wykhr")
 Tree/styles/panel = SubResource("StyleBoxFlat_0avsd")
