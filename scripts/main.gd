@@ -4,7 +4,7 @@ extends Control
 @onready var sprite_tree_reference := $'HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/SpriteTree'
 @onready var canvas_reference := $'HSplitContainer/Control/Canvas'
 
-@onready var gizmos_reference := $'HSplitContainer/Control/SpritePositionGizmo'
+@onready var sprite_control_gizmo_reference := $'HSplitContainer/Control/SpriteControlGizmo'
 
 @onready var sprite_icon_image := preload('res://icons/sprite.svg')
 @onready var missing_texture := preload('res://icon.svg')
@@ -40,4 +40,4 @@ func _on_sprite_tree_item_selected() -> void:
 	var item_uid := str(selected_item.get_meta('uid'))
 	var selected_node: Node2D = canvas_reference.sub_viewport_reference.get_node(item_uid)
 
-	gizmos_reference.selected_node = selected_node
+	sprite_control_gizmo_reference.selected_node = selected_node
