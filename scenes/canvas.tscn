@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://b73pof3xnvcnr"]
 
-[ext_resource type="Texture2D" uid="uid://dfkhgfysnox1s" path="res://icon.svg" id="1_7axt1"]
 [ext_resource type="Script" uid="uid://b40vymxtageup" path="res://scripts/canvas.gd" id="1_owpp6"]
 
 [node name="Canvas" type="SubViewportContainer" unique_id=976777930]
@@ -17,6 +16,3 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Sprite2D" type="Sprite2D" parent="SubViewport" unique_id=1779807606]
-texture = ExtResource("1_7axt1")

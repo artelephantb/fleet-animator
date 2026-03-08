@@ -53,4 +53,5 @@ HSplitContainer/constants/autohide = 0
 HSplitContainer/constants/separation = 6
 HSplitContainer/styles/split_bar_background = SubResource("StyleBoxFlat_1id7b")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_wykhr")
+Tree/colors/guide_color = Color(0, 0, 0, 0)
 Tree/styles/panel = SubResource("StyleBoxFlat_0avsd")
