@@ -20,17 +20,19 @@ func _process(delta: float) -> void:
 
 
 func create_sprite(sprite_name: String, sprite_icon := sprite_icon_image) -> TreeItem:
-	var new_sprite: TreeItem = sprite_tree_reference.create_item(root)
+	var new_sprite_item: TreeItem = sprite_tree_reference.create_item(root)
 	var sprite_uid := randi_range(-1000000, 1000000)
 
-	new_sprite.set_text(0, sprite_name)
-	new_sprite.set_icon(0, sprite_icon)
+	new_sprite_item.set_editable(0, true)
 
-	new_sprite.set_meta('uid', sprite_uid)
+	new_sprite_item.set_text(0, sprite_name)
+	new_sprite_item.set_icon(0, sprite_icon)
+
+	new_sprite_item.set_meta('uid', sprite_uid)
 
 	canvas_reference.create_texture_sprite(sprite_uid, missing_texture)
 
-	return new_sprite
+	return new_sprite_item
 
 func _on_create_sprite_button_pressed() -> void:
 	create_sprite('New Sprite')
