@@ -11,8 +11,10 @@ func _process(delta: float) -> void:
 	pass
 
 
-func create_texture_sprite(sprite_name: String, texture: Texture2D, start_position := Vector2(0.0, 0.0)) -> Sprite2D:
+func create_texture_sprite(uid: int, texture: Texture2D, start_position := Vector2(0.0, 0.0)) -> Sprite2D:
 	var new_sprite := Sprite2D.new()
+
+	new_sprite.name = str(uid)
 	new_sprite.texture = texture
 	new_sprite.position = start_position
 
