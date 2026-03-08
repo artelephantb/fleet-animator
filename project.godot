@@ -11,14 +11,17 @@ config_version=5
 [application]
 
 config/name="Fleet Animator"
+run/main_scene="uid://b0vgu5hlv0jdw"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [display]
 
+window/size/viewport_width=2304
+window/size/viewport_height=1296
 window/subwindows/embed_subwindows=false
-window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+window/stretch/scale=1.5
 
 [physics]
 

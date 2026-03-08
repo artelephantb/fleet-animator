@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://b0vgu5hlv0jdw"]
+
+[ext_resource type="Script" uid="uid://c66k2lcw7m3e" path="res://scripts/main.gd" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://buxh5vujusfy" path="res://scripts/sprite_tree.gd" id="2_0wfyh"]
+
+[node name="Main" type="Control" unique_id=288462970]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_o5qli")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="." unique_id=370791941]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offsets = PackedInt32Array(200)
+split_offset = 200
+
+[node name="SpriteTree" type="Tree" parent="HSplitContainer" unique_id=542596784]
+layout_mode = 2
+hide_root = true
+script = ExtResource("2_0wfyh")
+
+[node name="Container" type="Container" parent="HSplitContainer" unique_id=242348411]
+layout_mode = 2
