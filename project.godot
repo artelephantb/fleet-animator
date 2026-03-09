@@ -12,6 +12,8 @@ config_version=5
 
 config/name="Fleet Animator"
 run/main_scene="uid://b0vgu5hlv0jdw"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="fleet-animator"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -19,6 +21,7 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=2304
 window/size/viewport_height=1296
+window/energy_saving/keep_screen_on=false
 window/subwindows/embed_subwindows=false
 window/stretch/aspect="expand"
 window/stretch/scale=1.5
@@ -29,6 +32,7 @@ theme/custom="uid://yy3xm4qiy0n6"
 
 [physics]
 
+2d/physics_engine="Dummy"
 3d/physics_engine="Jolt Physics"
 
 [rendering]
