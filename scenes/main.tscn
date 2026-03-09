@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bg8jo5vi0wdg5" path="res://icons/play.svg" id="2_tbgi4"]
 [ext_resource type="Script" uid="uid://d3v1ei3f6udih" path="res://scripts/sprite_control_gizmo.gd" id="3_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://b73pof3xnvcnr" path="res://scenes/canvas.tscn" id="3_sugp2"]
+[ext_resource type="PackedScene" uid="uid://yicd4qsuk04k" path="res://scenes/render_window.tscn" id="3_tefeu"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_tbgi4"]
 action = &"animation_render"
@@ -56,6 +57,8 @@ size_flags_horizontal = 8
 shortcut = SubResource("Shortcut_tefeu")
 icon = ExtResource("2_tbgi4")
 icon_alignment = 1
+
+[node name="RenderWindow" parent="VBoxContainer/PanelContainer/MarginContainer/RenderButton" unique_id=702783721 instance=ExtResource("3_tefeu")]
 
 [node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer" unique_id=370791941]
 layout_mode = 2

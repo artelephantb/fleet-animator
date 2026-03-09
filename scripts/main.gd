@@ -6,6 +6,8 @@ extends Control
 
 @onready var sprite_control_gizmo_reference := $'VBoxContainer/HSplitContainer/Control/SpriteControlGizmo'
 
+@onready var render_popup := $'VBoxContainer/PanelContainer/MarginContainer/RenderButton/RenderWindow'
+
 @onready var sprite_icon_image := preload('res://icons/sprite.svg')
 @onready var missing_texture := preload('res://icon.svg')
 
@@ -45,7 +47,4 @@ func _on_sprite_tree_item_selected() -> void:
 	sprite_control_gizmo_reference.selected_node = selected_node
 
 func _on_render_button_pressed() -> void:
-	var temp_directory := DirAccess.create_temp('fleet-animation-part')
-	var temp_directory_location := temp_directory.get_current_dir()
-
-	canvas_reference.sub_viewport_reference.get_texture().get_image().save_png(temp_directory_location + '/test.png')
+	render_popup.popup_centered()
