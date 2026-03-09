@@ -2,8 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d3waxoxjm4bcy" path="res://scripts/file_selector.gd" id="1_o1dx2"]
 
-[node name="FileSelector" type="Control" unique_id=789538086]
-layout_mode = 3
+[node name="FileSelector" type="HBoxContainer" unique_id=1925565160]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -11,18 +10,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_o1dx2")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1677207653]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 31.0
-grow_horizontal = 2
-
-[node name="SelectButton" type="Button" parent="HBoxContainer" unique_id=864361888]
+[node name="SelectButton" type="Button" parent="." unique_id=864361888]
 layout_mode = 2
 text = "Select"
 
-[node name="LineEdit" type="LineEdit" parent="HBoxContainer" unique_id=1298956224]
+[node name="LineEdit" type="LineEdit" parent="." unique_id=1298956224]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -31,6 +23,6 @@ oversampling_override = 1.0
 access = 2
 use_native_dialog = true
 
-[connection signal="pressed" from="HBoxContainer/SelectButton" to="." method="_on_select_button_pressed"]
+[connection signal="pressed" from="SelectButton" to="." method="_on_select_button_pressed"]
 [connection signal="dir_selected" from="FileDialog" to="." method="_on_file_dialog_dir_selected"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]

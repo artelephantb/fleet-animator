@@ -48,3 +48,6 @@ func _on_sprite_tree_item_selected() -> void:
 
 func _on_render_button_pressed() -> void:
 	render_popup.popup_centered()
+
+func _on_render_window_render(output_path: String) -> void:
+	print('Tried rendering with output path: ', output_path)
