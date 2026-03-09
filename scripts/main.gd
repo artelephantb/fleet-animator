@@ -43,3 +43,9 @@ func _on_sprite_tree_item_selected() -> void:
 	var selected_node: Node2D = canvas_reference.sub_viewport_reference.get_node(item_uid)
 
 	sprite_control_gizmo_reference.selected_node = selected_node
+
+func _on_render_button_pressed() -> void:
+	var temp_directory := DirAccess.create_temp('fleet-animation-part')
+	var temp_directory_location := temp_directory.get_current_dir()
+
+	canvas_reference.sub_viewport_reference.get_texture().get_image().save_png(temp_directory_location + '/test.png')
