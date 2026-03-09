@@ -46,6 +46,7 @@ layout_mode = 2
 [node name="PopupMenu" type="PopupMenu" parent="VBoxContainer/PanelContainer/MarginContainer/MenuBar" unique_id=660373129]
 oversampling_override = 1.0
 title = "Render"
+prefer_native_menu = true
 item_count = 1
 item_0/text = "Open Menu"
 item_0/icon = ExtResource("2_tbgi4")
@@ -123,6 +124,7 @@ grow_vertical = 2
 mouse_behavior_recursive = 1
 script = ExtResource("3_jyhfs")
 
+[connection signal="index_pressed" from="VBoxContainer/PanelContainer/MarginContainer/MenuBar/PopupMenu" to="." method="_on_popup_menu_index_pressed"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/RenderButton" to="." method="_on_render_button_pressed"]
 [connection signal="render" from="VBoxContainer/PanelContainer/MarginContainer/RenderButton/RenderWindow" to="." method="_on_render_window_render"]
 [connection signal="item_selected" from="VBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/SpriteTree" to="." method="_on_sprite_tree_item_selected"]

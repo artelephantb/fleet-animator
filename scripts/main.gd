@@ -13,12 +13,47 @@ extends Control
 
 @onready var root: TreeItem = sprite_tree_reference.create_item()
 
+var part_temp_directory: DirAccess
+var part_temp_directory_location: String
+
+var playing_animation := false
+var animation_output_path: String
+
+var animation_frame := 0
+
 
 func _ready():
-	pass
+	part_temp_directory_location = ProjectSettings.globalize_path('user://part_temp')
+	DirAccess.make_dir_recursive_absolute(part_temp_directory_location)
+	part_temp_directory = DirAccess.open(part_temp_directory_location)
+
+
+func update_animation() -> void:
+	if animation_output_path:
+		canvas_reference.sub_viewport_reference.get_texture().get_image().save_png(part_temp_directory_location + '/%d.png' % animation_frame)
+
+	animation_frame += 1
+
+	if animation_frame < 1000: return
+	playing_animation = false
+
+	if animation_output_path:
+		OS.execute('ffmpeg', [
+			'-framerate',
+			'24',
+			'-pattern_type',
+			'glob',
+			'-i',
+			part_temp_directory_location + '/*.png',
+			'-crf',
+			'18',
+			'-c:v',
+			'libx264',
+			animation_output_path
+		], [], true)
 
 func _process(delta: float) -> void:
-	pass
+	if playing_animation: update_animation()
 
 
 func create_sprite(sprite_name: String, sprite_icon := sprite_icon_image) -> TreeItem:
@@ -46,8 +81,34 @@ func _on_sprite_tree_item_selected() -> void:
 
 	sprite_control_gizmo_reference.selected_node = selected_node
 
+
 func _on_render_button_pressed() -> void:
 	render_popup.popup_centered()
 
+func _on_popup_menu_index_pressed(index: int) -> void:
+	if index == 0:
+		render_popup.popup_centered()
+
+
+func remove_recursive_directory(directory: String) -> void:
+	for directory_name in DirAccess.get_directories_at(directory):
+		remove_recursive_directory(directory.path_join(directory_name))
+	for file_name in DirAccess.get_files_at(directory):
+		DirAccess.remove_absolute(directory.path_join(file_name))
+
+	DirAccess.remove_absolute(directory)
+
+
+func render_animation(output_path: String) -> void:
+	remove_recursive_directory(part_temp_directory.get_current_dir())
+	DirAccess.make_dir_recursive_absolute(part_temp_directory_location)
+
+	if FileAccess.file_exists(output_path):
+		DirAccess.remove_absolute(output_path)
+
+	animation_output_path = output_path
+	playing_animation = true
+
 func _on_render_window_render(output_path: String) -> void:
-	print('Tried rendering with output path: ', output_path)
+	if !output_path: return
+	render_animation(output_path)
