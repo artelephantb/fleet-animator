@@ -21,6 +21,7 @@ size_flags_horizontal = 3
 [node name="FileDialog" type="FileDialog" parent="." unique_id=1479803994]
 oversampling_override = 1.0
 access = 2
+filters = PackedStringArray("*.p", "")
 use_native_dialog = true
 
 [connection signal="pressed" from="SelectButton" to="." method="_on_select_button_pressed"]

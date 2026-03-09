@@ -2,6 +2,7 @@ extends Control
 
 
 @export var file_mode := FileDialog.FileMode.FILE_MODE_SAVE_FILE
+@export var filters: PackedStringArray
 
 @onready var file_dialog_reference := $'FileDialog'
 @onready var line_edit_reference := $'LineEdit'
@@ -11,6 +12,7 @@ var selected_path := ''
 
 func update_file_mode():
 	file_dialog_reference.file_mode = file_mode
+	file_dialog_reference.filters = filters
 
 func _ready() -> void:
 	update_file_mode()

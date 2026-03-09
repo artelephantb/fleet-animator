@@ -24,6 +24,7 @@ text = "Output File"
 
 [node name="FileSelector" parent="VBoxContainer" unique_id=1703167137 instance=ExtResource("1_wl74n")]
 layout_mode = 2
+filters = PackedStringArray("*.mp4")
 
 [node name="RenderButton" type="Button" parent="VBoxContainer" unique_id=1569350124]
 layout_mode = 2
