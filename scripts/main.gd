@@ -1,10 +1,10 @@
 extends Control
 
 
-@onready var sprite_tree_reference := $'HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/SpriteTree'
-@onready var canvas_reference := $'HSplitContainer/Control/Canvas'
+@onready var sprite_tree_reference := $'VBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/SpriteTree'
+@onready var canvas_reference := $'VBoxContainer/HSplitContainer/Control/Canvas'
 
-@onready var sprite_control_gizmo_reference := $'HSplitContainer/Control/SpriteControlGizmo'
+@onready var sprite_control_gizmo_reference := $'VBoxContainer/HSplitContainer/Control/SpriteControlGizmo'
 
 @onready var sprite_icon_image := preload('res://icons/sprite.svg')
 @onready var missing_texture := preload('res://icon.svg')
@@ -12,7 +12,7 @@ extends Control
 @onready var root: TreeItem = sprite_tree_reference.create_item()
 
 
-func _ready() -> void:
+func _ready():
 	pass
 
 func _process(delta: float) -> void:

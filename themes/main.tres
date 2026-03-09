@@ -39,6 +39,33 @@ corner_radius_bottom_left = 5
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1id7b"]
 bg_color = Color(0.22826847, 0.25755507, 0.29049948, 0.9411765)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kx4sy"]
+content_margin_left = 5.0
+content_margin_right = 5.0
+bg_color = Color(0.5898591, 0.636474, 0.6832384, 0.49019608)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k5u3e"]
+content_margin_left = 5.0
+content_margin_right = 5.0
+bg_color = Color(0.44313726, 0.49019608, 0.5372549, 0.49019608)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hcg30"]
+content_margin_left = 5.0
+content_margin_right = 5.0
+bg_color = Color(0.77109987, 0.80361634, 0.8332747, 0.49019608)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wykhr"]
 bg_color = Color(0.11764706, 0.13725491, 0.15686275, 0.9411765)
 
@@ -52,6 +79,9 @@ Button/styles/pressed = SubResource("StyleBoxFlat_7d6gw")
 HSplitContainer/constants/autohide = 0
 HSplitContainer/constants/separation = 6
 HSplitContainer/styles/split_bar_background = SubResource("StyleBoxFlat_1id7b")
+MenuBar/styles/hover = SubResource("StyleBoxFlat_kx4sy")
+MenuBar/styles/normal = SubResource("StyleBoxFlat_k5u3e")
+MenuBar/styles/pressed = SubResource("StyleBoxFlat_hcg30")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_wykhr")
 Tree/colors/guide_color = Color(0, 0, 0, 0)
 Tree/styles/panel = SubResource("StyleBoxFlat_0avsd")
