@@ -21,6 +21,10 @@ var animation_output_path: String
 
 var animation_frame := 0
 
+var animation_framerate := '24'
+var animation_compression := '18'
+var animation_codec := 'libx264'
+
 
 func _ready():
 	part_temp_directory_location = ProjectSettings.globalize_path('user://part_temp')
@@ -40,15 +44,15 @@ func update_animation() -> void:
 	if animation_output_path:
 		OS.execute('ffmpeg', [
 			'-framerate',
-			'24',
+			animation_framerate,
 			'-pattern_type',
 			'glob',
 			'-i',
 			part_temp_directory_location + '/*.png',
 			'-crf',
-			'18',
+			animation_compression,
 			'-c:v',
-			'libx264',
+			animation_codec,
 			animation_output_path
 		], [], true)
 
@@ -99,7 +103,12 @@ func remove_recursive_directory(directory: String) -> void:
 	DirAccess.remove_absolute(directory)
 
 
-func render_animation(output_path: String) -> void:
+func render_animation(framerate: int, compression: int, output_path: String) -> void:
+	animation_frame = 0
+
+	animation_framerate = str(framerate)
+	animation_compression = str(compression)
+
 	remove_recursive_directory(part_temp_directory.get_current_dir())
 	DirAccess.make_dir_recursive_absolute(part_temp_directory_location)
 
@@ -109,6 +118,6 @@ func render_animation(output_path: String) -> void:
 	animation_output_path = output_path
 	playing_animation = true
 
-func _on_render_window_render(output_path: String) -> void:
+func _on_render_window_render(framerate: int, compression: int, output_path: String) -> void:
 	if !output_path: return
-	render_animation(output_path)
+	render_animation(framerate, compression, output_path)

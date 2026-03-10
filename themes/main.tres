@@ -36,6 +36,9 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_1id7b"]
+color = Color(1, 1, 1, 0.3137255)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1id7b"]
 bg_color = Color(0.22826847, 0.25755507, 0.29049948, 0.9411765)
 
@@ -76,6 +79,7 @@ bg_color = Color(0.11764706, 0.13725491, 0.15686275, 0.9411765)
 Button/styles/hover = SubResource("StyleBoxFlat_wc0q8")
 Button/styles/normal = SubResource("StyleBoxFlat_78ekx")
 Button/styles/pressed = SubResource("StyleBoxFlat_7d6gw")
+HSeparator/styles/separator = SubResource("StyleBoxLine_1id7b")
 HSplitContainer/constants/autohide = 0
 HSplitContainer/constants/separation = 6
 HSplitContainer/styles/split_bar_background = SubResource("StyleBoxFlat_1id7b")
