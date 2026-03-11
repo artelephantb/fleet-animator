@@ -5,7 +5,8 @@ extends GraphEdit
 
 var component_types := [
 	preload('res://scenes/components/on_start_component.tscn'),
-	preload('res://scenes/components/jump_to_position_component.tscn')
+	preload('res://scenes/components/jump_to_position_component.tscn'),
+	preload('res://scenes/components/wait_component.tscn')
 ]
 
 

@@ -5,13 +5,6 @@ extends GraphNode
 @onready var y_position_spin_box_reference := $'YPositionContainer/SpinBox'
 
 
-func _ready() -> void:
-	pass
-
-func _process(delta: float) -> void:
-	pass
-
-
 func load_inputs(inputs: Dictionary) -> void:
 	if 'position' in inputs:
 		x_position_spin_box_reference.value = inputs.position.x

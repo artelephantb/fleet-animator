@@ -42,14 +42,29 @@ func _ready() -> void:
 	part_temp_directory = DirAccess.open(part_temp_directory_location)
 
 
-func run_component(type: int, sprite: Node, inputs: Dictionary) -> bool:
+func run_component(component_uid: String, type: int, sprite: Node, inputs: Dictionary) -> bool:
 	match type:
 		0: # On Start Event
 			return true
 		1: # Jump To Position
 			sprite.position = inputs.position
 			return true
+		2: # Wait
+			if component_uid not in animation_active_components_variables:
+				animation_active_components_variables[component_uid] = {
+					'time_left': int(inputs.time)
+				}
+				return false
 
+			var variables: Dictionary = animation_active_components_variables[component_uid]
+			variables.time_left -= 1
+
+			if variables.time_left > 0:
+				return false
+
+			return true
+
+	push_error('Invalid type: ', type)
 	return true
 
 
@@ -67,7 +82,7 @@ func update_play_animation() -> void:
 			var component_uid: String = animation_active_components[component_index]
 			var component: Dictionary = data.components[component_uid]
 
-			var is_done := run_component(component.type, canvas_reference.get_sprite(sprite_uid), component.inputs)
+			var is_done := run_component(component_uid, component.type, canvas_reference.get_sprite(sprite_uid), component.inputs)
 			if !is_done: continue
 
 			# When component finnished

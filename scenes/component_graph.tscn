@@ -36,9 +36,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 allow_reselect = true
-item_count = 2
+item_count = 3
 item_0/text = "On Start Event"
 item_1/text = "Jump To Position"
+item_2/text = "Wait"
 
 [connection signal="connection_request" from="." to="." method="_on_connection_request"]
 [connection signal="disconnection_request" from="." to="." method="_on_disconnection_request"]

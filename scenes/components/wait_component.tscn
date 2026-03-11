@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://dtvjutknyy2h7"]
+
+[ext_resource type="Script" uid="uid://dutw4vfcm5k0g" path="res://scripts/components/wait_component.gd" id="1_vabut"]
+
+[node name="WaitComponent" type="GraphNode" unique_id=680247325]
+offset_right = 73.0
+offset_bottom = 78.0
+title = "Wait"
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(0, 1, 0, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(0, 1, 0, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+script = ExtResource("1_vabut")
+
+[node name="TimeContainer" type="HBoxContainer" parent="." unique_id=901906397]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TimeContainer" unique_id=1184075459]
+layout_mode = 2
+text = "Time"
+
+[node name="SpinBox" type="SpinBox" parent="TimeContainer" unique_id=86441736]
+layout_mode = 2
+allow_greater = true
+allow_lesser = true
