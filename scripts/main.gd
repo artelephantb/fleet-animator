@@ -54,6 +54,10 @@ func run_component(type: int, sprite: Node, inputs: Dictionary) -> bool:
 
 
 func update_play_animation() -> void:
+	if len(animation_active_components) == 0:
+		sprite_control_gizmo_reference.disabled = false
+		playing_animation = false
+
 	for sprite_uid in animation_data:
 		var data: Dictionary = animation_data[sprite_uid]
 
@@ -200,6 +204,7 @@ func play_animation() -> void:
 				animation_active_components.append(component_uid)
 
 	animation_active_components_variables.clear()
+	sprite_control_gizmo_reference.disabled = true
 
 	playing_animation = true
 
