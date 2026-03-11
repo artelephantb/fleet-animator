@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://bf1mo7c3yvc21"]
 
+[ext_resource type="Script" uid="uid://bw2epxq17ywfy" path="res://scripts/components/on_start_component.gd" id="1_5c76u"]
+
 [node name="OnStartComponent" type="GraphNode" unique_id=680247325]
 offset_right = 73.0
 offset_bottom = 78.0
@@ -13,6 +15,7 @@ slot/0/right_type = 0
 slot/0/right_color = Color(0, 1, 0, 1)
 slot/0/right_icon = null
 slot/0/draw_stylebox = true
+script = ExtResource("1_5c76u")
 
 [node name="Label" type="Label" parent="." unique_id=952779707]
 layout_mode = 2

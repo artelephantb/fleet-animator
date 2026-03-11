@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://c2q7ecn5lnqjh"]
 
+[ext_resource type="Script" uid="uid://dsae5yqefh2jr" path="res://scripts/components/jump_to_position_component.gd" id="1_pc5nt"]
+
 [node name="JumpToPositionComponent" type="GraphNode" unique_id=680247325]
 offset_right = 73.0
 offset_bottom = 78.0
@@ -22,6 +24,7 @@ slot/1/right_type = 0
 slot/1/right_color = Color(1, 1, 1, 1)
 slot/1/right_icon = null
 slot/1/draw_stylebox = true
+script = ExtResource("1_pc5nt")
 
 [node name="XPositionContainer" type="HBoxContainer" parent="." unique_id=901906397]
 layout_mode = 2

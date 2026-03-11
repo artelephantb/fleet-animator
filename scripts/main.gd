@@ -106,7 +106,8 @@ func save_components(sprite_uid: int) -> void:
 
 		data.components[child.name] = {
 			'type': child.get_meta('type'),
-			'position_offset': child.position_offset
+			'position_offset': child.position_offset,
+			'inputs': child.get_inputs()
 		}
 
 	animation_data[sprite_uid] = data
@@ -123,7 +124,7 @@ func load_components(sprite_data: Dictionary) -> void:
 
 	for component_uid in components:
 		var component: Dictionary = components[component_uid]
-		components_graph_reference.add_component(component.type, component_uid, component.position_offset)
+		components_graph_reference.add_component(component.type, component.inputs, component_uid, component.position_offset)
 
 	for connection in connections:
 		components_graph_reference.connect_node(connection.from_node, connection.from_port, connection.to_node, connection.to_port, connection.keep_alive)

@@ -31,7 +31,7 @@ func _on_add_component_window_close_requested() -> void:
 	add_component_window_reference.hide()
 
 
-func add_component(index: int, component_name := str(randi_range(-1000000, 1000000)), position_offset := Vector2(0.0, 0.0)) -> void:
+func add_component(index: int, inputs := {}, component_name := str(randi_range(-1000000, 1000000)), position_offset := Vector2(0.0, 0.0)) -> void:
 	var new_component: Node = component_types[index].instantiate()
 	new_component.name = component_name
 	new_component.set_meta('type', index)
@@ -39,6 +39,8 @@ func add_component(index: int, component_name := str(randi_range(-1000000, 10000
 	new_component.position_offset = position_offset
 
 	add_child(new_component)
+
+	new_component.load_inputs(inputs)
 
 func _on_component_list_item_selected(index: int) -> void:
 	add_component(index)
