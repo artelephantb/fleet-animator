@@ -2,6 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dsae5yqefh2jr" path="res://scripts/components/jump_to_position_component.gd" id="1_pc5nt"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_pc5nt"]
+font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ai5bo"]
+font_color = Color(0, 1, 0, 1)
+
 [node name="JumpToPositionComponent" type="GraphNode" unique_id=680247325]
 offset_right = 73.0
 offset_bottom = 78.0
@@ -31,17 +37,23 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="XPositionContainer" unique_id=1184075459]
 layout_mode = 2
-text = "X:"
+text = "X"
+label_settings = SubResource("LabelSettings_pc5nt")
 
 [node name="SpinBox" type="SpinBox" parent="XPositionContainer" unique_id=86441736]
 layout_mode = 2
+allow_greater = true
+allow_lesser = true
 
 [node name="YPositionContainer" type="HBoxContainer" parent="." unique_id=735018226]
 layout_mode = 2
 
 [node name="Label" type="Label" parent="YPositionContainer" unique_id=101204044]
 layout_mode = 2
-text = "Y:"
+text = "Y"
+label_settings = SubResource("LabelSettings_ai5bo")
 
 [node name="SpinBox" type="SpinBox" parent="YPositionContainer" unique_id=1055114225]
 layout_mode = 2
+allow_greater = true
+allow_lesser = true
