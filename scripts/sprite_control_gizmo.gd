@@ -1,6 +1,7 @@
 extends Control
 
 
+@export var disabled := false
 @export var selected_node: Node2D
 
 var handle_distance := 50.0
@@ -12,6 +13,17 @@ var hovered_handle := -1
 var pressed_handle := -1
 
 var position_offset := Vector2(0.0, 0.0)
+
+
+var color_drag := Color(0.2, 0.2, 0.2)
+var color_drag_x := Color(0.0, 1.0, 0.3, 1.0)
+var color_drag_y := Color(1.0, 0.1, 0.1)
+
+var color_scale := Color(0.5, 0.0, 1.0)
+var color_scale_x := Color(1.0, 0.9, 0.2)
+var color_scale_y := Color(0.0, 0.3, 1.0, 1.0)
+
+var color_disabled := Color(0.191, 0.191, 0.191, 0.58)
 
 
 func _ready() -> void:
@@ -63,7 +75,7 @@ func update_selected_sprite() -> void:
 		4: selected_node.position.y = mouse_position.y + position_offset.y
 
 func _process(delta: float) -> void:
-	if selected_node:
+	if !disabled and selected_node:
 		update_handles()
 		update_selected_sprite()
 
@@ -88,12 +100,18 @@ func draw_node_handles(node: Node2D) -> void:
 		4:
 			draw_circle(bottom_handle_position, handle_border_radius, Color.WHITE)
 
-	draw_circle(node.position, handle_radius, Color.GRAY)
-
-	draw_circle(left_handle_position, handle_radius, Color.YELLOW)
-	draw_circle(right_handle_position, handle_radius, Color.RED)
-	draw_circle(top_handle_position, handle_radius, Color.BLUE)
-	draw_circle(bottom_handle_position, handle_radius, Color.GREEN)
+	if disabled:
+		draw_circle(node.position, handle_radius, color_disabled)
+		draw_circle(left_handle_position, handle_radius, color_disabled)
+		draw_circle(right_handle_position, handle_radius, color_disabled)
+		draw_circle(top_handle_position, handle_radius, color_disabled)
+		draw_circle(bottom_handle_position, handle_radius, color_disabled)
+	else:
+		draw_circle(node.position, handle_radius, color_drag)
+		draw_circle(left_handle_position, handle_radius, color_scale_x)
+		draw_circle(right_handle_position, handle_radius, color_drag_x)
+		draw_circle(top_handle_position, handle_radius, color_scale_y)
+		draw_circle(bottom_handle_position, handle_radius, color_drag_y)
 
 func _draw() -> void:
 	if selected_node: draw_node_handles(selected_node)
