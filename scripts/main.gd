@@ -16,6 +16,8 @@ extends Control
 @onready var root: TreeItem = sprite_tree_reference.create_item()
 
 var animation_data := {}
+var animation_active_components := []
+var animation_active_components_variables := {}
 
 var selected_sprite_uid: int
 
@@ -41,7 +43,35 @@ func _ready():
 
 
 func update_play_animation() -> void:
-	pass
+	for sprite_uid in animation_data:
+		var data: Dictionary = animation_data[sprite_uid]
+
+		var to_remove := []
+
+		for component_index in len(animation_active_components):
+			var component_uid: String = animation_active_components[component_index]
+			var component: Dictionary = data.components[component_uid]
+
+			match component.type:
+				0:
+					print('Starting...')
+				1:
+					print('Jumping to %v' % component.inputs.position)
+
+			# When component finnished
+			for connection_index in len(data.connections):
+				var connection: Dictionary = data.connections[connection_index]
+				if connection.from_node != component_uid: continue
+
+				animation_active_components.append(connection.to_node)
+
+			to_remove.append(component_index)
+
+		# Remove old components
+		var removed_amount := 0
+		for index in to_remove:
+			animation_active_components.remove_at(index - removed_amount)
+			removed_amount += 1
 
 func update_render_animation() -> void:
 	if animation_output_path:
@@ -149,8 +179,19 @@ func _on_render_button_pressed() -> void:
 
 
 func play_animation() -> void:
+	if selected_sprite_uid:
+		save_components(selected_sprite_uid)
+
+	for sprite_uid in animation_data:
+		var data: Dictionary = animation_data[sprite_uid]
+
+		for component_uid in data.components:
+			var component: Dictionary = data.components[component_uid]
+
+			if component.type == 0: # 0 is on_start_component
+				animation_active_components.append(component_uid)
+
 	playing_animation = true
-	print(components_graph_reference.get_connection_list())
 
 func _on_play_button_pressed() -> void:
 	play_animation()
