@@ -19,7 +19,7 @@ var animation_data := {}
 var animation_active_components := []
 var animation_active_components_variables := {}
 
-var selected_sprite_uid: int
+var selected_sprite_uid: String
 
 var playing_animation := false
 
@@ -36,10 +36,21 @@ var animation_compression := '18'
 var animation_codec := 'libx264'
 
 
-func _ready():
+func _ready() -> void:
 	part_temp_directory_location = ProjectSettings.globalize_path('user://part_temp')
 	DirAccess.make_dir_recursive_absolute(part_temp_directory_location)
 	part_temp_directory = DirAccess.open(part_temp_directory_location)
+
+
+func run_component(type: int, sprite: Node, inputs: Dictionary) -> bool:
+	match type:
+		0: # On Start Event
+			return true
+		1: # Jump To Position
+			sprite.position = inputs.position
+			return true
+
+	return true
 
 
 func update_play_animation() -> void:
@@ -52,11 +63,8 @@ func update_play_animation() -> void:
 			var component_uid: String = animation_active_components[component_index]
 			var component: Dictionary = data.components[component_uid]
 
-			match component.type:
-				0:
-					print('Starting...')
-				1:
-					print('Jumping to %v' % component.inputs.position)
+			var is_done := run_component(component.type, canvas_reference.get_sprite(sprite_uid), component.inputs)
+			if !is_done: continue
 
 			# When component finnished
 			for connection_index in len(data.connections):
@@ -104,7 +112,7 @@ func _process(delta: float) -> void:
 
 func create_sprite(sprite_name: String, sprite_icon := sprite_icon_image) -> TreeItem:
 	var new_sprite_item: TreeItem = sprite_tree_reference.create_item(root)
-	var sprite_uid := randi_range(-1000000, 1000000)
+	var sprite_uid := str(randi_range(-1000000, 1000000))
 
 	new_sprite_item.set_editable(0, true)
 
@@ -125,7 +133,7 @@ func _on_create_sprite_button_pressed() -> void:
 	create_sprite('New Sprite')
 
 
-func save_components(sprite_uid: int) -> void:
+func save_components(sprite_uid: String) -> void:
 	var data := {
 		'components': {},
 		'connections': components_graph_reference.get_connection_list()
@@ -162,8 +170,8 @@ func load_components(sprite_data: Dictionary) -> void:
 
 func _on_sprite_tree_item_selected() -> void:
 	var selected_item: TreeItem = sprite_tree_reference.get_selected()
-	var item_uid: int = selected_item.get_meta('uid')
-	var selected_node: Node2D = canvas_reference.sub_viewport_reference.get_node(str(item_uid))
+	var item_uid: String = selected_item.get_meta('uid')
+	var selected_node: Node2D = canvas_reference.get_sprite(item_uid)
 
 	if selected_sprite_uid:
 		save_components(selected_sprite_uid)
@@ -190,6 +198,8 @@ func play_animation() -> void:
 
 			if component.type == 0: # 0 is on_start_component
 				animation_active_components.append(component_uid)
+
+	animation_active_components_variables.clear()
 
 	playing_animation = true
 
