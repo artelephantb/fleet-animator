@@ -8,6 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://yicd4qsuk04k" path="res://scenes/render_window.tscn" id="3_tefeu"]
 [ext_resource type="PackedScene" uid="uid://bqnq57sninp87" path="res://scenes/component_graph.tscn" id="7_o6xl0"]
 
+[sub_resource type="InputEventAction" id="InputEventAction_o6xl0"]
+action = &"animation_play"
+
+[sub_resource type="Shortcut" id="Shortcut_tipki"]
+events = [SubResource("InputEventAction_o6xl0")]
+
 [sub_resource type="InputEventAction" id="InputEventAction_tbgi4"]
 action = &"animation_render"
 
@@ -62,6 +68,7 @@ size_flags_horizontal = 8
 
 [node name="PlayButton" type="Button" parent="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=660567790]
 layout_mode = 2
+shortcut = SubResource("Shortcut_tipki")
 text = "Play"
 icon = ExtResource("2_tbgi4")
 
@@ -146,7 +153,6 @@ layout_mode = 2
 
 [node name="ManipulationComponentGraphEdit" parent="VBoxContainer/HSplitContainer/VSplitContainer/PanelContainer" unique_id=1734273846 instance=ExtResource("7_o6xl0")]
 layout_mode = 2
-scroll_offset = Vector2(0, -2)
 right_disconnects = true
 
 [connection signal="index_pressed" from="VBoxContainer/PanelContainer/MarginContainer/MenuBar/PopupMenu" to="." method="_on_popup_menu_index_pressed"]
