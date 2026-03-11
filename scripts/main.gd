@@ -2,21 +2,27 @@ extends Control
 
 
 @onready var sprite_tree_reference := $'VBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/SpriteTree'
-@onready var canvas_reference := $'VBoxContainer/HSplitContainer/Control/Canvas'
+@onready var canvas_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/Control/Canvas'
 
-@onready var sprite_control_gizmo_reference := $'VBoxContainer/HSplitContainer/Control/SpriteControlGizmo'
+@onready var sprite_control_gizmo_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/Control/SpriteControlGizmo'
 
-@onready var render_popup := $'VBoxContainer/PanelContainer/MarginContainer/RenderButton/RenderWindow'
+@onready var render_popup := $'VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/RenderButton/RenderWindow'
+
+@onready var components_graph_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/PanelContainer/ManipulationComponentGraphEdit'
 
 @onready var sprite_icon_image := preload('res://icons/sprite.svg')
 @onready var missing_texture := preload('res://icon.svg')
 
 @onready var root: TreeItem = sprite_tree_reference.create_item()
 
+var animation_data := {}
+
+var playing_animation := false
+
 var part_temp_directory: DirAccess
 var part_temp_directory_location: String
 
-var playing_animation := false
+var rendering_animation := false
 var animation_output_path: String
 
 var animation_frame := 0
@@ -32,14 +38,17 @@ func _ready():
 	part_temp_directory = DirAccess.open(part_temp_directory_location)
 
 
-func update_animation() -> void:
+func update_play_animation() -> void:
+	pass
+
+func update_render_animation() -> void:
 	if animation_output_path:
 		canvas_reference.sub_viewport_reference.get_texture().get_image().save_png(part_temp_directory_location + '/%d.png' % animation_frame)
 
 	animation_frame += 1
 
 	if animation_frame < 1000: return
-	playing_animation = false
+	rendering_animation = false
 
 	if animation_output_path:
 		OS.execute('ffmpeg', [
@@ -57,7 +66,8 @@ func update_animation() -> void:
 		], [], true)
 
 func _process(delta: float) -> void:
-	if playing_animation: update_animation()
+	if playing_animation: update_play_animation()
+	elif rendering_animation: update_render_animation()
 
 
 func create_sprite(sprite_name: String, sprite_icon := sprite_icon_image) -> TreeItem:
@@ -89,9 +99,21 @@ func _on_sprite_tree_item_selected() -> void:
 func _on_render_button_pressed() -> void:
 	render_popup.popup_centered()
 
+
+func play_animation() -> void:
+	playing_animation = true
+	print(components_graph_reference.get_connection_list())
+
+func _on_play_button_pressed() -> void:
+	play_animation()
+
+
 func _on_popup_menu_index_pressed(index: int) -> void:
-	if index == 0:
-		render_popup.popup_centered()
+	match index:
+		0:
+			play_animation()
+		1:
+			render_popup.popup_centered()
 
 
 func remove_recursive_directory(directory: String) -> void:
@@ -116,7 +138,7 @@ func render_animation(framerate: int, compression: int, output_path: String) -> 
 		DirAccess.remove_absolute(output_path)
 
 	animation_output_path = output_path
-	playing_animation = true
+	rendering_animation = true
 
 func _on_render_window_render(framerate: int, compression: int, output_path: String) -> void:
 	if !output_path: return

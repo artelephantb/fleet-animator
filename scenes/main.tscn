@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://d3v1ei3f6udih" path="res://scripts/sprite_control_gizmo.gd" id="3_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://b73pof3xnvcnr" path="res://scenes/canvas.tscn" id="3_sugp2"]
 [ext_resource type="PackedScene" uid="uid://yicd4qsuk04k" path="res://scenes/render_window.tscn" id="3_tefeu"]
+[ext_resource type="PackedScene" uid="uid://bqnq57sninp87" path="res://scenes/component_graph.tscn" id="7_o6xl0"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_tbgi4"]
 action = &"animation_render"
@@ -45,21 +46,32 @@ layout_mode = 2
 
 [node name="PopupMenu" type="PopupMenu" parent="VBoxContainer/PanelContainer/MarginContainer/MenuBar" unique_id=660373129]
 oversampling_override = 1.0
-title = "Render"
+title = "Animation"
 prefer_native_menu = true
-item_count = 1
-item_0/text = "Open Menu"
+item_count = 2
+item_0/text = "Play From Beginning"
 item_0/icon = ExtResource("2_tbgi4")
 item_0/id = 0
+item_1/text = "Open Menu"
+item_1/icon = ExtResource("2_tbgi4")
+item_1/id = 1
 
-[node name="RenderButton" type="Button" parent="VBoxContainer/PanelContainer/MarginContainer" unique_id=1277699094]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer/MarginContainer" unique_id=468685784]
 layout_mode = 2
 size_flags_horizontal = 8
-shortcut = SubResource("Shortcut_tefeu")
-icon = ExtResource("2_tbgi4")
-icon_alignment = 1
 
-[node name="RenderWindow" parent="VBoxContainer/PanelContainer/MarginContainer/RenderButton" unique_id=702783721 instance=ExtResource("3_tefeu")]
+[node name="PlayButton" type="Button" parent="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=660567790]
+layout_mode = 2
+text = "Play"
+icon = ExtResource("2_tbgi4")
+
+[node name="RenderButton" type="Button" parent="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=1277699094]
+layout_mode = 2
+shortcut = SubResource("Shortcut_tefeu")
+text = "Render"
+icon = ExtResource("2_tbgi4")
+
+[node name="RenderWindow" parent="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/RenderButton" unique_id=702783721 instance=ExtResource("3_tefeu")]
 
 [node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer" unique_id=370791941]
 layout_mode = 2
@@ -90,10 +102,15 @@ script = ExtResource("2_0wfyh")
 layout_mode = 2
 text = "+ Sprite"
 
-[node name="Control" type="Control" parent="VBoxContainer/HSplitContainer" unique_id=1586407989]
+[node name="VSplitContainer" type="VSplitContainer" parent="VBoxContainer/HSplitContainer" unique_id=793584852]
+layout_mode = 2
+split_offsets = PackedInt32Array(700)
+split_offset = 700
+
+[node name="Control" type="Control" parent="VBoxContainer/HSplitContainer/VSplitContainer" unique_id=1586407989]
 layout_mode = 2
 
-[node name="Canvas" parent="VBoxContainer/HSplitContainer/Control" unique_id=1084551890 instance=ExtResource("3_sugp2")]
+[node name="Canvas" parent="VBoxContainer/HSplitContainer/VSplitContainer/Control" unique_id=1084551890 instance=ExtResource("3_sugp2")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -108,7 +125,7 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="SpriteControlGizmo" type="Control" parent="VBoxContainer/HSplitContainer/Control" unique_id=402941173]
+[node name="SpriteControlGizmo" type="Control" parent="VBoxContainer/HSplitContainer/VSplitContainer/Control" unique_id=402941173]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -124,8 +141,17 @@ grow_vertical = 2
 mouse_behavior_recursive = 1
 script = ExtResource("3_jyhfs")
 
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer" unique_id=1350626813]
+layout_mode = 2
+
+[node name="ManipulationComponentGraphEdit" parent="VBoxContainer/HSplitContainer/VSplitContainer/PanelContainer" unique_id=1734273846 instance=ExtResource("7_o6xl0")]
+layout_mode = 2
+scroll_offset = Vector2(0, -2)
+right_disconnects = true
+
 [connection signal="index_pressed" from="VBoxContainer/PanelContainer/MarginContainer/MenuBar/PopupMenu" to="." method="_on_popup_menu_index_pressed"]
-[connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/RenderButton" to="." method="_on_render_button_pressed"]
-[connection signal="render" from="VBoxContainer/PanelContainer/MarginContainer/RenderButton/RenderWindow" to="." method="_on_render_window_render"]
+[connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/RenderButton" to="." method="_on_render_button_pressed"]
+[connection signal="render" from="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/RenderButton/RenderWindow" to="." method="_on_render_window_render"]
 [connection signal="item_selected" from="VBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/SpriteTree" to="." method="_on_sprite_tree_item_selected"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/CreateSpriteButton" to="." method="_on_create_sprite_button_pressed"]

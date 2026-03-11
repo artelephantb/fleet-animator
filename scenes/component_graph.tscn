@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://bqnq57sninp87"]
+
+[ext_resource type="Script" uid="uid://it3n53kdxl4s" path="res://scripts/component_graph.gd" id="1_r75bl"]
+
+[node name="ManipulationComponentGraphEdit" type="GraphEdit" unique_id=1734273846]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r75bl")
+
+[node name="AddComponentWindow" type="Window" parent="." unique_id=953291601]
+oversampling_override = 1.0
+title = "Add Component"
+size = Vector2i(300, 500)
+visible = false
+transient = true
+exclusive = true
+minimize_disabled = true
+maximize_disabled = true
+min_size = Vector2i(300, 500)
+content_scale_factor = 1.6
+
+[node name="Background" type="PanelContainer" parent="AddComponentWindow" unique_id=1444064774]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ComponentList" type="ItemList" parent="AddComponentWindow" unique_id=368990134]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+allow_reselect = true
+item_count = 2
+item_0/text = "On Start Event"
+item_1/text = "Jump To Position"
+
+[connection signal="connection_request" from="." to="." method="_on_connection_request"]
+[connection signal="disconnection_request" from="." to="." method="_on_disconnection_request"]
+[connection signal="close_requested" from="AddComponentWindow" to="." method="_on_add_component_window_close_requested"]
+[connection signal="item_selected" from="AddComponentWindow/ComponentList" to="." method="_on_component_list_item_selected"]

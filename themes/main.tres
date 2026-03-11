@@ -75,6 +75,9 @@ bg_color = Color(0.11764706, 0.13725491, 0.15686275, 0.9411765)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0avsd"]
 bg_color = Color(0.11764706, 0.13725491, 0.15686275, 0.9411765)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nuec8"]
+bg_color = Color(0.22826847, 0.25755507, 0.29049948, 0.9411765)
+
 [resource]
 Button/styles/hover = SubResource("StyleBoxFlat_wc0q8")
 Button/styles/normal = SubResource("StyleBoxFlat_78ekx")
@@ -89,3 +92,6 @@ MenuBar/styles/pressed = SubResource("StyleBoxFlat_hcg30")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_wykhr")
 Tree/colors/guide_color = Color(0, 0, 0, 0)
 Tree/styles/panel = SubResource("StyleBoxFlat_0avsd")
+VSplitContainer/constants/autohide = 0
+VSplitContainer/constants/separation = 6
+VSplitContainer/styles/split_bar_background = SubResource("StyleBoxFlat_nuec8")
