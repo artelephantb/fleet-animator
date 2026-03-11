@@ -30,8 +30,16 @@ func _on_create_component_button_pressed() -> void:
 func _on_add_component_window_close_requested() -> void:
 	add_component_window_reference.hide()
 
-func _on_component_list_item_selected(index: int) -> void:
+
+func add_component(index: int, component_name := str(randi_range(-1000000, 1000000)), position_offset := Vector2(0.0, 0.0)) -> void:
 	var new_component: Node = component_types[index].instantiate()
+	new_component.name = component_name
+	new_component.set_meta('type', index)
+
+	new_component.position_offset = position_offset
+
 	add_child(new_component)
 
+func _on_component_list_item_selected(index: int) -> void:
+	add_component(index)
 	add_component_window_reference.hide()

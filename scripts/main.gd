@@ -17,6 +17,8 @@ extends Control
 
 var animation_data := {}
 
+var selected_sprite_uid: int
+
 var playing_animation := false
 
 var part_temp_directory: DirAccess
@@ -80,6 +82,10 @@ func create_sprite(sprite_name: String, sprite_icon := sprite_icon_image) -> Tre
 	new_sprite_item.set_icon(0, sprite_icon)
 
 	new_sprite_item.set_meta('uid', sprite_uid)
+	animation_data[sprite_uid] = {
+		'components': {},
+		'connections': []
+	}
 
 	canvas_reference.create_texture_sprite(sprite_uid, missing_texture)
 
@@ -88,10 +94,51 @@ func create_sprite(sprite_name: String, sprite_icon := sprite_icon_image) -> Tre
 func _on_create_sprite_button_pressed() -> void:
 	create_sprite('New Sprite')
 
+
+func save_components(sprite_uid: int) -> void:
+	var data := {
+		'components': {},
+		'connections': components_graph_reference.get_connection_list()
+	}
+
+	for child in components_graph_reference.get_children():
+		if child is not GraphNode: continue
+
+		data.components[child.name] = {
+			'type': child.get_meta('type'),
+			'position_offset': child.position_offset
+		}
+
+	animation_data[sprite_uid] = data
+
+func load_components(sprite_data: Dictionary) -> void:
+	# Remove previous components
+	for child in components_graph_reference.get_children():
+		if child is not GraphNode: continue
+		child.queue_free()
+
+	# Introduce new components
+	var components: Dictionary = sprite_data.components
+	var connections: Array = sprite_data.connections
+
+	for component_uid in components:
+		var component: Dictionary = components[component_uid]
+		components_graph_reference.add_component(component.type, component_uid, component.position_offset)
+
+	for connection in connections:
+		components_graph_reference.connect_node(connection.from_node, connection.from_port, connection.to_node, connection.to_port, connection.keep_alive)
+
+
 func _on_sprite_tree_item_selected() -> void:
 	var selected_item: TreeItem = sprite_tree_reference.get_selected()
-	var item_uid := str(selected_item.get_meta('uid'))
-	var selected_node: Node2D = canvas_reference.sub_viewport_reference.get_node(item_uid)
+	var item_uid: int = selected_item.get_meta('uid')
+	var selected_node: Node2D = canvas_reference.sub_viewport_reference.get_node(str(item_uid))
+
+	if selected_sprite_uid:
+		save_components(selected_sprite_uid)
+
+	selected_sprite_uid = item_uid
+	load_components(animation_data[item_uid])
 
 	sprite_control_gizmo_reference.selected_node = selected_node
 
