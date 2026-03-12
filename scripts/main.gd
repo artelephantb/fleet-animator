@@ -38,6 +38,14 @@ var animation_codec := 'libx264'
 var frame_length := 100
 var frame_digits := 3
 
+var play_component_cache := {}
+
+var play_component_mappings := {
+	0: 'res://scripts/play_components/on_start_component.gd',
+	1: 'res://scripts/play_components/jump_to_position_component.gd',
+	2: 'res://scripts/play_components/wait_component.gd'
+}
+
 
 func _ready() -> void:
 	part_temp_directory_location = ProjectSettings.globalize_path('user://part_temp')
@@ -52,30 +60,16 @@ func get_placehold_and_filled_digits(digits: int, number: int) -> String:
 	return '0'.repeat(needed_placeholders) + number_string
 
 
-func run_component(component_uid: String, type: int, sprite: Node, inputs: Dictionary) -> bool:
-	match type:
-		0: # On Start Event
-			return true
-		1: # Jump To Position
-			sprite.position = inputs.position
-			return true
-		2: # Wait
-			if component_uid not in animation_active_components_variables:
-				animation_active_components_variables[component_uid] = {
-					'time_left': int(inputs.time)
-				}
-				return false
+func run_component(component_uid: String, type: int, sprite: Node, inputs: Dictionary, active_variables: Dictionary) -> bool:
+	if type not in play_component_cache:
+		play_component_cache[type] = load(play_component_mappings[type])
 
-			var variables: Dictionary = animation_active_components_variables[component_uid]
-			variables.time_left -= 1
-
-			if variables.time_left > 0:
-				return false
-
-			return true
-
-	push_error('Invalid type: ', type)
-	return true
+	return play_component_cache[type].run(
+		component_uid,
+		sprite,
+		inputs,
+		active_variables
+	)
 
 
 func update_play_animation() -> void:
@@ -92,7 +86,19 @@ func update_play_animation() -> void:
 			var component_uid: String = animation_active_components[component_index]
 			var component: Dictionary = data.components[component_uid]
 
-			var is_done := run_component(component_uid, component.type, canvas_reference.get_sprite(sprite_uid), component.inputs)
+			if component_uid not in animation_active_components_variables:
+				animation_active_components_variables[component_uid] = {}
+
+			if component.type not in play_component_cache:
+				play_component_cache[component.type] = load(play_component_mappings[component.type])
+
+			var is_done: bool = play_component_cache[component.type].run(
+				component_uid,
+				canvas_reference.get_sprite(sprite_uid),
+				component.inputs,
+				animation_active_components_variables[component_uid]
+			)
+
 			if !is_done: continue
 
 			# When component finnished

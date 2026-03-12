@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c2q7ecn5lnqjh"]
 
-[ext_resource type="Script" uid="uid://dsae5yqefh2jr" path="res://scripts/components/jump_to_position_component.gd" id="1_pc5nt"]
+[ext_resource type="Script" uid="uid://dsae5yqefh2jr" path="res://scripts/graph_components/jump_to_position_component.gd" id="1_ur5ld"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_pc5nt"]
 font_color = Color(1, 0, 0, 1)
@@ -30,7 +30,7 @@ slot/1/right_type = 0
 slot/1/right_color = Color(1, 1, 1, 1)
 slot/1/right_icon = null
 slot/1/draw_stylebox = true
-script = ExtResource("1_pc5nt")
+script = ExtResource("1_ur5ld")
 
 [node name="XPositionContainer" type="HBoxContainer" parent="." unique_id=901906397]
 layout_mode = 2

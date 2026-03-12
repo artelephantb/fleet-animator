@@ -4,9 +4,9 @@ extends GraphEdit
 @onready var add_component_window_reference := $'AddComponentWindow'
 
 var component_types := [
-	preload('res://scenes/components/on_start_component.tscn'),
-	preload('res://scenes/components/jump_to_position_component.tscn'),
-	preload('res://scenes/components/wait_component.tscn')
+	preload('res://scenes/graph_components/on_start_component.tscn'),
+	preload('res://scenes/graph_components/jump_to_position_component.tscn'),
+	preload('res://scenes/graph_components/wait_component.tscn')
 ]
 
 
