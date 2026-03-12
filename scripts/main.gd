@@ -35,11 +35,21 @@ var animation_framerate := '24'
 var animation_compression := '18'
 var animation_codec := 'libx264'
 
+var frame_length := 100
+var frame_digits := 3
+
 
 func _ready() -> void:
 	part_temp_directory_location = ProjectSettings.globalize_path('user://part_temp')
 	DirAccess.make_dir_recursive_absolute(part_temp_directory_location)
 	part_temp_directory = DirAccess.open(part_temp_directory_location)
+
+
+func get_placehold_and_filled_digits(digits: int, number: int) -> String:
+	var number_string := str(number)
+	var needed_placeholders := digits - len(number_string)
+
+	return '0'.repeat(needed_placeholders) + number_string
 
 
 func run_component(component_uid: String, type: int, sprite: Node, inputs: Dictionary) -> bool:
@@ -101,32 +111,34 @@ func update_play_animation() -> void:
 			removed_amount += 1
 
 func update_render_animation() -> void:
+	update_play_animation()
+
 	if animation_output_path:
-		canvas_reference.sub_viewport_reference.get_texture().get_image().save_png(part_temp_directory_location + '/%d.png' % animation_frame)
+		canvas_reference.sub_viewport_reference.get_texture().get_image().save_png(part_temp_directory_location + '/%s.png' % get_placehold_and_filled_digits(frame_digits, animation_frame))
 
 	animation_frame += 1
 
-	if animation_frame < 1000: return
+	if playing_animation: return
 	rendering_animation = false
 
 	if animation_output_path:
 		OS.execute('ffmpeg', [
 			'-framerate',
 			animation_framerate,
-			'-pattern_type',
-			'glob',
 			'-i',
-			part_temp_directory_location + '/*.png',
+			part_temp_directory_location + '/%' + get_placehold_and_filled_digits(2, frame_digits) + 'd.png',
 			'-crf',
 			animation_compression,
 			'-c:v',
 			animation_codec,
+			'-pix_fmt',
+			'yuv420p',
 			animation_output_path
 		], [], true)
 
 func _process(delta: float) -> void:
-	if playing_animation: update_play_animation()
-	elif rendering_animation: update_render_animation()
+	if rendering_animation: update_render_animation()
+	elif playing_animation: update_play_animation()
 
 
 func create_sprite(sprite_name: String, sprite_icon := sprite_icon_image) -> TreeItem:
@@ -206,6 +218,8 @@ func _on_render_button_pressed() -> void:
 
 
 func play_animation() -> void:
+	if playing_animation or rendering_animation: return
+
 	if selected_sprite_uid:
 		save_components(selected_sprite_uid)
 
@@ -245,6 +259,8 @@ func remove_recursive_directory(directory: String) -> void:
 
 
 func render_animation(framerate: int, compression: int, output_path: String) -> void:
+	if playing_animation or rendering_animation: return
+
 	animation_frame = 0
 
 	animation_framerate = str(framerate)
@@ -256,8 +272,24 @@ func render_animation(framerate: int, compression: int, output_path: String) -> 
 	if FileAccess.file_exists(output_path):
 		DirAccess.remove_absolute(output_path)
 
+	if selected_sprite_uid:
+		save_components(selected_sprite_uid)
+
+	for sprite_uid in animation_data:
+		var data: Dictionary = animation_data[sprite_uid]
+
+		for component_uid in data.components:
+			var component: Dictionary = data.components[component_uid]
+
+			if component.type == 0: # 0 is on_start_component
+				animation_active_components.append(component_uid)
+
+	animation_active_components_variables.clear()
+	sprite_control_gizmo_reference.disabled = true
+
 	animation_output_path = output_path
 	rendering_animation = true
+	playing_animation = true
 
 func _on_render_window_render(framerate: int, compression: int, output_path: String) -> void:
 	if !output_path: return
