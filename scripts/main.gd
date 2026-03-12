@@ -16,8 +16,7 @@ extends Control
 @onready var root: TreeItem = sprite_tree_reference.create_item()
 
 var animation_data := {}
-var animation_active_components := []
-var animation_active_components_variables := {}
+var animation_variables := {}
 
 var selected_sprite_uid: String
 
@@ -73,21 +72,22 @@ func run_component(component_uid: String, type: int, sprite: Node, inputs: Dicti
 
 
 func update_play_animation() -> void:
-	if len(animation_active_components) == 0:
-		sprite_control_gizmo_reference.disabled = false
-		playing_animation = false
+	var finnished_sprites := 0
 
 	for sprite_uid in animation_data:
 		var data: Dictionary = animation_data[sprite_uid]
 
+		if len(data.active_components) == 0:
+			finnished_sprites += 1
+
 		var to_remove := []
 
-		for component_index in len(animation_active_components):
-			var component_uid: String = animation_active_components[component_index]
+		for component_index in len(data.active_components):
+			var component_uid: String = data.active_components[component_index]
 			var component: Dictionary = data.components[component_uid]
 
-			if component_uid not in animation_active_components_variables:
-				animation_active_components_variables[component_uid] = {}
+			if component_uid not in animation_variables:
+				animation_variables[component_uid] = {}
 
 			if component.type not in play_component_cache:
 				play_component_cache[component.type] = load(play_component_mappings[component.type])
@@ -96,7 +96,7 @@ func update_play_animation() -> void:
 				component_uid,
 				canvas_reference.get_sprite(sprite_uid),
 				component.inputs,
-				animation_active_components_variables[component_uid]
+				animation_variables[component_uid]
 			)
 
 			if !is_done: continue
@@ -106,15 +106,19 @@ func update_play_animation() -> void:
 				var connection: Dictionary = data.connections[connection_index]
 				if connection.from_node != component_uid: continue
 
-				animation_active_components.append(connection.to_node)
+				data.active_components.append(connection.to_node)
 
 			to_remove.append(component_index)
 
 		# Remove old components
 		var removed_amount := 0
 		for index in to_remove:
-			animation_active_components.remove_at(index - removed_amount)
+			data.active_components.remove_at(index - removed_amount)
 			removed_amount += 1
+
+	if finnished_sprites == len(animation_data):
+		sprite_control_gizmo_reference.disabled = false
+		playing_animation = false
 
 func update_render_animation() -> void:
 	update_play_animation()
@@ -159,6 +163,7 @@ func create_sprite(sprite_name: String, sprite_icon := sprite_icon_image) -> Tre
 	new_sprite_item.set_meta('uid', sprite_uid)
 	animation_data[sprite_uid] = {
 		'components': {},
+		'active_components': [],
 		'connections': []
 	}
 
@@ -173,6 +178,7 @@ func _on_create_sprite_button_pressed() -> void:
 func save_components(sprite_uid: String) -> void:
 	var data := {
 		'components': {},
+		'active_components': [],
 		'connections': components_graph_reference.get_connection_list()
 	}
 
@@ -236,9 +242,9 @@ func play_animation() -> void:
 			var component: Dictionary = data.components[component_uid]
 
 			if component.type == 0: # 0 is on_start_component
-				animation_active_components.append(component_uid)
+				data.active_components.append(component_uid)
 
-	animation_active_components_variables.clear()
+	animation_variables.clear()
 	sprite_control_gizmo_reference.disabled = true
 
 	playing_animation = true
@@ -288,9 +294,9 @@ func render_animation(framerate: int, compression: int, output_path: String) -> 
 			var component: Dictionary = data.components[component_uid]
 
 			if component.type == 0: # 0 is on_start_component
-				animation_active_components.append(component_uid)
+				data.active_components.append(component_uid)
 
-	animation_active_components_variables.clear()
+	animation_variables.clear()
 	sprite_control_gizmo_reference.disabled = true
 
 	animation_output_path = output_path
