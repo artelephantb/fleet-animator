@@ -43,6 +43,7 @@ item_2/text = "Move To Position"
 item_3/text = "Wait"
 
 [connection signal="connection_request" from="." to="." method="_on_connection_request"]
+[connection signal="delete_nodes_request" from="." to="." method="_on_delete_nodes_request"]
 [connection signal="disconnection_request" from="." to="." method="_on_disconnection_request"]
 [connection signal="close_requested" from="AddComponentWindow" to="." method="_on_add_component_window_close_requested"]
 [connection signal="item_selected" from="AddComponentWindow/ComponentList" to="." method="_on_component_list_item_selected"]

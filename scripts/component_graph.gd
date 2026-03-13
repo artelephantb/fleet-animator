@@ -26,6 +26,10 @@ func _on_disconnection_request(from_node: StringName, from_port: int, to_node: S
 	disconnect_node(from_node, from_port, to_node, to_port)
 
 
+func _on_delete_nodes_request(nodes: Array[StringName]) -> void:
+	for node in nodes: get_node(NodePath(node)).queue_free()
+
+
 func _on_create_component_button_pressed() -> void:
 	add_component_window_reference.popup_centered()
 
