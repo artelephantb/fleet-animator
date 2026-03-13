@@ -58,7 +58,7 @@ item_count = 2
 item_0/text = "Play From Beginning"
 item_0/icon = ExtResource("2_tbgi4")
 item_0/id = 0
-item_1/text = "Open Menu"
+item_1/text = "Render"
 item_1/icon = ExtResource("2_tbgi4")
 item_1/id = 1
 
