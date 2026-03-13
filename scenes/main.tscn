@@ -91,29 +91,29 @@ icon = ExtResource("2_tbgi4")
 [node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer" unique_id=370791941]
 layout_mode = 2
 size_flags_vertical = 3
-split_offsets = PackedInt32Array(200)
+split_offsets = PackedInt32Array(200, 1904)
 split_offset = 200
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HSplitContainer" unique_id=1472475956]
+[node name="SpritesPanelContainer" type="PanelContainer" parent="VBoxContainer/HSplitContainer" unique_id=1472475956]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HSplitContainer/PanelContainer" unique_id=1322924647]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HSplitContainer/SpritesPanelContainer" unique_id=1322924647]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/PanelContainer/MarginContainer" unique_id=1630379158]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/SpritesPanelContainer/MarginContainer" unique_id=1630379158]
 layout_mode = 2
 
-[node name="SpriteTree" type="Tree" parent="VBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=542596784]
+[node name="SpriteTree" type="Tree" parent="VBoxContainer/HSplitContainer/SpritesPanelContainer/MarginContainer/VBoxContainer" unique_id=542596784]
 layout_mode = 2
 size_flags_vertical = 3
 hide_root = true
 script = ExtResource("2_0wfyh")
 
-[node name="CreateSpriteButton" type="Button" parent="VBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1379626535]
+[node name="CreateSpriteButton" type="Button" parent="VBoxContainer/HSplitContainer/SpritesPanelContainer/MarginContainer/VBoxContainer" unique_id=1379626535]
 layout_mode = 2
 text = "+ Sprite"
 
@@ -161,7 +161,21 @@ layout_mode = 2
 
 [node name="ManipulationComponentGraphEdit" parent="VBoxContainer/HSplitContainer/VSplitContainer/PanelContainer" unique_id=1734273846 instance=ExtResource("7_o6xl0")]
 layout_mode = 2
+scroll_offset = Vector2(-200, 0)
 right_disconnects = true
+
+[node name="InspectorPanelContainer" type="PanelContainer" parent="VBoxContainer/HSplitContainer" unique_id=559784550]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HSplitContainer/InspectorPanelContainer" unique_id=786659540]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/InspectorPanelContainer/MarginContainer" unique_id=2097386057]
+layout_mode = 2
 
 [node name="CreateSpriteTypeListWindow" parent="." unique_id=1658129983 instance=ExtResource("8_85g3d")]
 
@@ -172,7 +186,7 @@ right_disconnects = true
 [connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/RenderButton" to="." method="_on_render_button_pressed"]
 [connection signal="render" from="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/RenderButton/RenderWindow" to="." method="_on_render_window_render"]
-[connection signal="item_selected" from="VBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/SpriteTree" to="." method="_on_sprite_tree_item_selected"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/CreateSpriteButton" to="." method="_on_create_sprite_button_pressed"]
+[connection signal="item_selected" from="VBoxContainer/HSplitContainer/SpritesPanelContainer/MarginContainer/VBoxContainer/SpriteTree" to="." method="_on_sprite_tree_item_selected"]
+[connection signal="pressed" from="VBoxContainer/HSplitContainer/SpritesPanelContainer/MarginContainer/VBoxContainer/CreateSpriteButton" to="." method="_on_create_sprite_button_pressed"]
 [connection signal="single_item_selected" from="CreateSpriteTypeListWindow" to="." method="_on_create_sprite_type_list_window_single_item_selected"]
 [connection signal="save_as" from="SaveWindow" to="." method="_on_save_window_save_as"]

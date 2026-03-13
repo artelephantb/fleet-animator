@@ -4,8 +4,10 @@ extends Control
 @onready var sprite_icon_resource := preload('res://icons/sprite.svg')
 @onready var missing_texture_resource := preload('res://icon.svg')
 
-@onready var sprite_tree_reference := $'VBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/SpriteTree'
+@onready var sprite_tree_reference := $'VBoxContainer/HSplitContainer/SpritesPanelContainer/MarginContainer/VBoxContainer/SpriteTree'
 @onready var canvas_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/Control/Canvas'
+
+@onready var inspector_container_reference := $'VBoxContainer/HSplitContainer/InspectorPanelContainer/MarginContainer/VBoxContainer'
 
 @onready var sprite_control_gizmo_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/Control/SpriteControlGizmo'
 
@@ -171,6 +173,8 @@ func create_texture_sprite(sprite_name: String, sprite_icon := sprite_icon_resou
 	new_sprite_item.set_icon(0, sprite_icon)
 
 	new_sprite_item.set_meta('uid', sprite_uid)
+	new_sprite_item.set_meta('type', 'texture_sprite')
+
 	animation_data[sprite_uid] = {
 		'components': {},
 		'active_components': [],
@@ -238,6 +242,14 @@ func _on_sprite_tree_item_selected() -> void:
 	load_components(animation_data[item_uid])
 
 	sprite_control_gizmo_reference.selected_node = selected_node
+
+	for child in inspector_container_reference.get_children():
+		child.queue_free()
+
+	var label = Label.new()
+	label.text = selected_item.get_text(0)
+
+	inspector_container_reference.add_child(label)
 
 
 func _on_render_button_pressed() -> void:
