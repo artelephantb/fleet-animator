@@ -49,5 +49,5 @@ func add_component(index: int, inputs := {}, component_name := str(randi_range(-
 	new_component.load_inputs(inputs)
 
 func _on_component_list_item_selected(index: int) -> void:
-	add_component(index)
+	add_component(index, {}, str(randi_range(-1000000, 1000000)), scroll_offset + size * 0.5)
 	add_component_window_reference.hide()
