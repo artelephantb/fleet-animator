@@ -7,6 +7,7 @@ extends Control
 @onready var sprite_control_gizmo_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/Control/SpriteControlGizmo'
 
 @onready var render_popup := $'VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/RenderButton/RenderWindow'
+@onready var save_popup := $'SaveWindow'
 
 @onready var components_graph_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/PanelContainer/ManipulationComponentGraphEdit'
 
@@ -254,8 +255,13 @@ func _on_play_button_pressed() -> void:
 	play_animation()
 
 
-func _on_popup_menu_index_pressed(index: int) -> void:
-	match index:
+func _on_file_popup_menu_id_pressed(id: int) -> void:
+	match id:
+		0:
+			save_popup.popup_centered()
+
+func _on_animation_popup_menu_id_pressed(id: int) -> void:
+	match id:
 		0:
 			play_animation()
 		1:

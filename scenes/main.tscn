@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b73pof3xnvcnr" path="res://scenes/canvas.tscn" id="3_sugp2"]
 [ext_resource type="PackedScene" uid="uid://yicd4qsuk04k" path="res://scenes/render_window.tscn" id="3_tefeu"]
 [ext_resource type="PackedScene" uid="uid://bqnq57sninp87" path="res://scenes/component_graph.tscn" id="7_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://b1xrvoxm3y8q0" path="res://scenes/save_window.tscn" id="8_tipki"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_o6xl0"]
 action = &"animation_play"
@@ -50,16 +51,22 @@ theme_override_constants/margin_bottom = 5
 [node name="MenuBar" type="MenuBar" parent="VBoxContainer/PanelContainer/MarginContainer" unique_id=164841245]
 layout_mode = 2
 
-[node name="PopupMenu" type="PopupMenu" parent="VBoxContainer/PanelContainer/MarginContainer/MenuBar" unique_id=660373129]
+[node name="FilePopupMenu" type="PopupMenu" parent="VBoxContainer/PanelContainer/MarginContainer/MenuBar" unique_id=795638324]
+oversampling_override = 1.0
+title = "File"
+prefer_native_menu = true
+item_count = 1
+item_0/text = "Save As..."
+item_0/id = 0
+
+[node name="AnimationPopupMenu" type="PopupMenu" parent="VBoxContainer/PanelContainer/MarginContainer/MenuBar" unique_id=660373129]
 oversampling_override = 1.0
 title = "Animation"
 prefer_native_menu = true
 item_count = 2
 item_0/text = "Play From Beginning"
-item_0/icon = ExtResource("2_tbgi4")
 item_0/id = 0
 item_1/text = "Render"
-item_1/icon = ExtResource("2_tbgi4")
 item_1/id = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer/MarginContainer" unique_id=468685784]
@@ -155,7 +162,10 @@ layout_mode = 2
 layout_mode = 2
 right_disconnects = true
 
-[connection signal="index_pressed" from="VBoxContainer/PanelContainer/MarginContainer/MenuBar/PopupMenu" to="." method="_on_popup_menu_index_pressed"]
+[node name="SaveWindow" parent="." unique_id=1658129983 instance=ExtResource("8_tipki")]
+
+[connection signal="id_pressed" from="VBoxContainer/PanelContainer/MarginContainer/MenuBar/FilePopupMenu" to="." method="_on_file_popup_menu_id_pressed"]
+[connection signal="id_pressed" from="VBoxContainer/PanelContainer/MarginContainer/MenuBar/AnimationPopupMenu" to="." method="_on_animation_popup_menu_id_pressed"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/RenderButton" to="." method="_on_render_button_pressed"]
 [connection signal="render" from="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/RenderButton/RenderWindow" to="." method="_on_render_window_render"]
