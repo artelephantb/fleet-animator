@@ -26,6 +26,10 @@ func remove_item(uid: String) -> void:
 	items.erase(uid)
 
 
+func _on_about_to_popup() -> void:
+	item_list_reference.grab_focus(true)
+
+
 func _on_select_button_pressed() -> void:
 	var selected_items_indexes: Array = item_list_reference.get_selected_items()
 	if len(selected_items_indexes) == 1:
@@ -37,4 +41,8 @@ func _on_select_button_pressed() -> void:
 
 		multiple_items_selected.emit(selected_items)
 
+	hide()
+
+func _on_item_list_item_activated(index: int) -> void:
+	single_item_selected.emit(items[index])
 	hide()
