@@ -49,6 +49,7 @@ var play_component_mappings := {
 
 var project_name := 'New Project'
 var project_location: String
+var project_config: ConfigFile
 
 
 func _ready() -> void:
@@ -318,13 +319,17 @@ func _on_render_window_render(framerate: int, compression: int, output_path: Str
 	render_animation(framerate, compression, output_path)
 
 
-func save_project(name: String, location: String) -> void:
+func create_project(name: String, location: String) -> void:
 	var global_location = ProjectSettings.globalize_path(location)
 
 	project_name = name
 	project_location = location
 
-	DirAccess.make_dir_recursive_absolute(global_location)
+	DirAccess.make_dir_recursive_absolute(project_location)
+
+	project_config = ConfigFile.new()
+	project_config.set_value('project', 'name', project_name)
+	project_config.save(project_location + '/project.cfg')
 
 func _on_save_window_save_as(name: String, location: String) -> void:
-	save_project(name, location)
+	create_project(name, location)
