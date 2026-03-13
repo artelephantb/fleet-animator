@@ -42,10 +42,10 @@ var frame_digits := 3
 var play_component_cache := {}
 
 var play_component_mappings := {
-	0: 'res://scripts/play_components/on_start_component.gd',
-	1: 'res://scripts/play_components/jump_to_position_component.gd',
-	2: 'res://scripts/play_components/move_to_position_component.gd',
-	3: 'res://scripts/play_components/wait_component.gd'
+	'on_start_component': 'res://scripts/play_components/on_start_component.gd',
+	'jump_to_position_component': 'res://scripts/play_components/jump_to_position_component.gd',
+	'move_to_position_component': 'res://scripts/play_components/move_to_position_component.gd',
+	'wait_component': 'res://scripts/play_components/wait_component.gd'
 }
 
 var project_name := 'New Project'
@@ -256,7 +256,7 @@ func play_animation() -> void:
 		for component_uid in data.components:
 			var component: Dictionary = data.components[component_uid]
 
-			if component.type == 0: # 0 is on_start_component
+			if component.type == 'on_start_component':
 				data.active_components.append(component_uid)
 
 	animation_variables.clear()

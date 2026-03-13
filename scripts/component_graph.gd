@@ -1,17 +1,24 @@
 extends GraphEdit
 
 
-@onready var add_component_window_reference := $'AddComponentWindow'
+@onready var component_list_window_reference := $'ComponentListWindow'
 
-var component_types := [
-	preload('res://scenes/graph_components/on_start_component.tscn'),
-	preload('res://scenes/graph_components/jump_to_position_component.tscn'),
-	preload('res://scenes/graph_components/move_to_position_component.tscn'),
-	preload('res://scenes/graph_components/wait_component.tscn')
-]
+var component_types := {
+	'on_start_component': preload('res://scenes/graph_components/on_start_component.tscn'),
+	'jump_to_position_component': preload('res://scenes/graph_components/jump_to_position_component.tscn'),
+	'move_to_position_component': preload('res://scenes/graph_components/move_to_position_component.tscn'),
+	'wait_component': preload('res://scenes/graph_components/wait_component.tscn')
+}
 
 
 func _ready() -> void:
+	component_list_window_reference.change_title('Add Component')
+
+	component_list_window_reference.add_item('on_start_component', 'On Start Event')
+	component_list_window_reference.add_item('jump_to_position_component', 'Jump To Position')
+	component_list_window_reference.add_item('move_to_position_component', 'Move To Position')
+	component_list_window_reference.add_item('wait_component', 'Wait')
+
 	var add_component_button := Button.new()
 	add_component_button.text = 'Add Component'
 	get_menu_hbox().add_child(add_component_button)
@@ -31,16 +38,16 @@ func _on_delete_nodes_request(nodes: Array[StringName]) -> void:
 
 
 func _on_create_component_button_pressed() -> void:
-	add_component_window_reference.popup_centered()
+	component_list_window_reference.popup_centered()
 
 func _on_add_component_window_close_requested() -> void:
-	add_component_window_reference.hide()
+	component_list_window_reference.hide()
 
 
-func add_component(index: int, inputs := {}, component_name := str(randi_range(-1000000, 1000000)), position_offset := Vector2(0.0, 0.0)) -> void:
-	var new_component: Node = component_types[index].instantiate()
+func add_component(uid: String, inputs := {}, component_name := str(randi_range(-1000000, 1000000)), position_offset := Vector2(0.0, 0.0)) -> void:
+	var new_component: Node = component_types[uid].instantiate()
 	new_component.name = component_name
-	new_component.set_meta('type', index)
+	new_component.set_meta('type', uid)
 
 	new_component.position_offset = position_offset
 
@@ -48,6 +55,6 @@ func add_component(index: int, inputs := {}, component_name := str(randi_range(-
 
 	new_component.load_inputs(inputs)
 
-func _on_component_list_item_selected(index: int) -> void:
-	add_component(index, {}, str(randi_range(-1000000, 1000000)), scroll_offset + size * 0.5)
-	add_component_window_reference.hide()
+func _on_component_list_window_single_item_selected(uid: String) -> void:
+	add_component(uid, {}, str(randi_range(-1000000, 1000000)), scroll_offset + size * 0.5)
+	component_list_window_reference.hide()
