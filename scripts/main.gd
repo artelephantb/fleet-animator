@@ -1,7 +1,7 @@
 extends Control
 
 
-@onready var sprite_icon_resource := preload('res://icons/sprite.svg')
+@onready var texture_sprite_icon_resource := preload('res://icons/texture_sprite.svg')
 @onready var missing_texture_resource := preload('res://icon.svg')
 
 @onready var sprite_tree_reference := $'VBoxContainer/HSplitContainer/SpritesPanelContainer/MarginContainer/VBoxContainer/SpriteTree'
@@ -57,7 +57,7 @@ var project_config: ConfigFile
 
 func _ready() -> void:
 	create_sprite_type_list_window_reference.change_title('Create New Sprite')
-	create_sprite_type_list_window_reference.add_item('texture_sprite', 'Texture Sprite', sprite_icon_resource)
+	create_sprite_type_list_window_reference.add_item('texture_sprite', 'Texture Sprite', texture_sprite_icon_resource)
 
 	part_temp_directory_location = ProjectSettings.globalize_path('user://part_temp')
 	DirAccess.make_dir_recursive_absolute(part_temp_directory_location)
@@ -163,7 +163,7 @@ func _process(delta: float) -> void:
 	elif playing_animation: update_play_animation()
 
 
-func create_texture_sprite(sprite_name: String, sprite_icon := sprite_icon_resource) -> TreeItem:
+func create_texture_sprite(sprite_name: String, sprite_icon := texture_sprite_icon_resource) -> TreeItem:
 	var new_sprite_item: TreeItem = sprite_tree_reference.create_item(root)
 	var sprite_uid := str(randi_range(-1000000, 1000000))
 
