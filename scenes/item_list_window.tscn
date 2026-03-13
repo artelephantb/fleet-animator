@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://dcwp6i4s668nl"]
+
+[ext_resource type="Script" uid="uid://kfx60882nq0y" path="res://scripts/list_window.gd" id="1_o75i8"]
+
+[node name="ItemListWindow" type="Window" unique_id=1658129983]
+oversampling_override = 1.0
+size = Vector2i(500, 600)
+visible = false
+transient = true
+exclusive = true
+minimize_disabled = true
+maximize_disabled = true
+min_size = Vector2i(500, 600)
+content_scale_mode = 1
+content_scale_aspect = 4
+content_scale_factor = 1.6
+script = ExtResource("1_o75i8")
+
+[node name="Background" type="PanelContainer" parent="." unique_id=643312599]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1483499892]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1998524055]
+layout_mode = 2
+
+[node name="SearchLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1209106545]
+layout_mode = 2
+text = "Search"
+
+[node name="SearchLineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer" unique_id=1698448501]
+layout_mode = 2
+
+[node name="ItemListLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1074148390]
+layout_mode = 2
+text = "Matches"
+
+[node name="ItemList" type="ItemList" parent="MarginContainer/VBoxContainer" unique_id=1450339596]
+layout_mode = 2
+size_flags_vertical = 3
+allow_reselect = true
+
+[node name="SelectButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=299693920]
+layout_mode = 2
+text = "Select"
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/SelectButton" to="." method="_on_select_button_pressed"]

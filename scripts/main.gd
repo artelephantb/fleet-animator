@@ -1,18 +1,19 @@
 extends Control
 
 
+@onready var sprite_icon_resource := preload('res://icons/sprite.svg')
+@onready var missing_texture_resource := preload('res://icon.svg')
+
 @onready var sprite_tree_reference := $'VBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/SpriteTree'
 @onready var canvas_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/Control/Canvas'
 
 @onready var sprite_control_gizmo_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/Control/SpriteControlGizmo'
 
+@onready var create_sprite_type_list_window_reference := $'CreateSpriteTypeListWindow'
 @onready var render_popup := $'VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/RenderButton/RenderWindow'
 @onready var save_popup := $'SaveWindow'
 
 @onready var components_graph_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/PanelContainer/ManipulationComponentGraphEdit'
-
-@onready var sprite_icon_image := preload('res://icons/sprite.svg')
-@onready var missing_texture := preload('res://icon.svg')
 
 @onready var root: TreeItem = sprite_tree_reference.create_item()
 
@@ -53,6 +54,9 @@ var project_config: ConfigFile
 
 
 func _ready() -> void:
+	create_sprite_type_list_window_reference.change_title('Create New Sprite')
+	create_sprite_type_list_window_reference.add_item('texture_sprite', 'Texture Sprite', sprite_icon_resource)
+
 	part_temp_directory_location = ProjectSettings.globalize_path('user://part_temp')
 	DirAccess.make_dir_recursive_absolute(part_temp_directory_location)
 	part_temp_directory = DirAccess.open(part_temp_directory_location)
@@ -157,7 +161,7 @@ func _process(delta: float) -> void:
 	elif playing_animation: update_play_animation()
 
 
-func create_sprite(sprite_name: String, sprite_icon := sprite_icon_image) -> TreeItem:
+func create_texture_sprite(sprite_name: String, sprite_icon := sprite_icon_resource) -> TreeItem:
 	var new_sprite_item: TreeItem = sprite_tree_reference.create_item(root)
 	var sprite_uid := str(randi_range(-1000000, 1000000))
 
@@ -173,12 +177,17 @@ func create_sprite(sprite_name: String, sprite_icon := sprite_icon_image) -> Tre
 		'connections': []
 	}
 
-	canvas_reference.create_texture_sprite(sprite_uid, missing_texture)
+	canvas_reference.create_texture_sprite(sprite_uid, missing_texture_resource)
 
 	return new_sprite_item
 
 func _on_create_sprite_button_pressed() -> void:
-	create_sprite('New Sprite')
+	create_sprite_type_list_window_reference.popup_centered()
+
+func _on_create_sprite_type_list_window_single_item_selected(uid: String) -> void:
+	match uid:
+		'texture_sprite':
+			create_texture_sprite('New Sprite')
 
 
 func save_components(sprite_uid: String) -> void:
@@ -326,6 +335,9 @@ func create_project(name: String, location: String) -> void:
 	project_location = location
 
 	DirAccess.make_dir_recursive_absolute(project_location)
+
+	DirAccess.make_dir_absolute(project_location + '/res')
+	DirAccess.make_dir_absolute(project_location + '/res/textures')
 
 	project_config = ConfigFile.new()
 	project_config.set_value('project', 'name', project_name)

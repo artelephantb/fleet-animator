@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b73pof3xnvcnr" path="res://scenes/canvas.tscn" id="3_sugp2"]
 [ext_resource type="PackedScene" uid="uid://yicd4qsuk04k" path="res://scenes/render_window.tscn" id="3_tefeu"]
 [ext_resource type="PackedScene" uid="uid://bqnq57sninp87" path="res://scenes/component_graph.tscn" id="7_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://dcwp6i4s668nl" path="res://scenes/item_list_window.tscn" id="8_85g3d"]
 [ext_resource type="PackedScene" uid="uid://b1xrvoxm3y8q0" path="res://scenes/save_window.tscn" id="8_tipki"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_o6xl0"]
@@ -162,7 +163,9 @@ layout_mode = 2
 layout_mode = 2
 right_disconnects = true
 
-[node name="SaveWindow" parent="." unique_id=1658129983 instance=ExtResource("8_tipki")]
+[node name="CreateSpriteTypeListWindow" parent="." unique_id=1658129983 instance=ExtResource("8_85g3d")]
+
+[node name="SaveWindow" parent="." unique_id=680731760 instance=ExtResource("8_tipki")]
 
 [connection signal="id_pressed" from="VBoxContainer/PanelContainer/MarginContainer/MenuBar/ProjectPopupMenu" to="." method="_on_project_popup_menu_id_pressed"]
 [connection signal="id_pressed" from="VBoxContainer/PanelContainer/MarginContainer/MenuBar/AnimationPopupMenu" to="." method="_on_animation_popup_menu_id_pressed"]
@@ -171,4 +174,5 @@ right_disconnects = true
 [connection signal="render" from="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/RenderButton/RenderWindow" to="." method="_on_render_window_render"]
 [connection signal="item_selected" from="VBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/SpriteTree" to="." method="_on_sprite_tree_item_selected"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/CreateSpriteButton" to="." method="_on_create_sprite_button_pressed"]
+[connection signal="single_item_selected" from="CreateSpriteTypeListWindow" to="." method="_on_create_sprite_type_list_window_single_item_selected"]
 [connection signal="save_as" from="SaveWindow" to="." method="_on_save_window_save_as"]
