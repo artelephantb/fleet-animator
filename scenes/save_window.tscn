@@ -44,6 +44,7 @@ text = "Project Name"
 
 [node name="ProjectNameLineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer" unique_id=838880780]
 layout_mode = 2
+emoji_menu_enabled = false
 
 [node name="HSeparator3" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=510155177]
 layout_mode = 2

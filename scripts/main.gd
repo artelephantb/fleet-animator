@@ -47,6 +47,9 @@ var play_component_mappings := {
 	3: 'res://scripts/play_components/wait_component.gd'
 }
 
+var project_name := 'New Project'
+var project_location: String
+
 
 func _ready() -> void:
 	part_temp_directory_location = ProjectSettings.globalize_path('user://part_temp')
@@ -255,7 +258,7 @@ func _on_play_button_pressed() -> void:
 	play_animation()
 
 
-func _on_file_popup_menu_id_pressed(id: int) -> void:
+func _on_project_popup_menu_id_pressed(id: int) -> void:
 	match id:
 		0:
 			save_popup.popup_centered()
@@ -313,3 +316,15 @@ func render_animation(framerate: int, compression: int, output_path: String) -> 
 func _on_render_window_render(framerate: int, compression: int, output_path: String) -> void:
 	if !output_path: return
 	render_animation(framerate, compression, output_path)
+
+
+func save_project(name: String, location: String) -> void:
+	var global_location = ProjectSettings.globalize_path(location)
+
+	project_name = name
+	project_location = location
+
+	DirAccess.make_dir_recursive_absolute(global_location)
+
+func _on_save_window_save_as(name: String, location: String) -> void:
+	save_project(name, location)

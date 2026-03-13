@@ -51,9 +51,9 @@ theme_override_constants/margin_bottom = 5
 [node name="MenuBar" type="MenuBar" parent="VBoxContainer/PanelContainer/MarginContainer" unique_id=164841245]
 layout_mode = 2
 
-[node name="FilePopupMenu" type="PopupMenu" parent="VBoxContainer/PanelContainer/MarginContainer/MenuBar" unique_id=795638324]
+[node name="ProjectPopupMenu" type="PopupMenu" parent="VBoxContainer/PanelContainer/MarginContainer/MenuBar" unique_id=795638324]
 oversampling_override = 1.0
-title = "File"
+title = "Project"
 prefer_native_menu = true
 item_count = 1
 item_0/text = "Save As..."
@@ -164,10 +164,11 @@ right_disconnects = true
 
 [node name="SaveWindow" parent="." unique_id=1658129983 instance=ExtResource("8_tipki")]
 
-[connection signal="id_pressed" from="VBoxContainer/PanelContainer/MarginContainer/MenuBar/FilePopupMenu" to="." method="_on_file_popup_menu_id_pressed"]
+[connection signal="id_pressed" from="VBoxContainer/PanelContainer/MarginContainer/MenuBar/ProjectPopupMenu" to="." method="_on_project_popup_menu_id_pressed"]
 [connection signal="id_pressed" from="VBoxContainer/PanelContainer/MarginContainer/MenuBar/AnimationPopupMenu" to="." method="_on_animation_popup_menu_id_pressed"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/RenderButton" to="." method="_on_render_button_pressed"]
 [connection signal="render" from="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/RenderButton/RenderWindow" to="." method="_on_render_window_render"]
 [connection signal="item_selected" from="VBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/SpriteTree" to="." method="_on_sprite_tree_item_selected"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/CreateSpriteButton" to="." method="_on_create_sprite_button_pressed"]
+[connection signal="save_as" from="SaveWindow" to="." method="_on_save_window_save_as"]
