@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://djlb5ktt1pvsc"]
+
+[ext_resource type="Script" uid="uid://cc04cjs3n6bb4" path="res://scripts/vector2_controls.gd" id="1_v3k05"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_v3k05"]
+font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1temj"]
+font_color = Color(0, 1, 0, 1)
+
+[node name="Vector2Controls" type="VBoxContainer" unique_id=162069503]
+script = ExtResource("1_v3k05")
+
+[node name="XHBoxContainer" type="HBoxContainer" parent="." unique_id=78880415]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="XHBoxContainer" unique_id=749106572]
+layout_mode = 2
+text = "X"
+label_settings = SubResource("LabelSettings_v3k05")
+
+[node name="SpinBox" type="SpinBox" parent="XHBoxContainer" unique_id=1948866871]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -10000.0
+max_value = 10000.0
+step = 0.01
+allow_greater = true
+allow_lesser = true
+
+[node name="YHBoxContainer" type="HBoxContainer" parent="." unique_id=1154324258]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="YHBoxContainer" unique_id=1852522214]
+layout_mode = 2
+text = "Y"
+label_settings = SubResource("LabelSettings_1temj")
+
+[node name="SpinBox" type="SpinBox" parent="YHBoxContainer" unique_id=1061601611]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -10000.0
+max_value = 10000.0
+step = 0.01
+allow_greater = true
+allow_lesser = true
+
+[connection signal="value_changed" from="XHBoxContainer/SpinBox" to="." method="_on_x_spin_box_value_changed"]
+[connection signal="value_changed" from="YHBoxContainer/SpinBox" to="." method="_on_y_spin_box_value_changed"]
