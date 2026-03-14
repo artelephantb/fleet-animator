@@ -47,7 +47,23 @@ func add_property(name: StringName, value: Variant, flags := [], on_value_change
 				editable.add_child(check_box)
 		'int':
 			editable = SpinBox.new()
+
+			editable.min_value = -10000.0
+			editable.max_value = 10000.0
+
 			editable.value = value
+
+			if on_value_changed_callable: editable.connect('value_changed', on_value_changed_callable)
+		'float':
+			editable = SpinBox.new()
+
+			editable.min_value = -10000.0
+			editable.max_value = 10000.0
+
+			editable.step = 0.01
+
+			editable.value = value
+
 			if on_value_changed_callable: editable.connect('value_changed', on_value_changed_callable)
 		'String':
 			editable = LineEdit.new()

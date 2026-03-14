@@ -253,6 +253,10 @@ func _on_sprite_tree_item_selected() -> void:
 		selected_node.scale = new_value
 	)
 
+	inspector_panel_container_reference.add_property('rotation', selected_node.rotation, [], func(new_value: float):
+		selected_node.rotation = new_value
+	)
+
 
 func _on_render_button_pressed() -> void:
 	render_popup.popup_centered()
