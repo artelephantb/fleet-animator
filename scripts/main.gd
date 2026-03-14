@@ -249,6 +249,10 @@ func _on_sprite_tree_item_selected() -> void:
 		selected_node.position = new_value
 	)
 
+	inspector_panel_container_reference.add_property('scale', selected_node.scale, [], func(new_value: Vector2):
+		selected_node.scale = new_value
+	)
+
 
 func _on_render_button_pressed() -> void:
 	render_popup.popup_centered()
@@ -367,6 +371,7 @@ func _on_sprite_control_gizmo_handle_pressed(handle: int) -> void:
 
 		sprite_control_gizmo_reference.handle_locations.LEFT:
 			sprite_control_gizmo_reference.selected_node.scale.x = mouse_position.x + sprite_control_gizmo_reference.position_offset.x
+			inspector_panel_container_reference.set_property_value('scale', sprite_control_gizmo_reference.selected_node.scale)
 
 		sprite_control_gizmo_reference.handle_locations.RIGHT:
 			sprite_control_gizmo_reference.selected_node.position.x = mouse_position.x + sprite_control_gizmo_reference.position_offset.x
@@ -374,6 +379,7 @@ func _on_sprite_control_gizmo_handle_pressed(handle: int) -> void:
 
 		sprite_control_gizmo_reference.handle_locations.UP:
 			sprite_control_gizmo_reference.selected_node.scale.y = mouse_position.y + sprite_control_gizmo_reference.position_offset.y
+			inspector_panel_container_reference.set_property_value('scale', sprite_control_gizmo_reference.selected_node.scale)
 
 		sprite_control_gizmo_reference.handle_locations.DOWN:
 			sprite_control_gizmo_reference.selected_node.position.y = mouse_position.y + sprite_control_gizmo_reference.position_offset.y
