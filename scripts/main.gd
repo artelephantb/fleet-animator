@@ -245,7 +245,7 @@ func _on_sprite_tree_item_selected() -> void:
 
 	inspector_panel_container_reference.remove_all_properties()
 
-	inspector_panel_container_reference.add_property('name', selected_item.get_text(0))
+	inspector_panel_container_reference.add_property('position', selected_node.position)
 
 
 func _on_render_button_pressed() -> void:
