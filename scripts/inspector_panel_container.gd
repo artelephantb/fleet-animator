@@ -1,14 +1,12 @@
 extends PanelContainer
 
 
+@onready var vector2_controls_scene := preload('res://scenes/vector2_controls.tscn')
+
 @onready var v_box_container_reference := $'MarginContainer/VBoxContainer'
 
 
-func _process(delta: float) -> void:
-	pass
-
-
-func add_property(name: String, value: Variant, flags := []) -> void:
+func add_property(name: StringName, value: Variant, flags := [], on_value_changed_callable = null) -> void:
 	var property_type := type_string(typeof(value))
 
 	var h_box_container := HBoxContainer.new()
@@ -33,6 +31,8 @@ func add_property(name: String, value: Variant, flags := []) -> void:
 
 				check_button.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 
+				if on_value_changed_callable: check_button.connect('toggled', on_value_changed_callable)
+
 				editable.add_child(check_button)
 
 			else:
@@ -42,63 +42,21 @@ func add_property(name: String, value: Variant, flags := []) -> void:
 
 				check_box.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 
+				if on_value_changed_callable: check_box.connect('toggled', on_value_changed_callable)
+
 				editable.add_child(check_box)
 		'int':
 			editable = SpinBox.new()
 			editable.value = value
+			if on_value_changed_callable: editable.connect('value_changed', on_value_changed_callable)
 		'String':
 			editable = LineEdit.new()
 			editable.text = value
+			if on_value_changed_callable: editable.connect('text_changed', on_value_changed_callable)
 		'Vector2':
-			editable = VBoxContainer.new()
-
-			# X Position
-			var x_h_box_container := HBoxContainer.new()
-
-			var x_label := Label.new()
-			x_label.text = 'X'
-			x_label.add_theme_color_override('font_color', Color.RED)
-			x_h_box_container.add_child(x_label)
-
-			var x_spin_box := SpinBox.new()
-
-			x_spin_box.min_value = -10000.0
-			x_spin_box.max_value = 10000.0
-
-			x_spin_box.allow_greater = true
-			x_spin_box.allow_lesser = true
-
-			x_spin_box.value = value.x
-
-			x_spin_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-
-			x_h_box_container.add_child(x_spin_box)
-
-			editable.add_child(x_h_box_container)
-
-			# Y Position
-			var y_h_box_container := HBoxContainer.new()
-
-			var y_label := Label.new()
-			y_label.text = 'Y'
-			y_label.add_theme_color_override('font_color', Color.GREEN)
-			y_h_box_container.add_child(y_label)
-
-			var y_spin_box := SpinBox.new()
-
-			y_spin_box.min_value = -10000.0
-			y_spin_box.max_value = 10000.0
-
-			y_spin_box.allow_greater = true
-			y_spin_box.allow_lesser = true
-
-			y_spin_box.value = value.y
-
-			y_spin_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-
-			y_h_box_container.add_child(y_spin_box)
-
-			editable.add_child(y_h_box_container)
+			editable = vector2_controls_scene.instantiate()
+			editable.value = value
+			if on_value_changed_callable: editable.connect('value_changed', on_value_changed_callable)
 		_:
 			push_error('Invalid property type: ', property_type)
 			editable = Label.new()
@@ -110,20 +68,38 @@ func add_property(name: String, value: Variant, flags := []) -> void:
 	v_box_container_reference.add_child(h_box_container)
 
 
-func set_property_value(name: String, value: Variant) -> void:
-	var property_reference := get_node(name)
+func set_property_value(name: StringName, value: Variant) -> void:
+	var property_reference := v_box_container_reference.get_node(NodePath(name))
 
 	match property_reference.get_meta('type'):
 		'bool':
-			property_reference.button_pressed = value
+			property_reference.get_child(1).button_pressed = value
 		'int':
-			property_reference.value = value
+			property_reference.get_child(1).value = value
 		'String':
-			property_reference.text = value
+			property_reference.get_child(1).text = value
+		'Vector2':
+			property_reference.get_child(1).value = value
 
 
-func remove_property(name: String) -> void:
-	get_node(name).queue_free()
+func get_property_value(name: StringName) -> Variant:
+	var property_reference := v_box_container_reference.get_node(NodePath(name))
+
+	match property_reference.get_meta('type'):
+		'bool':
+			return property_reference.get_child(1).button_pressed
+		'int':
+			return property_reference.get_child(1).value
+		'String':
+			return property_reference.get_child(1).text
+		'Vector2':
+			return property_reference.get_child(1).value
+
+	return null
+
+
+func remove_property(name: StringName) -> void:
+	v_box_container_reference.get_node(NodePath(name)).queue_free()
 
 func remove_all_properties() -> void:
 	for child in v_box_container_reference.get_children():

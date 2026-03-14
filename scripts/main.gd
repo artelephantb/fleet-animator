@@ -245,7 +245,9 @@ func _on_sprite_tree_item_selected() -> void:
 
 	inspector_panel_container_reference.remove_all_properties()
 
-	inspector_panel_container_reference.add_property('position', selected_node.position)
+	inspector_panel_container_reference.add_property('position', selected_node.position, [], func(new_value: Vector2):
+		selected_node.position = new_value
+	)
 
 
 func _on_render_button_pressed() -> void:
@@ -353,3 +355,26 @@ func create_project(name: String, location: String) -> void:
 
 func _on_save_window_save_as(name: String, location: String) -> void:
 	create_project(name, location)
+
+
+func _on_sprite_control_gizmo_handle_pressed(handle: int) -> void:
+	var mouse_position: Vector2 = sprite_control_gizmo_reference.get_local_mouse_position()
+
+	match handle:
+		sprite_control_gizmo_reference.handle_locations.MIDDLE:
+			sprite_control_gizmo_reference.selected_node.position = mouse_position + sprite_control_gizmo_reference.position_offset
+			inspector_panel_container_reference.set_property_value('position', sprite_control_gizmo_reference.selected_node.position)
+
+		sprite_control_gizmo_reference.handle_locations.LEFT:
+			sprite_control_gizmo_reference.selected_node.scale.x = mouse_position.x + sprite_control_gizmo_reference.position_offset.x
+
+		sprite_control_gizmo_reference.handle_locations.RIGHT:
+			sprite_control_gizmo_reference.selected_node.position.x = mouse_position.x + sprite_control_gizmo_reference.position_offset.x
+			inspector_panel_container_reference.set_property_value('position', sprite_control_gizmo_reference.selected_node.position)
+
+		sprite_control_gizmo_reference.handle_locations.UP:
+			sprite_control_gizmo_reference.selected_node.scale.y = mouse_position.y + sprite_control_gizmo_reference.position_offset.y
+
+		sprite_control_gizmo_reference.handle_locations.DOWN:
+			sprite_control_gizmo_reference.selected_node.position.y = mouse_position.y + sprite_control_gizmo_reference.position_offset.y
+			inspector_panel_container_reference.set_property_value('position', sprite_control_gizmo_reference.selected_node.position)

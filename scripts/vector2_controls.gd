@@ -1,6 +1,8 @@
 @tool
 extends VBoxContainer
 
+signal value_changed(new_value: Vector2)
+
 
 @onready var x_spin_box := $'XHBoxContainer/SpinBox'
 @onready var y_spin_box := $'YHBoxContainer/SpinBox'
@@ -20,6 +22,8 @@ func _ready() -> void:
 
 func _on_x_spin_box_value_changed(new_value: float) -> void:
 	value.x = new_value
+	value_changed.emit(value)
 
 func _on_y_spin_box_value_changed(new_value: float) -> void:
 	value.y = new_value
+	value_changed.emit(value)

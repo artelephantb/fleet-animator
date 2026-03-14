@@ -1,5 +1,7 @@
 extends Control
 
+signal handle_pressed(handle: int)
+
 
 @export var disabled := false
 @export var selected_node: Node2D
@@ -14,6 +16,7 @@ var pressed_handle := -1
 
 var position_offset := Vector2(0.0, 0.0)
 
+enum handle_locations { MIDDLE, LEFT, RIGHT, UP, DOWN }
 
 var color_drag := Color(0.2, 0.2, 0.2)
 var color_drag_x := Color(0.0, 1.0, 0.3, 1.0)
@@ -66,13 +69,8 @@ func update_selected_sprite() -> void:
 		pressed_handle = hovered_handle
 		position_offset = selected_node.position - mouse_position
 
-	match pressed_handle:
-		-1: pass
-		0: selected_node.position = mouse_position + position_offset
-		1: selected_node.scale.x = mouse_position.x + position_offset.x
-		2: selected_node.position.x = mouse_position.x + position_offset.x
-		3: selected_node.scale.y = mouse_position.y + position_offset.y
-		4: selected_node.position.y = mouse_position.y + position_offset.y
+	if pressed_handle == -1: return
+	handle_pressed.emit(pressed_handle)
 
 func _process(delta: float) -> void:
 	if !disabled and selected_node:

@@ -178,5 +178,6 @@ layout_mode = 2
 [connection signal="render" from="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/RenderButton/RenderWindow" to="." method="_on_render_window_render"]
 [connection signal="item_selected" from="VBoxContainer/HSplitContainer/SpritesPanelContainer/MarginContainer/VBoxContainer/SpriteTree" to="." method="_on_sprite_tree_item_selected"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/SpritesPanelContainer/MarginContainer/VBoxContainer/CreateSpriteButton" to="." method="_on_create_sprite_button_pressed"]
+[connection signal="handle_pressed" from="VBoxContainer/HSplitContainer/VSplitContainer/Control/SpriteControlGizmo" to="." method="_on_sprite_control_gizmo_handle_pressed"]
 [connection signal="single_item_selected" from="CreateSpriteTypeListWindow" to="." method="_on_create_sprite_type_list_window_single_item_selected"]
 [connection signal="save_as" from="SaveWindow" to="." method="_on_save_window_save_as"]
