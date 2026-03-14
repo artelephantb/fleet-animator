@@ -1,6 +1,6 @@
-# Modified from https://github.com/JtotheThree/godot_curve_editor/blob/main/curve_editor.gd
+# Adapted from https://github.com/JtotheThree/godot_curve_editor/blob/main/curve_editor.gd
 
-# --------------------------------------- #
+# ------------------------------------------------------------- #
 # MIT License
 #
 # Copyright (c) 2024 JtotheThree
@@ -22,7 +22,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-# --------------------------------------- #
+# ------------------------------------------------------------- #
 
 @tool
 class_name CurveEditor
