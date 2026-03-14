@@ -36,6 +36,30 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_30s71"]
+bg_color = Color(0.7540073, 0.76904565, 0.8050037, 0.39215687)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0.23529412)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_10so0"]
+bg_color = Color(0.7540073, 0.76904565, 0.8050037, 0.39215687)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0.23529412)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_1id7b"]
 color = Color(1, 1, 1, 0.3137255)
 
@@ -82,6 +106,10 @@ bg_color = Color(0.22826847, 0.25755507, 0.29049948, 0.9411765)
 Button/styles/hover = SubResource("StyleBoxFlat_wc0q8")
 Button/styles/normal = SubResource("StyleBoxFlat_78ekx")
 Button/styles/pressed = SubResource("StyleBoxFlat_7d6gw")
+CheckBox/colors/checkbox_checked_color = Color(0, 0.5647059, 1, 1)
+CheckBox/styles/hover_pressed = SubResource("StyleBoxFlat_30s71")
+CheckButton/colors/button_checked_color = Color(0, 0.5647059, 1, 1)
+CheckButton/styles/hover_pressed = SubResource("StyleBoxFlat_10so0")
 CurveEditor/colors/align_x = Color(1, 0, 0, 1)
 CurveEditor/colors/align_y = Color(0, 1, 0, 1)
 CurveEditor/colors/grid_color = Color(1, 1, 1, 0.39215687)

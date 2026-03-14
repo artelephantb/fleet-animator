@@ -7,7 +7,7 @@ extends Control
 @onready var sprite_tree_reference := $'VBoxContainer/HSplitContainer/SpritesPanelContainer/MarginContainer/VBoxContainer/SpriteTree'
 @onready var canvas_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/Control/Canvas'
 
-@onready var inspector_container_reference := $'VBoxContainer/HSplitContainer/InspectorPanelContainer/MarginContainer/VBoxContainer'
+@onready var inspector_panel_container_reference := $'VBoxContainer/HSplitContainer/InspectorPanelContainer'
 
 @onready var sprite_control_gizmo_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/Control/SpriteControlGizmo'
 
@@ -243,13 +243,9 @@ func _on_sprite_tree_item_selected() -> void:
 
 	sprite_control_gizmo_reference.selected_node = selected_node
 
-	for child in inspector_container_reference.get_children():
-		child.queue_free()
+	inspector_panel_container_reference.remove_all_properties()
 
-	var label = Label.new()
-	label.text = selected_item.get_text(0)
-
-	inspector_container_reference.add_child(label)
+	inspector_panel_container_reference.add_property('name', selected_item.get_text(0))
 
 
 func _on_render_button_pressed() -> void:

@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://yicd4qsuk04k" path="res://scenes/render_window.tscn" id="3_tefeu"]
 [ext_resource type="PackedScene" uid="uid://bqnq57sninp87" path="res://scenes/component_graph.tscn" id="7_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://dcwp6i4s668nl" path="res://scenes/item_list_window.tscn" id="8_85g3d"]
+[ext_resource type="PackedScene" uid="uid://blbk7sf6jstik" path="res://scenes/inspector_panel_container.tscn" id="8_choun"]
 [ext_resource type="PackedScene" uid="uid://b1xrvoxm3y8q0" path="res://scenes/save_window.tscn" id="8_tipki"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_o6xl0"]
@@ -91,8 +92,8 @@ icon = ExtResource("2_tbgi4")
 [node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer" unique_id=370791941]
 layout_mode = 2
 size_flags_vertical = 3
-split_offsets = PackedInt32Array(200, 1904)
-split_offset = 200
+split_offsets = PackedInt32Array(250, 1804)
+split_offset = 250
 
 [node name="SpritesPanelContainer" type="PanelContainer" parent="VBoxContainer/HSplitContainer" unique_id=1472475956]
 layout_mode = 2
@@ -163,17 +164,7 @@ layout_mode = 2
 layout_mode = 2
 right_disconnects = true
 
-[node name="InspectorPanelContainer" type="PanelContainer" parent="VBoxContainer/HSplitContainer" unique_id=559784550]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HSplitContainer/InspectorPanelContainer" unique_id=786659540]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/InspectorPanelContainer/MarginContainer" unique_id=2097386057]
+[node name="InspectorPanelContainer" parent="VBoxContainer/HSplitContainer" unique_id=250627417 instance=ExtResource("8_choun")]
 layout_mode = 2
 
 [node name="CreateSpriteTypeListWindow" parent="." unique_id=1658129983 instance=ExtResource("8_85g3d")]

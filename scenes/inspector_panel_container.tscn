@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://blbk7sf6jstik"]
+
+[ext_resource type="Script" uid="uid://r4cnwc4ac6i3" path="res://scripts/inspector_panel_container.gd" id="1_n6mi8"]
+
+[node name="InspectorPanelContainer" type="PanelContainer" unique_id=250627417]
+script = ExtResource("1_n6mi8")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1219401359]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1236281024]
+layout_mode = 2
