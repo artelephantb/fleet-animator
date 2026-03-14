@@ -103,4 +103,4 @@ func remove_property(name: StringName) -> void:
 
 func remove_all_properties() -> void:
 	for child in v_box_container_reference.get_children():
-		child.queue_free()
+		child.free()
