@@ -2,13 +2,13 @@ extends Sprite2D
 
 
 var original_image: PackedByteArray
-var original_image_extention := 'svg'
+var original_image_extention := 'png'
 
 
 func _ready() -> void:
-	original_image = FileAccess.get_file_as_bytes('res://icon.svg')
+	original_image = FileAccess.get_file_as_bytes('res://debug.png')
 
-	var image_for_texture := ImageTools.load_image('res://icon.svg')
+	var image_for_texture := ImageTools.load_image('res://debug.png')
 	texture = ImageTexture.create_from_image(image_for_texture)
 
 
