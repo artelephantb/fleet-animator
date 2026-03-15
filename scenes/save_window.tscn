@@ -4,7 +4,7 @@
 
 [node name="SaveWindow" type="Window" unique_id=1658129983]
 oversampling_override = 1.0
-title = "Render"
+title = "Save"
 size = Vector2i(500, 180)
 visible = false
 transient = true
