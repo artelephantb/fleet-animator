@@ -351,9 +351,12 @@ func _on_render_window_render(framerate: int, compression: int, output_path: Str
 	render_animation(framerate, compression, output_path)
 
 
-func create_project(name: String, location: String) -> void:
-	var global_location = ProjectSettings.globalize_path(location)
+func save_sprites() -> void:
+	for sprite_uid in animation_data:
+		var sprite: Node = canvas_reference.get_sprite(sprite_uid)
+		sprite.export(project_location)
 
+func create_project(name: String, location: String) -> void:
 	project_name = name
 	project_location = location
 
@@ -366,6 +369,8 @@ func create_project(name: String, location: String) -> void:
 	project_config = ConfigFile.new()
 	project_config.set_value('project', 'name', project_name)
 	project_config.save(project_location + '/project.cfg')
+
+	save_sprites()
 
 func _on_save_window_save_as(name: String, location: String) -> void:
 	create_project(name, location)

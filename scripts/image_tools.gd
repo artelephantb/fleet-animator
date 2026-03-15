@@ -15,10 +15,7 @@ func load_image(image_path: String) -> Image:
 
 	return image
 
-func get_image_from_packed_byte_array_or_null_image(packed_image: PackedByteArray) -> Image:
-	if packed_image == null:
-		packed_image = FileAccess.get_file_as_bytes('res://icon.svg')
-
+func load_image_from_packed_byte_array(packed_image: PackedByteArray) -> Image:
 	var image := Image.new()
 	image.load_png_from_buffer(packed_image)
 
