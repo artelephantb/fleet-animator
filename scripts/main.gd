@@ -41,12 +41,12 @@ var animation_output_path: String
 
 var animation_frame := 0
 
-var animation_framerate := '24'
+var animation_framerate := '60'
 var animation_compression := '18'
 var animation_codec := 'libx264'
 
 var frame_length := 100
-var frame_digits := 3
+var frame_digits := 1
 
 var play_component_cache := {}
 
@@ -70,13 +70,6 @@ func _ready() -> void:
 	part_temp_directory_location = ProjectSettings.globalize_path('user://part_temp')
 	DirAccess.make_dir_recursive_absolute(part_temp_directory_location)
 	part_temp_directory = DirAccess.open(part_temp_directory_location)
-
-
-func get_placehold_and_filled_digits(digits: int, number: int) -> String:
-	var number_string := str(number)
-	var needed_placeholders := digits - len(number_string)
-
-	return '0'.repeat(needed_placeholders) + number_string
 
 
 func run_component(component_uid: String, type: int, sprite: Node, inputs: Dictionary, active_variables: Dictionary) -> bool:
@@ -144,7 +137,7 @@ func update_render_animation() -> void:
 	update_play_animation()
 
 	if animation_output_path:
-		canvas_reference.sub_viewport_reference.get_texture().get_image().save_png(part_temp_directory_location + '/%s.png' % get_placehold_and_filled_digits(frame_digits, animation_frame))
+		canvas_reference.sub_viewport_reference.get_texture().get_image().save_png(part_temp_directory_location + '/%s.png' % animation_frame)
 
 	animation_frame += 1
 
@@ -156,7 +149,7 @@ func update_render_animation() -> void:
 			'-framerate',
 			animation_framerate,
 			'-i',
-			part_temp_directory_location + '/%' + get_placehold_and_filled_digits(2, frame_digits) + 'd.png',
+			part_temp_directory_location + '/%01d.png',
 			'-crf',
 			animation_compression,
 			'-c:v',
@@ -348,7 +341,7 @@ func render_animation(framerate: int, compression: int, output_path: String) -> 
 		for component_uid in data.components:
 			var component: Dictionary = data.components[component_uid]
 
-			if component.type == 0: # 0 is on_start_component
+			if component.type == 'on_start_component':
 				data.active_components.append(component_uid)
 
 	animation_variables.clear()

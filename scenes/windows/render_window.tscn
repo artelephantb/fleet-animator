@@ -47,7 +47,7 @@ text = "Framerate"
 layout_mode = 2
 min_value = 24.0
 max_value = 120.0
-value = 24.0
+value = 60.0
 
 [node name="HSeparator1" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=544241780]
 layout_mode = 2
