@@ -352,9 +352,26 @@ func _on_render_window_render(framerate: int, compression: int, output_path: Str
 
 
 func save_sprites() -> void:
+	if selected_sprite_uid: save_components(selected_sprite_uid)
+
+	var sprites := {}
+
 	for sprite_uid in animation_data:
 		var sprite: Node = canvas_reference.get_sprite(sprite_uid)
 		sprite.export(project_location)
+
+		var sprite_animation_data: Dictionary = animation_data[sprite_uid]
+
+		sprites[sprite_uid] = {
+			'components': sprite_animation_data.components,
+			'connections': sprite_animation_data.connections
+		}
+
+	var encoded_sprites := JSON.stringify(JSON.from_native(sprites))
+
+	var file_access := FileAccess.open(project_location + '/res/scenes/main.json', FileAccess.WRITE)
+	file_access.store_string(encoded_sprites)
+
 
 func create_project(name: String, location: String) -> void:
 	project_name = name
