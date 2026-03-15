@@ -22,6 +22,7 @@ var animation_data := {}
 var animation_variables := {}
 
 var selected_sprite_uid: String
+var selected_sprite_item: TreeItem
 
 var sprite_types := {
 	'texture_sprite': {
@@ -175,8 +176,6 @@ func create_sprite(type: String, sprite_name: String, sprite_uid := str(randi_ra
 
 	var new_sprite_item: TreeItem = sprite_tree_reference.create_item(root)
 
-	new_sprite_item.set_editable(0, true)
-
 	new_sprite_item.set_text(0, sprite_name)
 	new_sprite_item.set_icon(0, sprite_type_info.icon)
 
@@ -239,9 +238,17 @@ func load_components(sprite_data: Dictionary) -> void:
 
 
 func _on_sprite_tree_item_selected() -> void:
-	var selected_item: TreeItem = sprite_tree_reference.get_selected()
-	var item_uid: String = selected_item.get_meta('uid')
+	if selected_sprite_item:
+		selected_sprite_item.set_editable(0, false)
+
+	selected_sprite_item = sprite_tree_reference.get_selected()
+	var item_uid: String = selected_sprite_item.get_meta('uid')
 	var selected_node: Node2D = canvas_reference.get_sprite(item_uid)
+
+	# Allow name editing separately from this function
+	get_tree().create_timer(0.0).timeout.connect(func():
+		selected_sprite_item.set_editable(0, true)
+	)
 
 	if selected_sprite_uid:
 		save_components(selected_sprite_uid)
