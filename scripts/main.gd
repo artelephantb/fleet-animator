@@ -368,15 +368,20 @@ func save_sprites() -> void:
 
 	var sprites := {}
 
-	for sprite_uid in animation_data:
+	for sprite_item in sprite_tree_reference.get_root().get_children():
+		var sprite_uid = sprite_item.get_meta('uid')
+
 		var sprite: Node = canvas_reference.get_sprite(sprite_uid)
 		sprite.export(current_project_location)
 
 		var sprite_animation_data: Dictionary = animation_data[sprite_uid]
 
 		sprites[sprite_uid] = {
-			'components': CurveTools.dictionary_to_json(sprite_animation_data.components),
-			'connections': sprite_animation_data.connections
+			'name': sprite_item.get_text(0),
+			'animation': {
+				'components': CurveTools.dictionary_to_json(sprite_animation_data.components),
+				'connections': sprite_animation_data.connections
+			}
 		}
 
 	var encoded_sprites := JSON.stringify(JSON.from_native(sprites))
@@ -420,12 +425,12 @@ func load_project(project_location: String) -> void:
 	for sprite_uid in scene_content:
 		var sprite_data: Dictionary = scene_content[sprite_uid]
 
-		var created_sprite := create_sprite('texture_sprite', sprite_uid, sprite_uid)
+		var created_sprite := create_sprite('texture_sprite', sprite_data.name, sprite_uid)
 
 		animation_data[sprite_uid] = {
-			'components': CurveTools.json_to_dictionary(sprite_data.components),
+			'components': CurveTools.json_to_dictionary(sprite_data.animation.components),
 			'active_components': [],
-			'connections': sprite_data.connections
+			'connections': sprite_data.animation.connections
 		}
 
 func _on_load_window_load_project(project_name: String, project_location: String) -> void:
