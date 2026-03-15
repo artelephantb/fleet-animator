@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 ImageTools="*uid://bcdpiefcwsq4v"
+CurveTools="*uid://cm5qlwqmlmc6a"
 
 [display]
 

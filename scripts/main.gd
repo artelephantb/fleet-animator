@@ -368,7 +368,7 @@ func save_sprites() -> void:
 		var sprite_animation_data: Dictionary = animation_data[sprite_uid]
 
 		sprites[sprite_uid] = {
-			'components': sprite_animation_data.components,
+			'components': CurveTools.dictionary_to_json(sprite_animation_data.components),
 			'connections': sprite_animation_data.connections
 		}
 
@@ -416,7 +416,8 @@ func load_project(project_location: String) -> void:
 		var created_sprite := create_sprite('texture_sprite', sprite_uid, sprite_uid)
 
 		animation_data[sprite_uid] = {
-			'components': sprite_data.components,
+			'components': CurveTools.json_to_dictionary(sprite_data.components),
+			'active_components': [],
 			'connections': sprite_data.connections
 		}
 
