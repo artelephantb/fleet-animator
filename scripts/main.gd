@@ -410,7 +410,27 @@ func _on_save_window_save_as(name: String, project_location: String) -> void:
 	save_new_project(name, project_location)
 
 
+func clear_project() -> void:
+	selected_sprite_item = null
+	selected_sprite_uid = ''
+	animation_data = {}
+
+	canvas_reference.clear()
+
+	# Remove sprites
+	for child in sprite_tree_reference.get_root().get_children():
+		child.free()
+
+	# Remove previous components
+	for child in components_graph_reference.get_children():
+		if child is not GraphNode: continue
+		child.queue_free()
+
+	inspector_panel_container_reference.remove_all_properties()
+
 func load_project(project_location: String) -> void:
+	clear_project()
+
 	current_project_location = project_location
 
 	current_project_config = ConfigFile.new()
