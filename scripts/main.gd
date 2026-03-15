@@ -1,9 +1,6 @@
 extends Control
 
 
-@onready var texture_sprite_icon_resource := preload('res://icons/texture_sprite.svg')
-@onready var missing_texture_resource := preload('res://icon.svg')
-
 @onready var sprite_tree_reference := $'VBoxContainer/HSplitContainer/SpritesPanelContainer/MarginContainer/VBoxContainer/SpriteTree'
 @onready var canvas_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/Control/Canvas'
 
@@ -23,6 +20,13 @@ var animation_data := {}
 var animation_variables := {}
 
 var selected_sprite_uid: String
+
+var sprite_types := {
+	'texture_sprite': {
+		'icon': preload('res://icons/texture_sprite.svg'),
+		'scene': preload('res://scenes/sprites/TextureSprite.tscn')
+	}
+}
 
 var playing_animation := false
 
@@ -57,7 +61,8 @@ var project_config: ConfigFile
 
 func _ready() -> void:
 	create_sprite_type_list_window_reference.change_title('Create New Sprite')
-	create_sprite_type_list_window_reference.add_item('texture_sprite', 'Texture Sprite', texture_sprite_icon_resource)
+	for sprite_type in sprite_types:
+		create_sprite_type_list_window_reference.add_item(sprite_type, sprite_type.capitalize(), sprite_types[sprite_type].icon)
 
 	part_temp_directory_location = ProjectSettings.globalize_path('user://part_temp')
 	DirAccess.make_dir_recursive_absolute(part_temp_directory_location)
@@ -163,17 +168,19 @@ func _process(delta: float) -> void:
 	elif playing_animation: update_play_animation()
 
 
-func create_texture_sprite(sprite_name: String, sprite_icon := texture_sprite_icon_resource) -> TreeItem:
+func create_sprite(type: String, sprite_name: String) -> void:
+	var sprite_type_info: Dictionary = sprite_types[type]
+
 	var new_sprite_item: TreeItem = sprite_tree_reference.create_item(root)
 	var sprite_uid := str(randi_range(-1000000, 1000000))
 
 	new_sprite_item.set_editable(0, true)
 
 	new_sprite_item.set_text(0, sprite_name)
-	new_sprite_item.set_icon(0, sprite_icon)
+	new_sprite_item.set_icon(0, sprite_type_info.icon)
 
 	new_sprite_item.set_meta('uid', sprite_uid)
-	new_sprite_item.set_meta('type', 'texture_sprite')
+	new_sprite_item.set_meta('type', type)
 
 	animation_data[sprite_uid] = {
 		'components': {},
@@ -181,17 +188,15 @@ func create_texture_sprite(sprite_name: String, sprite_icon := texture_sprite_ic
 		'connections': []
 	}
 
-	canvas_reference.create_texture_sprite(sprite_uid, missing_texture_resource)
-
-	return new_sprite_item
+	var sprite = sprite_type_info.scene.instantiate()
+	sprite.name = sprite_uid
+	canvas_reference.sub_viewport_reference.add_child(sprite)
 
 func _on_create_sprite_button_pressed() -> void:
 	create_sprite_type_list_window_reference.popup_centered()
 
-func _on_create_sprite_type_list_window_single_item_selected(uid: String) -> void:
-	match uid:
-		'texture_sprite':
-			create_texture_sprite('New Sprite')
+func _on_create_sprite_type_list_window_single_item_selected(type: String) -> void:
+	create_sprite(type, 'New Sprite')
 
 
 func save_components(sprite_uid: String) -> void:
@@ -355,6 +360,7 @@ func create_project(name: String, location: String) -> void:
 	DirAccess.make_dir_recursive_absolute(project_location)
 
 	DirAccess.make_dir_absolute(project_location + '/res')
+	DirAccess.make_dir_absolute(project_location + '/res/scenes')
 	DirAccess.make_dir_absolute(project_location + '/res/textures')
 
 	project_config = ConfigFile.new()

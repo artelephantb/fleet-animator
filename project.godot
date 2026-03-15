@@ -17,6 +17,10 @@ config/custom_user_dir_name="fleet-animator"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+ImageTools="*uid://bcdpiefcwsq4v"
+
 [display]
 
 window/size/viewport_width=2304
