@@ -373,7 +373,7 @@ func save_sprites() -> void:
 	file_access.store_string(encoded_sprites)
 
 
-func create_project(name: String, location: String) -> void:
+func save_new_project(name: String, location: String) -> void:
 	project_name = name
 	project_location = location
 
@@ -390,7 +390,7 @@ func create_project(name: String, location: String) -> void:
 	save_sprites()
 
 func _on_save_window_save_as(name: String, location: String) -> void:
-	create_project(name, location)
+	save_new_project(name, location)
 
 
 func _on_sprite_control_gizmo_handle_pressed(handle: int) -> void:
@@ -416,3 +416,8 @@ func _on_sprite_control_gizmo_handle_pressed(handle: int) -> void:
 		sprite_control_gizmo_reference.handle_locations.DOWN:
 			sprite_control_gizmo_reference.selected_node.position.y = mouse_position.y + sprite_control_gizmo_reference.position_offset.y
 			inspector_panel_container_reference.set_property_value('position', sprite_control_gizmo_reference.selected_node.position)
+
+
+func _input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed('project_save_as'):
+		save_popup.popup_centered()
