@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://yicd4qsuk04k"]
 
-[ext_resource type="Script" uid="uid://ccx0he7vwqygi" path="res://scripts/render_window.gd" id="1_d5b1w"]
+[ext_resource type="Script" uid="uid://ccx0he7vwqygi" path="res://scripts/windows/render_window.gd" id="1_d5b1w"]
 [ext_resource type="PackedScene" uid="uid://brsgae54lvirk" path="res://scenes/file_selector.tscn" id="1_wl74n"]
 
 [node name="RenderWindow" type="Window" unique_id=1658129983]

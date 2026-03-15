@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bqnq57sninp87"]
 
 [ext_resource type="Script" uid="uid://it3n53kdxl4s" path="res://scripts/component_graph.gd" id="1_r75bl"]
-[ext_resource type="PackedScene" uid="uid://dcwp6i4s668nl" path="res://scenes/item_list_window.tscn" id="2_cqidu"]
+[ext_resource type="PackedScene" uid="uid://dcwp6i4s668nl" path="res://scenes/windows/item_list_window.tscn" id="2_cqidu"]
 
 [node name="ManipulationComponentGraphEdit" type="GraphEdit" unique_id=1734273846]
 anchors_preset = 15

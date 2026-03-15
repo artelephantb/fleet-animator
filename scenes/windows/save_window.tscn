@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b1xrvoxm3y8q0"]
 
-[ext_resource type="Script" uid="uid://m5tdtbtmhoij" path="res://scripts/save_window.gd" id="1_xnssr"]
+[ext_resource type="Script" uid="uid://m5tdtbtmhoij" path="res://scripts/windows/save_window.gd" id="1_xnssr"]
 
 [node name="SaveWindow" type="Window" unique_id=1658129983]
 oversampling_override = 1.0
