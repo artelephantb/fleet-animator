@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dcwp6i4s668nl" path="res://scenes/windows/item_list_window.tscn" id="8_85g3d"]
 [ext_resource type="PackedScene" uid="uid://blbk7sf6jstik" path="res://scenes/inspector_panel_container.tscn" id="8_choun"]
 [ext_resource type="PackedScene" uid="uid://b1xrvoxm3y8q0" path="res://scenes/windows/save_window.tscn" id="8_tipki"]
+[ext_resource type="PackedScene" uid="uid://dp4wl2a7nbfhu" path="res://scenes/windows/load_window.tscn" id="11_ya4ey"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_o6xl0"]
 action = &"animation_play"
@@ -57,9 +58,11 @@ layout_mode = 2
 oversampling_override = 1.0
 title = "Project"
 prefer_native_menu = true
-item_count = 1
+item_count = 2
 item_0/text = "Save As..."
 item_0/id = 0
+item_1/text = "Load..."
+item_1/id = 1
 
 [node name="AnimationPopupMenu" type="PopupMenu" parent="VBoxContainer/PanelContainer/MarginContainer/MenuBar" unique_id=660373129]
 oversampling_override = 1.0
@@ -171,6 +174,8 @@ layout_mode = 2
 
 [node name="SaveWindow" parent="." unique_id=680731760 instance=ExtResource("8_tipki")]
 
+[node name="LoadWindow" parent="." unique_id=741483703 instance=ExtResource("11_ya4ey")]
+
 [connection signal="id_pressed" from="VBoxContainer/PanelContainer/MarginContainer/MenuBar/ProjectPopupMenu" to="." method="_on_project_popup_menu_id_pressed"]
 [connection signal="id_pressed" from="VBoxContainer/PanelContainer/MarginContainer/MenuBar/AnimationPopupMenu" to="." method="_on_animation_popup_menu_id_pressed"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
@@ -181,3 +186,4 @@ layout_mode = 2
 [connection signal="handle_pressed" from="VBoxContainer/HSplitContainer/VSplitContainer/Control/SpriteControlGizmo" to="." method="_on_sprite_control_gizmo_handle_pressed"]
 [connection signal="single_item_selected" from="CreateSpriteTypeListWindow" to="." method="_on_create_sprite_type_list_window_single_item_selected"]
 [connection signal="save_as" from="SaveWindow" to="." method="_on_save_window_save_as"]
+[connection signal="load_project" from="LoadWindow" to="." method="_on_load_window_load_project"]

@@ -9,8 +9,10 @@ extends Control
 @onready var sprite_control_gizmo_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/Control/SpriteControlGizmo'
 
 @onready var create_sprite_type_list_window_reference := $'CreateSpriteTypeListWindow'
-@onready var render_popup := $'VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/RenderButton/RenderWindow'
-@onready var save_popup := $'SaveWindow'
+@onready var render_window := $'VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/RenderButton/RenderWindow'
+
+@onready var save_window := $'SaveWindow'
+@onready var load_window := $'LoadWindow'
 
 @onready var components_graph_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/PanelContainer/ManipulationComponentGraphEdit'
 
@@ -54,9 +56,9 @@ var play_component_mappings := {
 	'wait_component': 'res://scripts/play_components/wait_component.gd'
 }
 
-var project_name := 'New Project'
-var project_location: String
-var project_config: ConfigFile
+var current_project_name := 'New Project'
+var current_project_location: String
+var current_project_config: ConfigFile
 
 
 func _ready() -> void:
@@ -168,11 +170,10 @@ func _process(delta: float) -> void:
 	elif playing_animation: update_play_animation()
 
 
-func create_sprite(type: String, sprite_name: String) -> void:
+func create_sprite(type: String, sprite_name: String, sprite_uid := str(randi_range(-1000000, 1000000))) -> Node:
 	var sprite_type_info: Dictionary = sprite_types[type]
 
 	var new_sprite_item: TreeItem = sprite_tree_reference.create_item(root)
-	var sprite_uid := str(randi_range(-1000000, 1000000))
 
 	new_sprite_item.set_editable(0, true)
 
@@ -191,6 +192,8 @@ func create_sprite(type: String, sprite_name: String) -> void:
 	var sprite = sprite_type_info.scene.instantiate()
 	sprite.name = sprite_uid
 	canvas_reference.sub_viewport_reference.add_child(sprite)
+
+	return sprite
 
 func _on_create_sprite_button_pressed() -> void:
 	create_sprite_type_list_window_reference.popup_centered()
@@ -264,7 +267,7 @@ func _on_sprite_tree_item_selected() -> void:
 
 
 func _on_render_button_pressed() -> void:
-	render_popup.popup_centered()
+	render_window.popup_centered()
 
 
 func play_animation() -> void:
@@ -294,14 +297,16 @@ func _on_play_button_pressed() -> void:
 func _on_project_popup_menu_id_pressed(id: int) -> void:
 	match id:
 		0:
-			save_popup.popup_centered()
+			save_window.popup_centered()
+		1:
+			load_window.popup_centered()
 
 func _on_animation_popup_menu_id_pressed(id: int) -> void:
 	match id:
 		0:
 			play_animation()
 		1:
-			render_popup.popup_centered()
+			render_window.popup_centered()
 
 
 func remove_recursive_directory(directory: String) -> void:
@@ -358,7 +363,7 @@ func save_sprites() -> void:
 
 	for sprite_uid in animation_data:
 		var sprite: Node = canvas_reference.get_sprite(sprite_uid)
-		sprite.export(project_location)
+		sprite.export(current_project_location)
 
 		var sprite_animation_data: Dictionary = animation_data[sprite_uid]
 
@@ -369,28 +374,54 @@ func save_sprites() -> void:
 
 	var encoded_sprites := JSON.stringify(JSON.from_native(sprites))
 
-	var file_access := FileAccess.open(project_location + '/res/scenes/main.json', FileAccess.WRITE)
+	var file_access := FileAccess.open(current_project_location + '/res/scenes/main.json', FileAccess.WRITE)
 	file_access.store_string(encoded_sprites)
 
 
 func save_new_project(name: String, location: String) -> void:
-	project_name = name
-	project_location = location
+	current_project_name = name
+	current_project_location = location
 
-	DirAccess.make_dir_recursive_absolute(project_location)
+	DirAccess.make_dir_recursive_absolute(current_project_location)
 
-	DirAccess.make_dir_absolute(project_location + '/res')
-	DirAccess.make_dir_absolute(project_location + '/res/scenes')
-	DirAccess.make_dir_absolute(project_location + '/res/textures')
+	DirAccess.make_dir_absolute(current_project_location + '/res')
+	DirAccess.make_dir_absolute(current_project_location + '/res/scenes')
+	DirAccess.make_dir_absolute(current_project_location + '/res/textures')
 
-	project_config = ConfigFile.new()
-	project_config.set_value('project', 'name', project_name)
-	project_config.save(project_location + '/project.cfg')
+	current_project_config = ConfigFile.new()
+	current_project_config.set_value('project', 'name', current_project_name)
+	current_project_config.save(current_project_location + '/project.cfg')
 
 	save_sprites()
 
-func _on_save_window_save_as(name: String, location: String) -> void:
-	save_new_project(name, location)
+func _on_save_window_save_as(name: String, project_location: String) -> void:
+	save_new_project(name, project_location)
+
+
+func load_project(project_location: String) -> void:
+	current_project_location = project_location
+
+	current_project_config = ConfigFile.new()
+	current_project_config.load(project_location + '/project.cfg')
+
+	current_project_name = current_project_config.get_value('project', 'name')
+
+	var file_access := FileAccess.open(project_location + '/res/scenes/main.json', FileAccess.READ)
+	var scene_content: Dictionary = JSON.parse_string(file_access.get_as_text())
+	scene_content = JSON.to_native(scene_content)
+
+	for sprite_uid in scene_content:
+		var sprite_data: Dictionary = scene_content[sprite_uid]
+
+		var created_sprite := create_sprite('texture_sprite', sprite_uid, sprite_uid)
+
+		animation_data[sprite_uid] = {
+			'components': sprite_data.components,
+			'connections': sprite_data.connections
+		}
+
+func _on_load_window_load_project(project_name: String, project_location: String) -> void:
+	load_project(project_location)
 
 
 func _on_sprite_control_gizmo_handle_pressed(handle: int) -> void:
@@ -420,4 +451,6 @@ func _on_sprite_control_gizmo_handle_pressed(handle: int) -> void:
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed('project_save_as'):
-		save_popup.popup_centered()
+		save_window.popup_centered()
+	elif Input.is_action_just_pressed('project_load'):
+		load_window.popup_centered()

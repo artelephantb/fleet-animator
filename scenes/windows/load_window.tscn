@@ -1,10 +1,10 @@
-[gd_scene format=3 uid="uid://b1xrvoxm3y8q0"]
+[gd_scene format=3 uid="uid://dp4wl2a7nbfhu"]
 
-[ext_resource type="Script" uid="uid://m5tdtbtmhoij" path="res://scripts/windows/save_window.gd" id="1_xnssr"]
+[ext_resource type="Script" uid="uid://c0gqe0nrjdb7t" path="res://scripts/windows/load_window.gd" id="1_sck75"]
 
-[node name="SaveWindow" type="Window" unique_id=1658129983]
+[node name="LoadWindow" type="Window" unique_id=1658129983]
 oversampling_override = 1.0
-title = "Save Project"
+title = "Load Project"
 size = Vector2i(500, 180)
 visible = false
 transient = true
@@ -15,7 +15,7 @@ min_size = Vector2i(500, 180)
 content_scale_mode = 1
 content_scale_aspect = 4
 content_scale_factor = 1.6
-script = ExtResource("1_xnssr")
+script = ExtResource("1_sck75")
 
 [node name="Background" type="PanelContainer" parent="." unique_id=85794231]
 anchors_preset = 15
@@ -49,9 +49,9 @@ emoji_menu_enabled = false
 [node name="HSeparator3" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=510155177]
 layout_mode = 2
 
-[node name="SaveButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1569350124]
+[node name="LoadButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1569350124]
 layout_mode = 2
-text = "Save"
+text = "Load"
 
 [connection signal="close_requested" from="." to="." method="_on_close_requested"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
