@@ -255,17 +255,7 @@ func _on_sprite_tree_item_selected() -> void:
 
 	inspector_panel_container_reference.remove_all_properties()
 
-	inspector_panel_container_reference.add_property('position', selected_node.position, [], func(new_value: Vector2):
-		selected_node.position = new_value
-	)
-
-	inspector_panel_container_reference.add_property('scale', selected_node.scale, [], func(new_value: Vector2):
-		selected_node.scale = new_value
-	)
-
-	inspector_panel_container_reference.add_property('rotation', selected_node.rotation, [], func(new_value: float):
-		selected_node.rotation = new_value
-	)
+	selected_node._load_properties(inspector_panel_container_reference)
 
 
 func _on_render_button_pressed() -> void:
