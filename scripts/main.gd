@@ -299,8 +299,10 @@ func _on_play_button_pressed() -> void:
 func _on_project_popup_menu_id_pressed(id: int) -> void:
 	match id:
 		0:
-			save_window.popup_centered()
+			clear_workspace()
 		1:
+			save_window.popup_centered()
+		2:
 			load_window.popup_centered()
 
 func _on_animation_popup_menu_id_pressed(id: int) -> void:
@@ -405,7 +407,7 @@ func _on_save_window_save_as(name: String, project_location: String) -> void:
 	save_new_project(name, project_location)
 
 
-func clear_project() -> void:
+func clear_workspace() -> void:
 	selected_sprite_item = null
 	selected_sprite_uid = ''
 	animation_data = {}
@@ -424,7 +426,7 @@ func clear_project() -> void:
 	inspector_panel_container_reference.remove_all_properties()
 
 func load_project(project_location: String) -> void:
-	clear_project()
+	clear_workspace()
 
 	current_project_location = project_location
 
@@ -478,6 +480,10 @@ func _on_sprite_control_gizmo_handle_pressed(handle: int) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed('project_new'):
+		clear_workspace()
+		return
+
 	if Input.is_action_just_pressed('project_save_as'):
 		save_window.popup_centered()
 		return

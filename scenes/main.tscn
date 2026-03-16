@@ -59,11 +59,13 @@ layout_mode = 2
 oversampling_override = 1.0
 title = "Project"
 prefer_native_menu = true
-item_count = 2
-item_0/text = "Save As..."
+item_count = 3
+item_0/text = "New"
 item_0/id = 0
-item_1/text = "Load..."
+item_1/text = "Save As"
 item_1/id = 1
+item_2/text = "Load"
+item_2/id = 2
 
 [node name="AnimationPopupMenu" type="PopupMenu" parent="VBoxContainer/TopBarPanelContainer/LeftMarginContainer/MenuBar" unique_id=660373129]
 oversampling_override = 1.0
