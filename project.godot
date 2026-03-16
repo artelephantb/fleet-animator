@@ -26,6 +26,7 @@ CurveTools="*uid://cm5qlwqmlmc6a"
 
 window/size/viewport_width=2304
 window/size/viewport_height=1296
+window/size/extend_to_title=true
 window/energy_saving/keep_screen_on=false
 window/subwindows/embed_subwindows=false
 window/stretch/aspect="expand"

@@ -41,20 +41,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=1487543864]
+[node name="TopBarPanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=1487543864]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer" unique_id=1885680299]
+[node name="LeftMarginContainer" type="MarginContainer" parent="VBoxContainer/TopBarPanelContainer" unique_id=1885680299]
 layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
+size_flags_horizontal = 0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 
-[node name="MenuBar" type="MenuBar" parent="VBoxContainer/PanelContainer/MarginContainer" unique_id=164841245]
+[node name="MenuBar" type="MenuBar" parent="VBoxContainer/TopBarPanelContainer/LeftMarginContainer" unique_id=164841245]
 layout_mode = 2
 
-[node name="ProjectPopupMenu" type="PopupMenu" parent="VBoxContainer/PanelContainer/MarginContainer/MenuBar" unique_id=795638324]
+[node name="ProjectPopupMenu" type="PopupMenu" parent="VBoxContainer/TopBarPanelContainer/LeftMarginContainer/MenuBar" unique_id=795638324]
 oversampling_override = 1.0
 title = "Project"
 prefer_native_menu = true
@@ -64,7 +65,7 @@ item_0/id = 0
 item_1/text = "Load..."
 item_1/id = 1
 
-[node name="AnimationPopupMenu" type="PopupMenu" parent="VBoxContainer/PanelContainer/MarginContainer/MenuBar" unique_id=660373129]
+[node name="AnimationPopupMenu" type="PopupMenu" parent="VBoxContainer/TopBarPanelContainer/LeftMarginContainer/MenuBar" unique_id=660373129]
 oversampling_override = 1.0
 title = "Animation"
 prefer_native_menu = true
@@ -74,23 +75,31 @@ item_0/id = 0
 item_1/text = "Render"
 item_1/id = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer/MarginContainer" unique_id=468685784]
+[node name="RightMarginContainer" type="MarginContainer" parent="VBoxContainer/TopBarPanelContainer" unique_id=1453862008]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TopBarPanelContainer/RightMarginContainer" unique_id=468685784]
 layout_mode = 2
 size_flags_horizontal = 8
 
-[node name="PlayButton" type="Button" parent="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=660567790]
+[node name="PlayButton" type="Button" parent="VBoxContainer/TopBarPanelContainer/RightMarginContainer/HBoxContainer" unique_id=660567790]
 layout_mode = 2
 shortcut = SubResource("Shortcut_tipki")
 text = "Play"
 icon = ExtResource("2_tbgi4")
 
-[node name="RenderButton" type="Button" parent="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=1277699094]
+[node name="RenderButton" type="Button" parent="VBoxContainer/TopBarPanelContainer/RightMarginContainer/HBoxContainer" unique_id=1277699094]
 layout_mode = 2
 shortcut = SubResource("Shortcut_tefeu")
 text = "Render"
 icon = ExtResource("2_tbgi4")
 
-[node name="RenderWindow" parent="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/RenderButton" unique_id=702783721 instance=ExtResource("3_tefeu")]
+[node name="RenderWindow" parent="VBoxContainer/TopBarPanelContainer/RightMarginContainer/HBoxContainer/RenderButton" unique_id=702783721 instance=ExtResource("3_tefeu")]
 
 [node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer" unique_id=370791941]
 layout_mode = 2
@@ -165,6 +174,7 @@ layout_mode = 2
 
 [node name="ManipulationComponentGraphEdit" parent="VBoxContainer/HSplitContainer/VSplitContainer/PanelContainer" unique_id=1734273846 instance=ExtResource("7_o6xl0")]
 layout_mode = 2
+scroll_offset = Vector2(0, -5)
 right_disconnects = true
 
 [node name="InspectorPanelContainer" parent="VBoxContainer/HSplitContainer" unique_id=250627417 instance=ExtResource("8_choun")]
@@ -176,11 +186,12 @@ layout_mode = 2
 
 [node name="LoadWindow" parent="." unique_id=741483703 instance=ExtResource("11_ya4ey")]
 
-[connection signal="id_pressed" from="VBoxContainer/PanelContainer/MarginContainer/MenuBar/ProjectPopupMenu" to="." method="_on_project_popup_menu_id_pressed"]
-[connection signal="id_pressed" from="VBoxContainer/PanelContainer/MarginContainer/MenuBar/AnimationPopupMenu" to="." method="_on_animation_popup_menu_id_pressed"]
-[connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/RenderButton" to="." method="_on_render_button_pressed"]
-[connection signal="render" from="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/RenderButton/RenderWindow" to="." method="_on_render_window_render"]
+[connection signal="gui_input" from="VBoxContainer/TopBarPanelContainer" to="." method="_on_top_bar_panel_container_gui_input"]
+[connection signal="id_pressed" from="VBoxContainer/TopBarPanelContainer/LeftMarginContainer/MenuBar/ProjectPopupMenu" to="." method="_on_project_popup_menu_id_pressed"]
+[connection signal="id_pressed" from="VBoxContainer/TopBarPanelContainer/LeftMarginContainer/MenuBar/AnimationPopupMenu" to="." method="_on_animation_popup_menu_id_pressed"]
+[connection signal="pressed" from="VBoxContainer/TopBarPanelContainer/RightMarginContainer/HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/TopBarPanelContainer/RightMarginContainer/HBoxContainer/RenderButton" to="." method="_on_render_button_pressed"]
+[connection signal="render" from="VBoxContainer/TopBarPanelContainer/RightMarginContainer/HBoxContainer/RenderButton/RenderWindow" to="." method="_on_render_window_render"]
 [connection signal="item_selected" from="VBoxContainer/HSplitContainer/SpritesPanelContainer/MarginContainer/VBoxContainer/SpriteTree" to="." method="_on_sprite_tree_item_selected"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/SpritesPanelContainer/MarginContainer/VBoxContainer/CreateSpriteButton" to="." method="_on_create_sprite_button_pressed"]
 [connection signal="handle_pressed" from="VBoxContainer/HSplitContainer/VSplitContainer/Control/SpriteControlGizmo" to="." method="_on_sprite_control_gizmo_handle_pressed"]

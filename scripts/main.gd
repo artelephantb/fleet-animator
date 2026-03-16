@@ -9,7 +9,7 @@ extends Control
 @onready var sprite_control_gizmo_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/Control/SpriteControlGizmo'
 
 @onready var create_sprite_type_list_window_reference := $'CreateSpriteTypeListWindow'
-@onready var render_window := $'VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/RenderButton/RenderWindow'
+@onready var render_window := $'VBoxContainer/TopBarPanelContainer/RightMarginContainer/HBoxContainer/RenderButton/RenderWindow'
 
 @onready var save_window := $'SaveWindow'
 @onready var load_window := $'LoadWindow'
@@ -63,6 +63,8 @@ var current_project_config: ConfigFile
 
 
 func _ready() -> void:
+	DisplayServer.window_set_window_buttons_offset(Vector2i(34, 34))
+
 	create_sprite_type_list_window_reference.change_title('Create New Sprite')
 	for sprite_type in sprite_types:
 		create_sprite_type_list_window_reference.add_item(sprite_type, sprite_type.capitalize(), sprite_types[sprite_type].icon)
@@ -478,5 +480,12 @@ func _on_sprite_control_gizmo_handle_pressed(handle: int) -> void:
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed('project_save_as'):
 		save_window.popup_centered()
-	elif Input.is_action_just_pressed('project_load'):
+		return
+
+	if Input.is_action_just_pressed('project_load'):
 		load_window.popup_centered()
+
+func _on_top_bar_panel_container_gui_input(event: InputEvent) -> void:
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		DisplayServer.window_start_drag()
+		return
