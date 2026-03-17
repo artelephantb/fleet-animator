@@ -1,7 +1,7 @@
-extends Node
+class_name CurveTools
 
 
-func curve_to_array(curve: Curve) -> Array:
+static func curve_to_array(curve: Curve) -> Array:
 	var points := []
 
 	for point_index in curve.point_count:
@@ -17,7 +17,7 @@ func curve_to_array(curve: Curve) -> Array:
 
 	return points
 
-func array_to_curve(array: Array) -> Curve:
+static func array_to_curve(array: Array) -> Curve:
 	var curve := Curve.new()
 
 	for point in array:
@@ -32,7 +32,7 @@ func array_to_curve(array: Array) -> Curve:
 	return curve
 
 
-func dictionary_to_json(dictionary: Dictionary) -> Dictionary:
+static func dictionary_to_json(dictionary: Dictionary) -> Dictionary:
 	var json := {}
 
 	for key in dictionary:
@@ -51,7 +51,7 @@ func dictionary_to_json(dictionary: Dictionary) -> Dictionary:
 
 	return json
 
-func json_to_dictionary(json: Dictionary) -> Dictionary:
+static func json_to_dictionary(json: Dictionary) -> Dictionary:
 	var dictionary := {}
 
 	for key in json:
