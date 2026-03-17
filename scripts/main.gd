@@ -359,12 +359,13 @@ func save_sprites() -> void:
 		var sprite_uid = sprite_item.get_meta('uid')
 
 		var sprite: Node = canvas_reference.get_sprite(sprite_uid)
-		sprite._save(current_project_location)
+		var sprite_properties: Dictionary = sprite._save(current_project_location)
 
 		var sprite_animation_data: Dictionary = animation_data[sprite_uid]
 
 		sprites[sprite_uid] = {
 			'name': sprite_item.get_text(0),
+			'properties': sprite_properties,
 			'animation': {
 				'components': CurveTools.dictionary_to_json(sprite_animation_data.components),
 				'connections': sprite_animation_data.connections
@@ -425,14 +426,17 @@ func load_project(project_location: String) -> void:
 
 	current_project_name = current_project_config.get_value('project', 'name')
 
+	# Load scene
 	var file_access := FileAccess.open(project_location + '/res/scenes/main.json', FileAccess.READ)
 	var scene_content: Dictionary = JSON.parse_string(file_access.get_as_text())
 	scene_content = JSON.to_native(scene_content)
 
+	# Load sprites
 	for sprite_uid in scene_content:
 		var sprite_data: Dictionary = scene_content[sprite_uid]
 
 		var created_sprite := create_sprite('texture_sprite', sprite_data.name, sprite_uid)
+		created_sprite._load(sprite_data)
 
 		animation_data[sprite_uid] = {
 			'components': CurveTools.json_to_dictionary(sprite_data.animation.components),
