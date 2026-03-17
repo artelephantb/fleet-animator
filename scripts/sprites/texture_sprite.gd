@@ -2,19 +2,14 @@ extends Sprite2D
 
 
 var original_image: PackedByteArray
-var original_image_extention := 'png'
+var original_image_extention: String
 
 
 func _ready() -> void:
-	original_image = FileAccess.get_file_as_bytes('res://debug.png')
-
-	var image_for_texture := ImageTools.load_image('res://debug.png')
-	texture = ImageTexture.create_from_image(image_for_texture)
+	change_texture_from_file('res://debug.png')
 
 func _load_properties(inspector_panel: Node) -> void:
-	inspector_panel.add_file_button_property('texture', 'Replace', [], func(path: String):
-		print(path)
-	)
+	inspector_panel.add_file_button_property('texture', 'Replace', [], change_texture_from_file)
 
 	inspector_panel.add_property('position', position, [], func(new_value: Vector2):
 		position = new_value
@@ -28,9 +23,17 @@ func _load_properties(inspector_panel: Node) -> void:
 		rotation = new_value
 	)
 
-
-func export(project_path: String) -> void:
+func _save(project_path: String) -> void:
 	var image_path := project_path + '/res/textures/%s.%s' % [name, original_image_extention]
 
 	var file_access := FileAccess.open(image_path, FileAccess.WRITE)
 	file_access.store_buffer(original_image)
+
+
+func change_texture_from_file(texture_location: String) -> void:
+	original_image = FileAccess.get_file_as_bytes(texture_location)
+
+	var image_for_texture := ImageTools.load_image(texture_location)
+	texture = ImageTexture.create_from_image(image_for_texture)
+
+	original_image_extention = texture_location.get_extension()
