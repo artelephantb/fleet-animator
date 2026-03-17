@@ -12,6 +12,10 @@
 [ext_resource type="PackedScene" uid="uid://b1xrvoxm3y8q0" path="res://scenes/windows/save_window.tscn" id="8_tipki"]
 [ext_resource type="PackedScene" uid="uid://dp4wl2a7nbfhu" path="res://scenes/windows/load_window.tscn" id="11_ya4ey"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya4ey"]
+bg_color = Color(0.11764706, 0.13725491, 0.15686275, 0.9411765)
+border_width_bottom = 1
+
 [sub_resource type="InputEventAction" id="InputEventAction_o6xl0"]
 action = &"animation_play"
 
@@ -40,9 +44,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 0
 
 [node name="TopBarPanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=1487543864]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ya4ey")
 
 [node name="LeftMarginContainer" type="MarginContainer" parent="VBoxContainer/TopBarPanelContainer" unique_id=1885680299]
 layout_mode = 2
@@ -176,6 +182,7 @@ layout_mode = 2
 
 [node name="ManipulationComponentGraphEdit" parent="VBoxContainer/HSplitContainer/VSplitContainer/PanelContainer" unique_id=1734273846 instance=ExtResource("7_o6xl0")]
 layout_mode = 2
+scroll_offset = Vector2(0, -65)
 right_disconnects = true
 
 [node name="InspectorPanelContainer" parent="VBoxContainer/HSplitContainer" unique_id=250627417 instance=ExtResource("8_choun")]
