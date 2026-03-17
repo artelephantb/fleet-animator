@@ -12,6 +12,10 @@ func _ready() -> void:
 	texture = ImageTexture.create_from_image(image_for_texture)
 
 func _load_properties(inspector_panel: Node) -> void:
+	inspector_panel.add_file_button_property('texture', 'Replace', [], func(path: String):
+		print(path)
+	)
+
 	inspector_panel.add_property('position', position, [], func(new_value: Vector2):
 		position = new_value
 	)

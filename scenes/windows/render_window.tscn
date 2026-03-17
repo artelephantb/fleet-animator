@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://yicd4qsuk04k"]
 
 [ext_resource type="Script" uid="uid://ccx0he7vwqygi" path="res://scripts/windows/render_window.gd" id="1_d5b1w"]
-[ext_resource type="PackedScene" uid="uid://brsgae54lvirk" path="res://scenes/file_selector.tscn" id="1_wl74n"]
+[ext_resource type="PackedScene" uid="uid://brsgae54lvirk" path="res://scenes/file_path_selector.tscn" id="1_wl74n"]
 
 [node name="RenderWindow" type="Window" unique_id=1658129983]
 oversampling_override = 1.0
@@ -70,6 +70,7 @@ text = "Output File"
 
 [node name="FileSelector" parent="MarginContainer/VBoxContainer" unique_id=1703167137 instance=ExtResource("1_wl74n")]
 layout_mode = 2
+select_button_text = null
 filters = PackedStringArray("*.mp4")
 
 [node name="HSeparator3" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=510155177]

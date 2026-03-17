@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://brsgae54lvirk"]
 
-[ext_resource type="Script" uid="uid://d3waxoxjm4bcy" path="res://scripts/file_selector.gd" id="1_o1dx2"]
+[ext_resource type="Script" uid="uid://d3waxoxjm4bcy" path="res://scripts/file_path_selector.gd" id="1_hxtdv"]
 
-[node name="FileSelector" type="HBoxContainer" unique_id=1925565160]
+[node name="FilePathSelector" type="HBoxContainer" unique_id=1925565160]
 offset_right = 120.0
 offset_bottom = 31.0
-script = ExtResource("1_o1dx2")
+script = ExtResource("1_hxtdv")
 
 [node name="SelectButton" type="Button" parent="." unique_id=864361888]
 layout_mode = 2
@@ -21,5 +21,6 @@ access = 2
 use_native_dialog = true
 
 [connection signal="pressed" from="SelectButton" to="." method="_on_select_button_pressed"]
+[connection signal="editing_toggled" from="LineEdit" to="." method="_on_line_edit_editing_toggled"]
 [connection signal="dir_selected" from="FileDialog" to="." method="_on_file_dialog_dir_selected"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]

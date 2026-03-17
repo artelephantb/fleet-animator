@@ -2,6 +2,8 @@ extends PanelContainer
 
 
 @onready var vector2_controls_scene := preload('res://scenes/vector2_controls.tscn')
+@onready var file_path_selector_scene := preload('res://scenes/file_path_selector.tscn')
+@onready var file_load_selector_scene := preload('res://scenes/file_load_selector.tscn')
 
 @onready var v_box_container_reference := $'MarginContainer/VBoxContainer'
 
@@ -66,9 +68,24 @@ func add_property(name: StringName, value: Variant, flags := [], on_value_change
 
 			if on_value_changed_callable: editable.connect('value_changed', on_value_changed_callable)
 		'String':
-			editable = LineEdit.new()
-			editable.text = value
-			if on_value_changed_callable: editable.connect('text_changed', on_value_changed_callable)
+			if 'is_file_selector' in flags:
+				editable = file_path_selector_scene.instantiate()
+
+				if 'open_file' in flags:
+					editable.file_mode = FileDialog.FILE_MODE_OPEN_FILE
+				elif 'open_files' in flags:
+					editable.file_mode = FileDialog.FILE_MODE_OPEN_FILES
+				elif 'open_dir' in flags:
+					editable.file_mode = FileDialog.FILE_MODE_OPEN_DIR
+				if 'open_any' in flags:
+					editable.file_mode = FileDialog.FILE_MODE_OPEN_ANY
+
+				editable.selected_path = value
+				if on_value_changed_callable: editable.connect('path_selected', on_value_changed_callable)
+			else:
+				editable = LineEdit.new()
+				editable.text = value
+				if on_value_changed_callable: editable.connect('text_changed', on_value_changed_callable)
 		'Vector2':
 			editable = vector2_controls_scene.instantiate()
 			editable.value = value
@@ -80,6 +97,28 @@ func add_property(name: StringName, value: Variant, flags := [], on_value_change
 
 	editable.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h_box_container.add_child(editable)
+
+	v_box_container_reference.add_child(h_box_container)
+
+func add_file_button_property(property_name: StringName, text: String, flags := [], on_file_selected_callable = null, on_dir_selected_callable = null) -> void:
+	var h_box_container := HBoxContainer.new()
+	h_box_container.name = name
+
+	var label := Label.new()
+	label.text = property_name.capitalize()
+	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
+	h_box_container.add_child(label)
+
+	#region Setup Editable
+	var editable := file_load_selector_scene.instantiate()
+	editable.select_button_text = text
+
+	editable.connect('file_selected', on_file_selected_callable)
+
+	editable.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	h_box_container.add_child(editable)
+	#endregion
 
 	v_box_container_reference.add_child(h_box_container)
 

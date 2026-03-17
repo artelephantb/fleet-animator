@@ -176,7 +176,6 @@ layout_mode = 2
 
 [node name="ManipulationComponentGraphEdit" parent="VBoxContainer/HSplitContainer/VSplitContainer/PanelContainer" unique_id=1734273846 instance=ExtResource("7_o6xl0")]
 layout_mode = 2
-scroll_offset = Vector2(0, -5)
 right_disconnects = true
 
 [node name="InspectorPanelContainer" parent="VBoxContainer/HSplitContainer" unique_id=250627417 instance=ExtResource("8_choun")]
