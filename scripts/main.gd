@@ -53,6 +53,7 @@ var play_component_cache := {}
 var play_component_mappings := {
 	'on_start_component': 'res://scripts/play_components/on_start_component.gd',
 	'jump_to_position_component': 'res://scripts/play_components/jump_to_position_component.gd',
+	'set_scale_component': 'res://scripts/play_components/set_scale_component.gd',
 	'move_to_position_component': 'res://scripts/play_components/move_to_position_component.gd',
 	'wait_component': 'res://scripts/play_components/wait_component.gd'
 }

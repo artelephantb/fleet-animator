@@ -6,6 +6,7 @@ extends GraphEdit
 var component_types := {
 	'on_start_component': preload('res://scenes/graph_components/on_start_component.tscn'),
 	'jump_to_position_component': preload('res://scenes/graph_components/jump_to_position_component.tscn'),
+	'set_scale_component': preload('res://scenes/graph_components/set_scale_component.tscn'),
 	'move_to_position_component': preload('res://scenes/graph_components/move_to_position_component.tscn'),
 	'wait_component': preload('res://scenes/graph_components/wait_component.tscn')
 }
@@ -16,6 +17,7 @@ func _ready() -> void:
 
 	component_list_window_reference.add_item('on_start_component', 'On Start Event')
 	component_list_window_reference.add_item('jump_to_position_component', 'Jump To Position')
+	component_list_window_reference.add_item('set_scale_component', 'Set Scale')
 	component_list_window_reference.add_item('move_to_position_component', 'Move To Position')
 	component_list_window_reference.add_item('wait_component', 'Wait')
 
