@@ -1,15 +1,18 @@
 extends Node
 
 
-var image_cache := {}
+var image_cache := {
+	'missing': preload('res://debug.png').get_image()
+}
 
 
 func load_image(image_path: String) -> Image:
+	if !image_path: return image_cache.missing
+
 	if image_path in image_cache: return image_cache[image_path]
 
 	var image := Image.load_from_file(image_path)
-	if image == null:
-		image = Image.load_from_file('res://icon.svg')
+	if image == null: return image_cache.missing
 
 	image_cache[image_path] = image
 

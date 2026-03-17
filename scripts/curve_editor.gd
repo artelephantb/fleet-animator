@@ -109,17 +109,6 @@ func _notification(what: int) -> void:
 			#	set_selected_index(-1)
 			#	queue_redraw()
 
-		EditorSettings.NOTIFICATION_EDITOR_SETTINGS_CHANGED, NOTIFICATION_THEME_CHANGED:
-			var gizmo_scale: int = 1 # EditorInterface.get_editor_settings().get_setting(
-					# "interface/touchscreen/scale_gizmo_handles")
-			var theme_scale = get_theme_default_base_scale()
-
-			point_radius = roundi(BASE_POINT_RADIUS * theme_scale * gizmo_scale)
-			hover_radius = roundi(BASE_HOVER_RADIUS * theme_scale * gizmo_scale)
-			tangent_radius = roundi(BASE_TANGENT_RADIUS * theme_scale * gizmo_scale)
-			tangent_hover_radius = roundi(BASE_TANGENT_HOVER_RADIUS * theme_scale * gizmo_scale)
-			tangent_length = roundi(BASE_TANGENT_LENGTH * theme_scale * gizmo_scale)
-
 		NOTIFICATION_DRAW:
 			_draw()
 

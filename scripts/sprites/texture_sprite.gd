@@ -6,7 +6,7 @@ var original_image_extention: String
 
 
 func _ready() -> void:
-	if !original_image: change_texture_from_file('res://debug.png')
+	if !original_image: change_texture_from_file('')
 
 func _load_properties(inspector_panel: Node) -> void:
 	inspector_panel.add_file_button_property('texture', 'Replace', [], change_texture_from_file)
