@@ -380,6 +380,17 @@ func save_sprites() -> void:
 	file_access.store_string(encoded_sprites)
 
 
+func save_current_project() -> void:
+	DirAccess.make_dir_absolute(current_project_location + '/res')
+	DirAccess.make_dir_absolute(current_project_location + '/res/scenes')
+	DirAccess.make_dir_absolute(current_project_location + '/res/textures')
+
+	current_project_config = ConfigFile.new()
+	current_project_config.set_value('project', 'name', current_project_name)
+	current_project_config.save(current_project_location + '/project.cfg')
+
+	save_sprites()
+
 func save_new_project(name: String, location: String) -> void:
 	current_project_name = name
 	current_project_location = location
@@ -478,13 +489,15 @@ func _on_sprite_control_gizmo_handle_pressed(handle: int) -> void:
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed('project_new'):
 		clear_workspace()
-		return
 
-	if Input.is_action_just_pressed('project_save_as'):
+	elif Input.is_action_just_pressed('project_save_as'):
 		save_window.popup_centered()
-		return
 
-	if Input.is_action_just_pressed('project_load'):
+	elif Input.is_action_just_pressed('project_save'):
+		if current_project_location: save_current_project()
+		else: save_window.popup_centered()
+
+	elif Input.is_action_just_pressed('project_load'):
 		load_window.popup_centered()
 
 func _on_top_bar_panel_container_gui_input(event: InputEvent) -> void:
