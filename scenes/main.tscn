@@ -47,6 +47,7 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 
 [node name="TopBarPanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=1487543864]
+z_index = 1
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ya4ey")
 
@@ -144,6 +145,7 @@ split_offsets = PackedInt32Array(700)
 split_offset = 700
 
 [node name="Control" type="Control" parent="VBoxContainer/HSplitContainer/VSplitContainer" unique_id=1586407989]
+z_index = -1
 layout_mode = 2
 
 [node name="Canvas" parent="VBoxContainer/HSplitContainer/VSplitContainer/Control" unique_id=1084551890 instance=ExtResource("3_sugp2")]
@@ -182,7 +184,6 @@ layout_mode = 2
 
 [node name="ManipulationComponentGraphEdit" parent="VBoxContainer/HSplitContainer/VSplitContainer/PanelContainer" unique_id=1734273846 instance=ExtResource("7_o6xl0")]
 layout_mode = 2
-scroll_offset = Vector2(0, -65)
 right_disconnects = true
 
 [node name="InspectorPanelContainer" parent="VBoxContainer/HSplitContainer" unique_id=250627417 instance=ExtResource("8_choun")]
