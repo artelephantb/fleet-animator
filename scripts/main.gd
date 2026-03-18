@@ -55,10 +55,10 @@ var component_mappings := {
 	'jump_to_position_component': 'res://scripts/components/jump_to_position_component.gd',
 	'move_to_position_component': 'res://scripts/components/move_to_position_component.gd',
 	'set_scale_component': 'res://scripts/components/set_scale_component.gd',
-	'transitionally_scale_component': 'res://scripts/omponents/transitionally_scale_component.gd',
+	'transitionally_scale_component': 'res://scripts/components/transitionally_scale_component.gd',
 	'set_rotation_component': 'res://scripts/components/set_rotation_component.gd',
 	'transitionally_rotate_component': 'res://scripts/components/transitionally_rotate_component.gd',
-	'wait_component': 'res://scripts/play_components/component.gd'
+	'wait_component': 'res://scripts/components/component.gd'
 }
 
 var current_project_name := 'New Project'
