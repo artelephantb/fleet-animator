@@ -48,17 +48,17 @@ var animation_codec := 'libx264'
 var frame_length := 100
 var frame_digits := 1
 
-var play_component_cache := {}
+var component_cache := {}
 
-var play_component_mappings := {
-	'on_start_component': 'res://scripts/play_components/on_start_component.gd',
-	'jump_to_position_component': 'res://scripts/play_components/jump_to_position_component.gd',
-	'move_to_position_component': 'res://scripts/play_components/move_to_position_component.gd',
-	'set_scale_component': 'res://scripts/play_components/set_scale_component.gd',
-	'transitionally_scale_component': 'res://scripts/play_components/transitionally_scale_component.gd',
-	'set_rotation_component': 'res://scripts/play_components/set_rotation_component.gd',
-	'transitionally_rotate_component': 'res://scripts/play_components/transitionally_rotate_component.gd',
-	'wait_component': 'res://scripts/play_components/wait_component.gd'
+var component_mappings := {
+	'on_start_component': 'res://scripts/components/on_start_component.gd',
+	'jump_to_position_component': 'res://scripts/components/jump_to_position_component.gd',
+	'move_to_position_component': 'res://scripts/components/move_to_position_component.gd',
+	'set_scale_component': 'res://scripts/components/set_scale_component.gd',
+	'transitionally_scale_component': 'res://scripts/omponents/transitionally_scale_component.gd',
+	'set_rotation_component': 'res://scripts/components/set_rotation_component.gd',
+	'transitionally_rotate_component': 'res://scripts/components/transitionally_rotate_component.gd',
+	'wait_component': 'res://scripts/play_components/component.gd'
 }
 
 var current_project_name := 'New Project'
@@ -79,10 +79,10 @@ func _ready() -> void:
 
 
 func run_component(component_uid: String, type: int, sprite: Node, inputs: Dictionary, active_variables: Dictionary) -> bool:
-	if type not in play_component_cache:
-		play_component_cache[type] = load(play_component_mappings[type])
+	if type not in component_cache:
+		component_cache[type] = load(component_mappings[type])
 
-	return play_component_cache[type].run(
+	return component_cache[type].run(
 		component_uid,
 		sprite,
 		inputs,
@@ -108,10 +108,10 @@ func update_play_animation() -> void:
 			if component_uid not in animation_variables:
 				animation_variables[component_uid] = {}
 
-			if component.type not in play_component_cache:
-				play_component_cache[component.type] = load(play_component_mappings[component.type])
+			if component.type not in component_cache:
+				component_cache[component.type] = load(component_mappings[component.type])
 
-			var is_done: bool = play_component_cache[component.type].run(
+			var is_done: bool = component_cache[component.type].run(
 				component_uid,
 				canvas_reference.get_sprite(sprite_uid),
 				component.inputs,

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c2q7ecn5lnqjh"]
 
-[ext_resource type="Script" uid="uid://dsae5yqefh2jr" path="res://scripts/graph_components/jump_to_position_component.gd" id="1_ur5ld"]
+[ext_resource type="Script" uid="uid://dsae5yqefh2jr" path="res://scripts/components/jump_to_position_component.gd" id="1_ur5ld"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_pc5nt"]
 font_color = Color(1, 0, 0, 1)

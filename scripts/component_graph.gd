@@ -4,14 +4,14 @@ extends GraphEdit
 @onready var component_list_window_reference := $'ComponentListWindow'
 
 var component_types := {
-	'on_start_component': preload('res://scenes/graph_components/on_start_component.tscn'),
-	'jump_to_position_component': preload('res://scenes/graph_components/jump_to_position_component.tscn'),
-	'move_to_position_component': preload('res://scenes/graph_components/move_to_position_component.tscn'),
-	'set_scale_component': preload('res://scenes/graph_components/set_scale_component.tscn'),
-	'transitionally_scale_component': preload('res://scenes/graph_components/transitionally_scale_component.tscn'),
-	'set_rotation_component': preload('res://scenes/graph_components/set_rotation_component.tscn'),
-	'transitionally_rotate_component': preload('res://scenes/graph_components/transitionally_rotate_component.tscn'),
-	'wait_component': preload('res://scenes/graph_components/wait_component.tscn')
+	'on_start_component': preload('res://scenes/components/on_start_component.tscn'),
+	'jump_to_position_component': preload('res://scenes/components/jump_to_position_component.tscn'),
+	'move_to_position_component': preload('res://scenes/components/move_to_position_component.tscn'),
+	'set_scale_component': preload('res://scenes/components/set_scale_component.tscn'),
+	'transitionally_scale_component': preload('res://scenes/components/transitionally_scale_component.tscn'),
+	'set_rotation_component': preload('res://scenes/components/set_rotation_component.tscn'),
+	'transitionally_rotate_component': preload('res://scenes/components/transitionally_rotate_component.tscn'),
+	'wait_component': preload('res://scenes/components/wait_component.tscn')
 }
 
 

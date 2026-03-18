@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bf1mo7c3yvc21"]
 
-[ext_resource type="Script" uid="uid://bw2epxq17ywfy" path="res://scripts/graph_components/on_start_component.gd" id="1_5c76u"]
+[ext_resource type="Script" uid="uid://bw2epxq17ywfy" path="res://scripts/components/on_start_component.gd" id="1_5c76u"]
 
 [node name="OnStartComponent" type="GraphNode" unique_id=680247325]
 offset_right = 73.0

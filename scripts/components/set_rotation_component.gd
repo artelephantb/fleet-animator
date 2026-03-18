@@ -12,3 +12,7 @@ func get_inputs() -> Dictionary:
 	return {
 		'rotation': rotation_spin_box_reference.value
 	}
+
+static func run(component_uid: String, sprite: Node, inputs: Dictionary, active_variables: Dictionary) -> bool:
+	sprite.rotation = inputs.rotation
+	return true

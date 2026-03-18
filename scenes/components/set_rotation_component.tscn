@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dyxveohbsd4ts"]
 
-[ext_resource type="Script" uid="uid://dm44ognsmjxjj" path="res://scripts/graph_components/set_rotation_component.gd" id="1_pvx4b"]
+[ext_resource type="Script" uid="uid://dm44ognsmjxjj" path="res://scripts/components/set_rotation_component.gd" id="1_pvx4b"]
 
 [node name="SetRotationComponent" type="GraphNode" unique_id=680247325]
 offset_right = 73.0

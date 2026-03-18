@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://wv66gv5t87v4"]
+[gd_scene format=3 uid="uid://bujwn0ius2b38"]
 
-[ext_resource type="Script" uid="uid://d11sg4ndw06g7" path="res://scripts/graph_components/transitionally_scale_component.gd" id="1_g5rxn"]
-[ext_resource type="Script" uid="uid://dg6lpewbjw5ao" path="res://scripts/curve_editor.gd" id="2_oqmre"]
+[ext_resource type="Script" uid="uid://ciikh7akq2xeb" path="res://scripts/components/move_to_position_component.gd" id="1_o2wi2"]
+[ext_resource type="Script" uid="uid://dg6lpewbjw5ao" path="res://scripts/curve_editor.gd" id="2_2qe2c"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_pc5nt"]
 font_color = Color(1, 0, 0, 1)
@@ -9,10 +9,10 @@ font_color = Color(1, 0, 0, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_ai5bo"]
 font_color = Color(0, 1, 0, 1)
 
-[node name="TransitionallyScaleComponent" type="GraphNode" unique_id=680247325]
+[node name="MoveToPositionComponent" type="GraphNode" unique_id=680247325]
 offset_right = 73.0
 offset_bottom = 78.0
-title = "Transitionally Scale"
+title = "Move To Position"
 slot/0/left_enabled = true
 slot/0/left_type = 0
 slot/0/left_color = Color(0, 1, 0, 1)
@@ -49,7 +49,7 @@ slot/3/right_type = 0
 slot/3/right_color = Color(1, 1, 1, 1)
 slot/3/right_icon = null
 slot/3/draw_stylebox = true
-script = ExtResource("1_g5rxn")
+script = ExtResource("1_o2wi2")
 
 [node name="XPositionContainer" type="HBoxContainer" parent="." unique_id=901906397]
 layout_mode = 2
@@ -63,8 +63,6 @@ label_settings = SubResource("LabelSettings_pc5nt")
 layout_mode = 2
 min_value = -10000.0
 max_value = 10000.0
-step = 0.01
-value = 1.0
 allow_greater = true
 allow_lesser = true
 
@@ -80,26 +78,24 @@ label_settings = SubResource("LabelSettings_ai5bo")
 layout_mode = 2
 min_value = -10000.0
 max_value = 10000.0
-step = 0.01
-value = 1.0
 allow_greater = true
 allow_lesser = true
 
-[node name="TimeContainer" type="HBoxContainer" parent="." unique_id=427083705]
+[node name="TimeContainer" type="HBoxContainer" parent="." unique_id=649404909]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TimeContainer" unique_id=759712477]
+[node name="Label" type="Label" parent="TimeContainer" unique_id=1416651290]
 layout_mode = 2
 text = "Time"
 
-[node name="SpinBox" type="SpinBox" parent="TimeContainer" unique_id=276415518]
+[node name="SpinBox" type="SpinBox" parent="TimeContainer" unique_id=256079192]
 layout_mode = 2
 max_value = 10000.0
 allow_greater = true
 
-[node name="CurveEditor" type="Control" parent="." unique_id=532626813]
+[node name="CurveEditor" type="Control" parent="." unique_id=504012247]
 clip_contents = true
 layout_mode = 2
 focus_mode = 2
-script = ExtResource("2_oqmre")
+script = ExtResource("2_2qe2c")
 metadata/_custom_type_script = "uid://dg6lpewbjw5ao"

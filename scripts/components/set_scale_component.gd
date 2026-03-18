@@ -14,3 +14,7 @@ func get_inputs() -> Dictionary:
 	return {
 		'scale': Vector2(x_position_spin_box_reference.value, y_position_spin_box_reference.value)
 	}
+
+static func run(component_uid: String, sprite: Node, inputs: Dictionary, active_variables: Dictionary) -> bool:
+	sprite.scale = inputs.scale
+	return true

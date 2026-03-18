@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dtvjutknyy2h7"]
 
-[ext_resource type="Script" uid="uid://dutw4vfcm5k0g" path="res://scripts/graph_components/wait_component.gd" id="1_vabut"]
+[ext_resource type="Script" uid="uid://dutw4vfcm5k0g" path="res://scripts/components/wait_component.gd" id="1_vabut"]
 
 [node name="WaitComponent" type="GraphNode" unique_id=680247325]
 offset_right = 73.0

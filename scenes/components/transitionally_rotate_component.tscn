@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ynhw8ucf2acv"]
 
-[ext_resource type="Script" uid="uid://dq7auqrdfbcpe" path="res://scripts/graph_components/transitionally_rotate_component.gd" id="1_fhnjg"]
+[ext_resource type="Script" uid="uid://dq7auqrdfbcpe" path="res://scripts/components/transitionally_rotate_component.gd" id="1_fhnjg"]
 [ext_resource type="Script" uid="uid://dg6lpewbjw5ao" path="res://scripts/curve_editor.gd" id="2_2r81r"]
 
 [node name="TransitionallyRotateComponent" type="GraphNode" unique_id=680247325]
