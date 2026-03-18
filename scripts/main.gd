@@ -57,6 +57,7 @@ var play_component_mappings := {
 	'set_scale_component': 'res://scripts/play_components/set_scale_component.gd',
 	'transitionally_scale_component': 'res://scripts/play_components/transitionally_scale_component.gd',
 	'set_rotation_component': 'res://scripts/play_components/set_rotation_component.gd',
+	'transitionally_rotate_component': 'res://scripts/play_components/transitionally_rotate_component.gd',
 	'wait_component': 'res://scripts/play_components/wait_component.gd'
 }
 

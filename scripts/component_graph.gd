@@ -10,6 +10,7 @@ var component_types := {
 	'set_scale_component': preload('res://scenes/graph_components/set_scale_component.tscn'),
 	'transitionally_scale_component': preload('res://scenes/graph_components/transitionally_scale_component.tscn'),
 	'set_rotation_component': preload('res://scenes/graph_components/set_rotation_component.tscn'),
+	'transitionally_rotate_component': preload('res://scenes/graph_components/transitionally_rotate_component.tscn'),
 	'wait_component': preload('res://scenes/graph_components/wait_component.tscn')
 }
 
@@ -23,6 +24,7 @@ func _ready() -> void:
 	component_list_window_reference.add_item('set_scale_component', 'Set Scale')
 	component_list_window_reference.add_item('transitionally_scale_component', 'Transitionally Scale')
 	component_list_window_reference.add_item('set_rotation_component', 'Set Rotation')
+	component_list_window_reference.add_item('transitionally_rotate_component', 'Transitionally Rotate')
 	component_list_window_reference.add_item('wait_component', 'Wait')
 
 	var add_component_button := Button.new()
