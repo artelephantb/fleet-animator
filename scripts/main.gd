@@ -48,19 +48,6 @@ var animation_codec := 'libx264'
 var frame_length := 100
 var frame_digits := 1
 
-var component_cache := {}
-
-var component_mappings := {
-	'on_start_component': 'res://scripts/components/on_start_component.gd',
-	'jump_to_position_component': 'res://scripts/components/jump_to_position_component.gd',
-	'move_to_position_component': 'res://scripts/components/move_to_position_component.gd',
-	'set_scale_component': 'res://scripts/components/set_scale_component.gd',
-	'transitionally_scale_component': 'res://scripts/components/transitionally_scale_component.gd',
-	'set_rotation_component': 'res://scripts/components/set_rotation_component.gd',
-	'transitionally_rotate_component': 'res://scripts/components/transitionally_rotate_component.gd',
-	'wait_component': 'res://scripts/components/component.gd'
-}
-
 var current_project_name := 'New Project'
 var current_project_location: String
 var current_project_config: ConfigFile
@@ -69,6 +56,8 @@ var current_project_config: ConfigFile
 func _ready() -> void:
 	DisplayServer.window_set_window_buttons_offset(Vector2i(34, 34))
 
+	ExtensionLoader.load_extension('res://internal_extensions/main')
+
 	create_sprite_type_list_window_reference.change_title('Create New Sprite')
 	for sprite_type in sprite_types:
 		create_sprite_type_list_window_reference.add_item(sprite_type, sprite_type.capitalize(), sprite_types[sprite_type].icon)
@@ -76,18 +65,6 @@ func _ready() -> void:
 	part_temp_directory_location = ProjectSettings.globalize_path('user://part_temp')
 	DirAccess.make_dir_recursive_absolute(part_temp_directory_location)
 	part_temp_directory = DirAccess.open(part_temp_directory_location)
-
-
-func run_component(component_uid: String, type: int, sprite: Node, inputs: Dictionary, active_variables: Dictionary) -> bool:
-	if type not in component_cache:
-		component_cache[type] = load(component_mappings[type])
-
-	return component_cache[type].run(
-		component_uid,
-		sprite,
-		inputs,
-		active_variables
-	)
 
 
 func update_play_animation() -> void:
@@ -108,10 +85,9 @@ func update_play_animation() -> void:
 			if component_uid not in animation_variables:
 				animation_variables[component_uid] = {}
 
-			if component.type not in component_cache:
-				component_cache[component.type] = load(component_mappings[component.type])
+			var component_script = ExtensionLoader.components[component.type].script
 
-			var is_done: bool = component_cache[component.type].run(
+			var is_done: bool = component_script.run(
 				component_uid,
 				canvas_reference.get_sprite(sprite_uid),
 				component.inputs,

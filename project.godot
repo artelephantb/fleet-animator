@@ -21,6 +21,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+ExtensionLoader="*uid://bxmtpaxk3p7v5"
 ImageTools="*uid://bcdpiefcwsq4v"
 
 [display]
