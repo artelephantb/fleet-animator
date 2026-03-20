@@ -18,20 +18,16 @@ var component_types := {
 func _ready() -> void:
 	component_list_window_reference.change_title('Add Component')
 
-	component_list_window_reference.add_item('on_start_component', 'On Start Event')
-	component_list_window_reference.add_item('jump_to_position_component', 'Jump To Position')
-	component_list_window_reference.add_item('move_to_position_component', 'Move To Position')
-	component_list_window_reference.add_item('set_scale_component', 'Set Scale')
-	component_list_window_reference.add_item('transitionally_scale_component', 'Transitionally Scale')
-	component_list_window_reference.add_item('set_rotation_component', 'Set Rotation')
-	component_list_window_reference.add_item('transitionally_rotate_component', 'Transitionally Rotate')
-	component_list_window_reference.add_item('wait_component', 'Wait')
-
 	var add_component_button := Button.new()
 	add_component_button.text = 'Add Component'
 	get_menu_hbox().add_child(add_component_button)
 
 	add_component_button.connect('pressed', _on_create_component_button_pressed)
+
+func load_components() -> void:
+	component_list_window_reference.remove_all_items()
+	for component_id in ExtensionLoader.components:
+		component_list_window_reference.add_item(component_id, ExtensionLoader.components[component_id].name)
 
 
 func _on_connection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:

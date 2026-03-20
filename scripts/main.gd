@@ -57,6 +57,7 @@ func _ready() -> void:
 	DisplayServer.window_set_window_buttons_offset(Vector2i(34, 34))
 
 	ExtensionLoader.load_extension('res://internal_extensions/main')
+	components_graph_reference.load_components()
 
 	create_sprite_type_list_window_reference.change_title('Create New Sprite')
 	for sprite_type in sprite_types:

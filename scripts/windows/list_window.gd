@@ -25,6 +25,9 @@ func remove_item(uid: String) -> void:
 	item_list_reference.remove_item(items.find(uid))
 	items.erase(uid)
 
+func remove_all_items() -> void:
+	item_list_reference.clear()
+
 
 func _on_about_to_popup() -> void:
 	item_list_reference.grab_focus(true)
