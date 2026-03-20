@@ -6,7 +6,7 @@ static var component_description := 'Runs the following connected components whe
 
 
 func _ready() -> void:
-	title = 'On Start'
+	title = component_name
 
 	set_slot(0, false, 0, Color.BLACK, true, 0, Color.GREEN)
 
