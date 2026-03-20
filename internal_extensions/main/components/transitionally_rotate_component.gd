@@ -1,18 +1,17 @@
 extends GraphNode
 
 
-@onready var x_position_spin_box_reference := $'XPositionContainer/SpinBox'
-@onready var y_position_spin_box_reference := $'YPositionContainer/SpinBox'
+static var component_name := 'Transitionally Rotate'
+static var component_description := 'Rotates the sprite over multiple frames.'
 
+@onready var rotation_spin_box_reference := $'RotationContainer/SpinBox'
 @onready var time_spin_box_reference := $'TimeContainer/SpinBox'
-
 @onready var curve_editor_reference := $'CurveEditor'
 
 
 func load_inputs(inputs: Dictionary) -> void:
-	if 'position' in inputs:
-		x_position_spin_box_reference.value = inputs.position.x
-		y_position_spin_box_reference.value = inputs.position.y
+	if 'rotation' in inputs:
+		rotation_spin_box_reference.value = inputs.rotation
 
 	if 'time' in inputs:
 		time_spin_box_reference.value = inputs.time
@@ -22,14 +21,14 @@ func load_inputs(inputs: Dictionary) -> void:
 
 func get_inputs() -> Dictionary:
 	return {
-		'position': Vector2(x_position_spin_box_reference.value, y_position_spin_box_reference.value),
+		'rotation': rotation_spin_box_reference.value,
 		'time': time_spin_box_reference.value,
 		'curve': curve_editor_reference.get_data()
 	}
 
 static func run(component_uid: String, sprite: Node, inputs: Dictionary, variables: Dictionary) -> bool:
-	if 'start_position' not in variables:
-		variables.start_position = sprite.position
+	if 'start_rotation' not in variables:
+		variables.start_rotation = sprite.rotation
 
 	if 'time_left' not in variables:
 		variables.time_left = inputs.time - 2
@@ -37,7 +36,7 @@ static func run(component_uid: String, sprite: Node, inputs: Dictionary, variabl
 
 	var percent_complete: float = (inputs.time - variables.time_left) / inputs.time
 
-	sprite.position = lerp(variables.start_position, inputs.position, inputs.curve.sample(percent_complete))
+	sprite.rotation = lerp(variables.start_rotation, inputs.rotation, inputs.curve.sample(percent_complete))
 	variables.time_left -= 1
 
 	variables.frames += 1

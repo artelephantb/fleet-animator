@@ -1,6 +1,9 @@
 extends GraphNode
 
 
+static var component_name := 'Set Scale'
+static var component_description := 'Sets the scale of the sprite.'
+
 @onready var x_position_spin_box_reference := $'XPositionContainer/SpinBox'
 @onready var y_position_spin_box_reference := $'YPositionContainer/SpinBox'
 

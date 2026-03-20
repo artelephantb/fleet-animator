@@ -1,6 +1,9 @@
 extends GraphNode
 
 
+static var component_name := 'Set Rotation'
+static var component_description := 'Sets the rotation of the sprite.'
+
 @onready var rotation_spin_box_reference := $'RotationContainer/SpinBox'
 
 

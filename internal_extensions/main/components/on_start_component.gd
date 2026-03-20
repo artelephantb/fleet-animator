@@ -8,7 +8,7 @@ static var component_description := 'Runs the following connected components whe
 func _ready() -> void:
 	title = 'On Start'
 
-	set_slot(0, false, 0, Color(), true, 0, Color(0.0, 1.0, 0.0))
+	set_slot(0, false, 0, Color.BLACK, true, 0, Color.GREEN)
 
 	var label := Label.new()
 	add_child(label)

@@ -1,6 +1,9 @@
 extends GraphNode
 
 
+static var component_name := 'Wait'
+static var component_description := 'Waits for a specified amount of frames.'
+
 @onready var spin_box_reference := $'TimeContainer/SpinBox'
 
 
