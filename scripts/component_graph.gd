@@ -3,17 +3,6 @@ extends GraphEdit
 
 @onready var component_list_window_reference := $'ComponentListWindow'
 
-var component_types := {
-	'on_start_component': preload('res://scenes/components/on_start_component.tscn'),
-	'jump_to_position_component': preload('res://scenes/components/jump_to_position_component.tscn'),
-	'move_to_position_component': preload('res://scenes/components/move_to_position_component.tscn'),
-	'set_scale_component': preload('res://scenes/components/set_scale_component.tscn'),
-	'transitionally_scale_component': preload('res://scenes/components/transitionally_scale_component.tscn'),
-	'set_rotation_component': preload('res://scenes/components/set_rotation_component.tscn'),
-	'transitionally_rotate_component': preload('res://scenes/components/transitionally_rotate_component.tscn'),
-	'wait_component': preload('res://scenes/components/wait_component.tscn')
-}
-
 
 func _ready() -> void:
 	component_list_window_reference.change_title('Add Component')
@@ -49,7 +38,9 @@ func _on_add_component_window_close_requested() -> void:
 
 
 func add_component(uid: String, inputs := {}, component_name := str(randi_range(-1000000, 1000000)), position_offset := Vector2(0.0, 0.0)) -> void:
-	var new_component: Node = component_types[uid].instantiate()
+	var new_component := GraphNode.new()
+	new_component.set_script(ExtensionLoader.components[uid].script)
+
 	new_component.name = component_name
 	new_component.set_meta('type', uid)
 
