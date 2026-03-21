@@ -15,7 +15,7 @@ extends Control
 			canvas_texture_rect_reference.texture = ImageTexture.create_from_image(canvas_image)
 			size = canvas_size
 
-@onready var checkerboard_pattern_texture := preload('res://debug.png')
+@onready var checkerboard_pattern_texture := preload('res://checkerboard.png')
 
 var canvas_texture_rect_reference: TextureRect
 
