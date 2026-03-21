@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://b5bwtc2iikcet"]
+
+[ext_resource type="Script" uid="uid://bcdepo18qu4sv" path="res://scripts/windows/extensions_manager_window.gd" id="1_csq3x"]
+
+[node name="ExtensionsManagerWindow" type="Window" unique_id=1658129983]
+oversampling_override = 1.0
+title = "Extensions Manager"
+size = Vector2i(500, 600)
+visible = false
+transient = true
+exclusive = true
+minimize_disabled = true
+maximize_disabled = true
+min_size = Vector2i(500, 600)
+content_scale_mode = 1
+content_scale_aspect = 4
+content_scale_factor = 1.6
+script = ExtResource("1_csq3x")
+
+[node name="Background" type="PanelContainer" parent="." unique_id=85794231]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1042173234]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1555749719]
+layout_mode = 2
+
+[node name="InstalledLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=947964175]
+layout_mode = 2
+text = "Installed"
+
+[node name="InstalledItemList" type="ItemList" parent="MarginContainer/VBoxContainer" unique_id=1761785873]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=510155177]
+layout_mode = 2
+
+[connection signal="about_to_popup" from="." to="." method="_on_about_to_popup"]
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]

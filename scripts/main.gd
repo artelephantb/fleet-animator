@@ -14,6 +14,8 @@ extends Control
 @onready var save_window := $'SaveWindow'
 @onready var load_window := $'LoadWindow'
 
+@onready var extensions_manager_window_reference := $'ExtensionsManagerWindow'
+
 @onready var components_graph_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/PanelContainer/ManipulationComponentGraphEdit'
 
 @onready var root: TreeItem = sprite_tree_reference.create_item()
@@ -58,6 +60,7 @@ func _ready() -> void:
 
 	ExtensionLoader.load_packed_extension('res://base_extensions/core.zip')
 	components_graph_reference.load_components()
+	extensions_manager_window_reference.reload_extensions()
 
 	create_sprite_type_list_window_reference.change_title('Create New Sprite')
 	for sprite_type in sprite_types:
@@ -282,6 +285,11 @@ func _on_animation_popup_menu_id_pressed(id: int) -> void:
 			play_animation()
 		1:
 			render_window.popup_centered()
+
+func _on_extensions_popup_menu_id_pressed(id: int) -> void:
+	match id:
+		0:
+			extensions_manager_window_reference.popup_centered()
 
 
 func remove_recursive_directory(directory: String) -> void:

@@ -1,6 +1,7 @@
 extends Node
 
 
+var extensions := {}
 var components := {}
 
 var extensions_path := ProjectSettings.globalize_path('user://extensions')
@@ -24,7 +25,10 @@ func load_unpacked_extension(path: String) -> void:
 	var config_file := ConfigFile.new()
 	config_file.load(config_path)
 
-	var extension_id: String = config_file.get_value('extension', 'id')
+	extensions[config_file.get_value('extension', 'id')] = {
+		'name': config_file.get_value('extension', 'name'),
+		'description': config_file.get_value('extension', 'description')
+	}
 
 	var component_scripts := DirAccess.get_files_at(path.path_join('components'))
 	for script in component_scripts:
@@ -55,7 +59,10 @@ func load_packed_extension(path: String) -> void:
 	var config_file := ConfigFile.new()
 	config_file.load(config_path)
 
-	var extension_id: String = config_file.get_value('extension', 'id')
+	extensions[config_file.get_value('extension', 'id')] = {
+		'name': config_file.get_value('extension', 'name'),
+		'description': config_file.get_value('extension', 'description')
+	}
 
 	var files := zip_reader.get_files()
 	for file_path in files:

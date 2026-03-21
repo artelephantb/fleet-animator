@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://blbk7sf6jstik" path="res://scenes/inspector_panel_container.tscn" id="8_choun"]
 [ext_resource type="PackedScene" uid="uid://b1xrvoxm3y8q0" path="res://scenes/windows/save_window.tscn" id="8_tipki"]
 [ext_resource type="PackedScene" uid="uid://dp4wl2a7nbfhu" path="res://scenes/windows/load_window.tscn" id="11_ya4ey"]
+[ext_resource type="PackedScene" uid="uid://b5bwtc2iikcet" path="res://scenes/windows/extensions_manager_window.tscn" id="12_eb6dy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya4ey"]
 bg_color = Color(0.11764706, 0.13725491, 0.15686275, 0.9411765)
@@ -83,6 +84,14 @@ item_0/text = "Play From Beginning"
 item_0/id = 0
 item_1/text = "Render"
 item_1/id = 1
+
+[node name="ExtensionsPopupMenu" type="PopupMenu" parent="VBoxContainer/TopBarPanelContainer/LeftMarginContainer/MenuBar" unique_id=577878339]
+oversampling_override = 1.0
+title = "Extensions"
+prefer_native_menu = true
+item_count = 1
+item_0/text = "Extensions Manager"
+item_0/id = 0
 
 [node name="RightMarginContainer" type="MarginContainer" parent="VBoxContainer/TopBarPanelContainer" unique_id=1453862008]
 layout_mode = 2
@@ -195,9 +204,12 @@ layout_mode = 2
 
 [node name="LoadWindow" parent="." unique_id=741483703 instance=ExtResource("11_ya4ey")]
 
+[node name="ExtensionsManagerWindow" parent="." unique_id=905138134 instance=ExtResource("12_eb6dy")]
+
 [connection signal="gui_input" from="VBoxContainer/TopBarPanelContainer" to="." method="_on_top_bar_panel_container_gui_input"]
 [connection signal="id_pressed" from="VBoxContainer/TopBarPanelContainer/LeftMarginContainer/MenuBar/ProjectPopupMenu" to="." method="_on_project_popup_menu_id_pressed"]
 [connection signal="id_pressed" from="VBoxContainer/TopBarPanelContainer/LeftMarginContainer/MenuBar/AnimationPopupMenu" to="." method="_on_animation_popup_menu_id_pressed"]
+[connection signal="id_pressed" from="VBoxContainer/TopBarPanelContainer/LeftMarginContainer/MenuBar/ExtensionsPopupMenu" to="." method="_on_extensions_popup_menu_id_pressed"]
 [connection signal="pressed" from="VBoxContainer/TopBarPanelContainer/RightMarginContainer/HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/TopBarPanelContainer/RightMarginContainer/HBoxContainer/RenderButton" to="." method="_on_render_button_pressed"]
 [connection signal="render" from="VBoxContainer/TopBarPanelContainer/RightMarginContainer/HBoxContainer/RenderButton/RenderWindow" to="." method="_on_render_window_render"]

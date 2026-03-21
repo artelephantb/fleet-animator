@@ -27,6 +27,7 @@ func remove_item(uid: String) -> void:
 
 func remove_all_items() -> void:
 	item_list_reference.clear()
+	items.clear()
 
 
 func _on_about_to_popup() -> void:
