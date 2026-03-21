@@ -1,0 +1,12 @@
+[
+	"components/on_start_component.gd",
+	"components/jump_to_position_component.gd",
+	"components/move_to_position_component.gd",
+	"components/set_scale_component.gd",
+	"components/transitionally_scale_component.gd",
+	"components/set_rotation_component.gd",
+	"components/transitionally_rotate_component.gd",
+	"components/flip_horizontally_component.gd",
+	"components/flip_vertically_component.gd",
+	"components/wait_component.gd"
+]
