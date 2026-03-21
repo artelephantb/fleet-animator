@@ -31,21 +31,24 @@ func load_unpacked_extension(path: String) -> void:
 		'description': config_file.get_value('extension', 'description')
 	}
 
-	var components_list_path: String = path.path_join(config_file.get_value('requirements', 'components'))
-	var components_list_file := FileAccess.open(components_list_path, FileAccess.READ)
-	var components_list: Array = JSON.parse_string(components_list_file.get_as_text())
+	var components_list_path = config_file.get_value('requirements', 'components')
+	if components_list_path != null:
+		components_list_path = path.path_join(components_list_path)
 
-	for script in components_list:
-		var script_path := path.path_join(script)
-		var loaded_script = load(script_path)
+		var components_list_file := FileAccess.open(components_list_path, FileAccess.READ)
+		var components_list: Array = JSON.parse_string(components_list_file.get_as_text())
 
-		var component_id: String = script_path.get_file().get_basename()
+		for script in components_list:
+			var script_path := path.path_join(script)
+			var loaded_script = load(script_path)
 
-		components[component_id] = {
-			'name': loaded_script.component_name,
-			'description': loaded_script.component_description,
-			'script': loaded_script
-		}
+			var component_id: String = script_path.get_file().get_basename()
+
+			components[component_id] = {
+				'name': loaded_script.component_name,
+				'description': loaded_script.component_description,
+				'script': loaded_script
+			}
 
 func load_packed_extension(path: String) -> void:
 	var zip_reader := ZIPReader.new()
