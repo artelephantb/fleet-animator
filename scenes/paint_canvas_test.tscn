@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://b8sbttb2tvn7a"]
+
+[ext_resource type="Script" uid="uid://ctaa1f034rqjw" path="res://scripts/paint_canvas.gd" id="1_ewj46"]
+
+[node name="PaintCanvasTest" type="Control" unique_id=1064958722]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="PaintCanvas" type="Control" parent="." unique_id=1601493591]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_ewj46")
+metadata/_custom_type_script = "uid://ctaa1f034rqjw"
