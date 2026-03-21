@@ -59,6 +59,19 @@ func _ready() -> void:
 	DisplayServer.window_set_window_buttons_offset(Vector2i(34, 34))
 
 	ExtensionLoader.load_packed_extension('res://base_extensions/core.zip')
+	print('Loaded core extension')
+
+	for packed_user_extension in DirAccess.get_files_at(ExtensionLoader.extensions_path):
+		var extension_path := ExtensionLoader.extensions_path.path_join(packed_user_extension)
+		match packed_user_extension.get_extension():
+			'zip':
+				print('Loaded packed user extension: ', packed_user_extension)
+				ExtensionLoader.load_packed_extension(extension_path)
+
+	for unpacked_user_extension in DirAccess.get_directories_at(ExtensionLoader.extensions_path):
+		print('Loaded unpacked user extension: ', unpacked_user_extension)
+		ExtensionLoader.load_unpacked_extension(ExtensionLoader.extensions_path.path_join(unpacked_user_extension))
+
 	components_graph_reference.load_components()
 	extensions_manager_window_reference.reload_extensions()
 
