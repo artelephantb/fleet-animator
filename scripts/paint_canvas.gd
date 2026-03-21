@@ -30,6 +30,8 @@ func _ready() -> void:
 	canvas_texture_rect_reference.size = canvas_size
 	canvas_texture_rect_reference.texture = ImageTexture.create_from_image(canvas_image)
 
+	canvas_texture_rect_reference.connect('gui_input', canvas_input)
+
 	add_child(canvas_texture_rect_reference)
 
 
@@ -57,7 +59,7 @@ func handle_mouse_motion(event: InputEvent) -> void:
 
 	canvas_texture_rect_reference.texture.update(canvas_image)
 
-func _input(event: InputEvent) -> void:
+func canvas_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		handle_mouse_button(event)
 		return
