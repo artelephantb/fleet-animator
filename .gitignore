@@ -25,4 +25,3 @@ mono_crash.*.json
 
 # Export
 export_presets.cfg
-packed_base_extensions/

@@ -19,6 +19,7 @@ func get_extension_info(path: String) -> Dictionary:
 		'description': config_file.get_value('extension', 'description')
 	}
 
+
 func load_unpacked_extension(path: String) -> void:
 	var config_path := path.path_join('extension.cfg')
 
@@ -44,7 +45,6 @@ func load_unpacked_extension(path: String) -> void:
 			'description': loaded_script.component_description,
 			'script': loaded_script
 		}
-
 
 func load_packed_extension(path: String) -> void:
 	var zip_reader := ZIPReader.new()

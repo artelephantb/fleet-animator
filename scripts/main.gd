@@ -58,12 +58,8 @@ var current_project_config: ConfigFile
 func _ready() -> void:
 	DisplayServer.window_set_window_buttons_offset(Vector2i(34, 34))
 
-	if DirAccess.dir_exists_absolute(ProjectSettings.globalize_path('res://base_extensions/core')):
-		ExtensionLoader.load_unpacked_extension('res://base_extensions/core')
-		print('Loaded unpacked core extension')
-	else:
-		ExtensionLoader.load_packed_extension('res://packed_base_extensions/core.zip')
-		print('Loaded packed core extension')
+	ExtensionLoader.load_unpacked_extension('res://base_extensions/core')
+	print('Loaded core extension')
 
 	for packed_user_extension in DirAccess.get_files_at(ExtensionLoader.extensions_path):
 		var extension_path := ExtensionLoader.extensions_path.path_join(packed_user_extension)
