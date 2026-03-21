@@ -49,5 +49,10 @@ size_flags_vertical = 3
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=510155177]
 layout_mode = 2
 
+[node name="OpenInFileManagerButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1230208230]
+layout_mode = 2
+text = "Open in File Manager"
+
 [connection signal="about_to_popup" from="." to="." method="_on_about_to_popup"]
 [connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/OpenInFileManagerButton" to="." method="_on_open_in_file_manager_button_pressed"]

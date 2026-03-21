@@ -37,3 +37,11 @@ func remove_all_items() -> void:
 
 func _on_about_to_popup() -> void:
 	item_list_reference.grab_focus(true)
+
+
+func _on_open_in_file_manager_button_pressed() -> void:
+	var selected_items: PackedInt32Array = item_list_reference.get_selected_items()
+	if not selected_items: return
+
+	var single_selected_item: String = items[selected_items[0]]
+	OS.shell_show_in_file_manager(ExtensionLoader.extensions_path.path_join(single_selected_item))
