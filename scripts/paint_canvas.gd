@@ -10,7 +10,12 @@ extends Control
 		if value.x <= 0: canvas_size.x = 1
 		if value.y <= 0: canvas_size.y = 1
 
-		if canvas_image: canvas_image.crop(canvas_size.x, canvas_size.y)
+		if canvas_image:
+			canvas_image.crop(canvas_size.x, canvas_size.y)
+			canvas_texture_rect_reference.texture = ImageTexture.create_from_image(canvas_image)
+			size = canvas_size
+
+@onready var checkerboard_pattern_texture := preload('res://debug.png')
 
 var canvas_texture_rect_reference: TextureRect
 
@@ -23,16 +28,28 @@ var stroke_connections := []
 
 
 func _ready() -> void:
+	clip_contents = true
+
+	#region Background Texture Rect
+	var background_texture_rect := TextureRect.new()
+	background_texture_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	background_texture_rect.texture = checkerboard_pattern_texture
+	background_texture_rect.stretch_mode = TextureRect.STRETCH_TILE
+
+	add_child(background_texture_rect)
+	#endregion
+
+	#region Canvas
 	canvas_image = Image.create_empty(canvas_size.x, canvas_size.y, false, Image.FORMAT_RGBA8)
-	canvas_image.fill(Color.WHITE)
 
 	canvas_texture_rect_reference = TextureRect.new()
-	canvas_texture_rect_reference.size = canvas_size
+	canvas_texture_rect_reference.set_anchors_preset(Control.PRESET_FULL_RECT)
 	canvas_texture_rect_reference.texture = ImageTexture.create_from_image(canvas_image)
 
 	canvas_texture_rect_reference.connect('gui_input', canvas_input)
 
 	add_child(canvas_texture_rect_reference)
+	#endregion
 
 
 func handle_mouse_button(event: InputEvent) -> void:
