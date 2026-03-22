@@ -10,13 +10,22 @@ extends Control
 		if value.x <= 0: canvas_size.x = 1
 		if value.y <= 0: canvas_size.y = 1
 
-		if canvas_image:
-			canvas_image.crop(canvas_size.x, canvas_size.y)
-			canvas_texture_rect_reference.texture = ImageTexture.create_from_image(canvas_image)
-			size = canvas_size
+		if not canvas_image: return
+
+		canvas_image.crop(canvas_size.x, canvas_size.y)
+		canvas_texture_rect_reference.texture = ImageTexture.create_from_image(canvas_image)
+		canvas_background_rect_reference.custom_minimum_size = canvas_size
+		size.x = canvas_size.x + color_picker_reference.size.x
+
+		if color_picker_reference.size.y > canvas_size.y:
+			size.y = color_picker_reference.size.y
+		else:
+			size.y = canvas_size.y
 
 @onready var checkerboard_pattern_texture := preload('res://checkerboard.png')
 
+var color_picker_reference: ColorPicker
+var canvas_background_rect_reference: TextureRect
 var canvas_texture_rect_reference: TextureRect
 
 var canvas_image: Image
@@ -31,28 +40,48 @@ var stroke_connections := []
 func _ready() -> void:
 	clip_contents = true
 
-	#region Background Texture Rect
-	var background_texture_rect := TextureRect.new()
-	background_texture_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
-	background_texture_rect.texture = checkerboard_pattern_texture
-	background_texture_rect.stretch_mode = TextureRect.STRETCH_TILE
+	var h_box_container := HBoxContainer.new()
+	h_box_container.set_anchors_preset(Control.PRESET_FULL_RECT)
 
-	add_child(background_texture_rect)
+	#region Color Picker
+	color_picker_reference = ColorPicker.new()
+	color_picker_reference.size_flags_vertical = 0
+	h_box_container.add_child(color_picker_reference)
+	#endregion
+
+	var editor_container := PanelContainer.new()
+	editor_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
+	#region Background Texture Rect
+	canvas_background_rect_reference = TextureRect.new()
+	canvas_background_rect_reference.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+
+	canvas_background_rect_reference.size_flags_horizontal = 0
+	canvas_background_rect_reference.size_flags_vertical = 0
+
+	canvas_background_rect_reference.custom_minimum_size = canvas_size
+
+	canvas_background_rect_reference.texture = checkerboard_pattern_texture
+	canvas_background_rect_reference.stretch_mode = TextureRect.STRETCH_TILE
+
+	editor_container.add_child(canvas_background_rect_reference)
 	#endregion
 
 	#region Canvas
 	canvas_image = Image.create_empty(canvas_size.x, canvas_size.y, false, Image.FORMAT_RGBA8)
 
 	canvas_texture_rect_reference = TextureRect.new()
-	canvas_texture_rect_reference.set_anchors_preset(Control.PRESET_FULL_RECT)
 	canvas_texture_rect_reference.texture = ImageTexture.create_from_image(canvas_image)
 
 	canvas_texture_rect_reference.set_focus_mode(Control.FOCUS_CLICK)
 
 	canvas_texture_rect_reference.connect('gui_input', canvas_input)
 
-	add_child(canvas_texture_rect_reference)
+	canvas_background_rect_reference.add_child(canvas_texture_rect_reference)
 	#endregion
+
+	h_box_container.add_child(editor_container)
+	add_child(h_box_container)
 
 
 func handle_mouse_button(event: InputEvent) -> void:

@@ -6,13 +6,13 @@
 [node name="TextureEditorWindow" type="Window" unique_id=1658129983]
 oversampling_override = 1.0
 title = "Texture Editor"
-size = Vector2i(760, 790)
+size = Vector2i(1250, 1045)
 visible = false
 transient = true
 exclusive = true
 minimize_disabled = true
 maximize_disabled = true
-min_size = Vector2i(760, 790)
+min_size = Vector2i(1250, 1045)
 content_scale_mode = 1
 content_scale_aspect = 4
 content_scale_factor = 1.6
@@ -43,7 +43,7 @@ layout_mode = 2
 clip_contents = true
 custom_minimum_size = Vector2(440, 440)
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_vertical = 3
 script = ExtResource("2_hunsf")
 metadata/_custom_type_script = "uid://ctaa1f034rqjw"
 
