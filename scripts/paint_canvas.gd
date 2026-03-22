@@ -24,6 +24,7 @@ var canvas_image: Image
 var is_painting := false
 
 var brush_strokes := []
+var removed_brushed_strokes := []
 var stroke_connections := []
 
 
@@ -46,6 +47,8 @@ func _ready() -> void:
 	canvas_texture_rect_reference.set_anchors_preset(Control.PRESET_FULL_RECT)
 	canvas_texture_rect_reference.texture = ImageTexture.create_from_image(canvas_image)
 
+	canvas_texture_rect_reference.set_focus_mode(Control.FOCUS_CLICK)
+
 	canvas_texture_rect_reference.connect('gui_input', canvas_input)
 
 	add_child(canvas_texture_rect_reference)
@@ -55,7 +58,7 @@ func _ready() -> void:
 func handle_mouse_button(event: InputEvent) -> void:
 	if !event.pressed:
 		if stroke_connections:
-			brush_strokes.append(stroke_connections)
+			brush_strokes.append(stroke_connections.duplicate())
 			stroke_connections.clear()
 
 		is_painting = false
@@ -83,6 +86,43 @@ func canvas_input(event: InputEvent) -> void:
 
 	if event is InputEventMouseMotion:
 		handle_mouse_motion(event)
+		return
+
+
+func draw_brush_strokes(strokes: Array) -> void:
+	canvas_image = Image.create_empty(canvas_image.get_width(), canvas_image.get_height(), false, Image.FORMAT_RGBA8)
+
+	for stroke in strokes:
+		var point_index := 1
+		while point_index < len(stroke):
+			create_line(stroke[point_index - 1], stroke[point_index])
+			point_index += 1
+
+	canvas_texture_rect_reference.texture.update(canvas_image)
+
+func undo() -> void:
+	if len(brush_strokes) == 0: return
+
+	removed_brushed_strokes.append(brush_strokes[-1])
+	brush_strokes.remove_at(-1)
+	draw_brush_strokes(brush_strokes)
+
+func redo() -> void:
+	if len(removed_brushed_strokes) == 0: return
+
+	brush_strokes.append(removed_brushed_strokes[-1])
+	removed_brushed_strokes.remove_at(-1)
+	draw_brush_strokes(brush_strokes)
+
+func _input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed('ui_redo'):
+		if get_viewport().gui_get_focus_owner() == canvas_texture_rect_reference:
+			redo()
+		return
+
+	if Input.is_action_just_pressed('ui_undo'):
+		if get_viewport().gui_get_focus_owner() == canvas_texture_rect_reference:
+			undo()
 		return
 
 
