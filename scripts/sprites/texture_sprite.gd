@@ -9,7 +9,7 @@ func _ready() -> void:
 	if !original_image: change_texture_from_file('')
 
 func _load_properties(inspector_panel: Node) -> void:
-	inspector_panel.add_file_button_property('texture', 'Replace', [], change_texture_from_file)
+	inspector_panel.add_file_button_property('texture', 'Replace', [], change_texture_from_file, null, change_texture_from_image)
 
 	inspector_panel.add_property('position', position, [], func(new_value: Vector2):
 		position = new_value
@@ -53,3 +53,8 @@ func change_texture_from_file(texture_location: String) -> void:
 	texture = ImageTexture.create_from_image(image_for_texture)
 
 	original_image_extention = texture_location.get_extension()
+
+func change_texture_from_image(image: Image) -> void:
+	original_image = image.save_png_to_buffer()
+	texture = ImageTexture.create_from_image(image)
+	original_image_extention = 'png'

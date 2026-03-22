@@ -4,9 +4,13 @@ extends Control
 signal dir_selected(dir: String)
 signal file_selected(path: String)
 
+signal image_selected(image: Image)
+
 
 @onready var select_button_reference := $'LoadButton'
 @onready var file_dialog_reference := $'FileDialog'
+
+@onready var texture_editor_window_reference := $'TextureEditorWindow'
 
 @export var select_button_text := 'Load':
 	set(new_value):
@@ -33,8 +37,16 @@ func _ready() -> void:
 func _on_select_button_pressed() -> void:
 	file_dialog_reference.popup_centered()
 
+func _on_new_button_pressed() -> void:
+	texture_editor_window_reference.popup_centered()
+
+
 func _on_file_dialog_dir_selected(dir: String) -> void:
 	dir_selected.emit(dir)
 
 func _on_file_dialog_file_selected(path: String) -> void:
 	file_selected.emit(path)
+
+
+func _on_texture_editor_window_save_image(image: Image) -> void:
+	image_selected.emit(image)

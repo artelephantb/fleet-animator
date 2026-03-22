@@ -3,7 +3,7 @@ extends PanelContainer
 
 @onready var vector2_controls_scene := preload('res://scenes/vector2_controls.tscn')
 @onready var file_path_selector_scene := preload('res://scenes/file_path_selector.tscn')
-@onready var file_load_selector_scene := preload('res://scenes/file_load_selector.tscn')
+@onready var texture_selector_scene := preload('res://scenes/texture_selector.tscn')
 
 @onready var v_box_container_reference := $'MarginContainer/VBoxContainer'
 
@@ -100,7 +100,7 @@ func add_property(name: StringName, value: Variant, flags := [], on_value_change
 
 	v_box_container_reference.add_child(h_box_container)
 
-func add_file_button_property(property_name: StringName, text: String, flags := [], on_file_selected_callable = null, on_dir_selected_callable = null) -> void:
+func add_file_button_property(property_name: StringName, text: String, flags := [], on_file_selected_callable = null, on_dir_selected_callable = null, on_image_selected_callable = null) -> void:
 	var h_box_container := HBoxContainer.new()
 	h_box_container.name = name
 
@@ -111,10 +111,12 @@ func add_file_button_property(property_name: StringName, text: String, flags := 
 	h_box_container.add_child(label)
 
 	#region Setup Editable
-	var editable := file_load_selector_scene.instantiate()
+	var editable := texture_selector_scene.instantiate()
 	editable.select_button_text = text
 
-	editable.connect('file_selected', on_file_selected_callable)
+	if on_file_selected_callable: editable.connect('file_selected', on_file_selected_callable)
+	if on_dir_selected_callable: editable.connect('dir_selected', on_dir_selected_callable)
+	if on_image_selected_callable: editable.connect('image_selected', on_image_selected_callable)
 
 	editable.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h_box_container.add_child(editable)

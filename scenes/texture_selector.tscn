@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://bcpf1j2dsmjyr"]
+
+[ext_resource type="Script" uid="uid://cvmrb2pxaxjp4" path="res://scripts/texture_selector.gd" id="1_4fslx"]
+[ext_resource type="PackedScene" uid="uid://8kefnwug8tjf" path="res://scenes/windows/texture_editor.tscn" id="2_i76w1"]
+
+[node name="TextureSelector" type="HBoxContainer" unique_id=1925565160]
+offset_right = 120.0
+offset_bottom = 31.0
+script = ExtResource("1_4fslx")
+
+[node name="LoadButton" type="Button" parent="." unique_id=864361888]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Load"
+
+[node name="NewButton" type="Button" parent="." unique_id=2013335541]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "New"
+
+[node name="FileDialog" type="FileDialog" parent="." unique_id=1479803994]
+oversampling_override = 1.0
+title = "Open a File"
+file_mode = 0
+access = 2
+use_native_dialog = true
+
+[node name="TextureEditorWindow" parent="." unique_id=1658129983 instance=ExtResource("2_i76w1")]
+
+[connection signal="pressed" from="LoadButton" to="." method="_on_select_button_pressed"]
+[connection signal="pressed" from="NewButton" to="." method="_on_new_button_pressed"]
+[connection signal="dir_selected" from="FileDialog" to="." method="_on_file_dialog_dir_selected"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="save_image" from="TextureEditorWindow" to="." method="_on_texture_editor_window_save_image"]
