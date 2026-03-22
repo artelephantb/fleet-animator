@@ -36,6 +36,8 @@ var brush_strokes := []
 var removed_brushed_strokes := []
 var stroke_connections := []
 
+var brush_color := Color.BLACK
+
 
 func _ready() -> void:
 	clip_contents = true
@@ -45,7 +47,11 @@ func _ready() -> void:
 
 	#region Color Picker
 	color_picker_reference = ColorPicker.new()
+	color_picker_reference.color = Color.BLACK
+
+	color_picker_reference.connect('color_changed', change_brush_color)
 	color_picker_reference.size_flags_vertical = 0
+
 	h_box_container.add_child(color_picker_reference)
 	#endregion
 
@@ -102,7 +108,7 @@ func handle_mouse_motion(event: InputEvent) -> void:
 	if stroke_connections:
 		create_line(stroke_connections[-1], event.position)
 	else:
-		canvas_image.fill_rect(Rect2i(event.position.x, event.position.y, 10, 10), Color.BLUE)
+		canvas_image.fill_rect(Rect2i(event.position.x, event.position.y, 10, 10), brush_color)
 
 	stroke_connections.append(event.position)
 
@@ -155,9 +161,13 @@ func _input(event: InputEvent) -> void:
 		return
 
 
+func change_brush_color(color: Color) -> void:
+	brush_color = color
+
+
 func create_line(start_position: Vector2, end_position: Vector2) -> void:
 	var line_position := start_position
 
 	while line_position != end_position:
-		canvas_image.fill_rect(Rect2i(line_position.x, line_position.y, 10, 10), Color.BLUE)
+		canvas_image.fill_rect(Rect2i(line_position.x, line_position.y, 10, 10), brush_color)
 		line_position = line_position.move_toward(end_position, 1.0)
