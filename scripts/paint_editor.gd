@@ -38,9 +38,13 @@ var stroke_connections := []
 
 var brush_color := Color.BLACK
 var brush_size := 10
+var brush_image: Image
 
 
 func _ready() -> void:
+	update_brush()
+
+	#region Create Nodes
 	clip_contents = true
 
 	var h_box_container := HBoxContainer.new()
@@ -114,6 +118,7 @@ func _ready() -> void:
 	v_box_container.add_child(editor_container)
 	h_box_container.add_child(v_box_container)
 	add_child(h_box_container)
+	#endregion
 
 
 func handle_mouse_button(event: InputEvent) -> void:
@@ -134,7 +139,7 @@ func handle_mouse_motion(event: InputEvent) -> void:
 	if stroke_connections:
 		create_line(stroke_connections[-1][0], event.position, brush_color)
 	else:
-		canvas_image.fill_rect(Rect2i(event.position.x, event.position.y, brush_size, brush_size), brush_color)
+		canvas_image.blend_rect(brush_image, Rect2i(Vector2.ZERO, brush_image.get_size()), Vector2i(event.position.x, event.position.y))
 
 	stroke_connections.append([event.position, brush_color])
 	canvas_texture_rect_reference.texture.update(canvas_image)
@@ -189,16 +194,37 @@ func _input(event: InputEvent) -> void:
 		return
 
 
+func update_brush() -> void:
+	var gradient := GradientTexture2D.new()
+
+	gradient.width = brush_size
+	gradient.height = brush_size
+
+	gradient.fill = GradientTexture2D.FILL_RADIAL
+	gradient.fill_from = Vector2(0.6, 0.6)
+	gradient.fill_to = Vector2(1.0, 0.5)
+
+	var transparent_brush_color := brush_color
+	transparent_brush_color.a = 0.0
+
+	gradient.gradient = Gradient.new()
+	gradient.gradient.colors = [brush_color, transparent_brush_color]
+
+	brush_image = gradient.get_image()
+
+
 func change_brush_color(color: Color) -> void:
 	brush_color = color
+	update_brush()
 
 func change_brush_size(new_size: int) -> void:
 	brush_size = new_size
+	update_brush()
 
 
 func create_line(start_position: Vector2, end_position: Vector2, color: Color) -> void:
 	var line_position := start_position
 
 	while line_position != end_position:
-		canvas_image.fill_rect(Rect2i(line_position.x, line_position.y, brush_size, brush_size), color)
+		canvas_image.blend_rect(brush_image, Rect2i(Vector2.ZERO, brush_image.get_size()), Vector2i(line_position.x, line_position.y))
 		line_position = line_position.move_toward(end_position, 1.0)
