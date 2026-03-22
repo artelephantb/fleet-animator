@@ -137,11 +137,11 @@ func handle_mouse_motion(event: InputEvent) -> void:
 	if !is_painting: return
 
 	if stroke_connections:
-		create_line(stroke_connections[-1][0], event.position, brush_color)
+		create_line(stroke_connections[-1][0], event.position - brush_image.get_size() * 0.5, brush_color)
 	else:
-		canvas_image.blend_rect(brush_image, Rect2i(Vector2.ZERO, brush_image.get_size()), Vector2i(event.position.x, event.position.y))
+		canvas_image.blend_rect(brush_image, Rect2i(Vector2.ZERO, brush_image.get_size()), event.position - brush_image.get_size() * 0.5)
 
-	stroke_connections.append([event.position, brush_color])
+	stroke_connections.append([event.position - brush_image.get_size() * 0.5, brush_color])
 	canvas_texture_rect_reference.texture.update(canvas_image)
 
 func canvas_input(event: InputEvent) -> void:
