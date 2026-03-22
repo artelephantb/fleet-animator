@@ -42,7 +42,7 @@ var brush_image: Image
 
 
 func _ready() -> void:
-	update_brush()
+	update_brush(brush_color, brush_size)
 
 	#region Create Nodes
 	clip_contents = true
@@ -124,7 +124,7 @@ func _ready() -> void:
 func handle_mouse_button(event: InputEvent) -> void:
 	if !event.pressed:
 		if stroke_connections:
-			brush_strokes.append(stroke_connections.duplicate())
+			brush_strokes.append([stroke_connections.duplicate(), brush_color, brush_size])
 			stroke_connections.clear()
 
 		is_painting = false
@@ -137,11 +137,11 @@ func handle_mouse_motion(event: InputEvent) -> void:
 	if !is_painting: return
 
 	if stroke_connections:
-		create_line(stroke_connections[-1][0], event.position - brush_image.get_size() * 0.5, brush_color)
+		create_line(stroke_connections[-1], event.position - brush_image.get_size() * 0.5)
 	else:
 		canvas_image.blend_rect(brush_image, Rect2i(Vector2.ZERO, brush_image.get_size()), event.position - brush_image.get_size() * 0.5)
 
-	stroke_connections.append([event.position - brush_image.get_size() * 0.5, brush_color])
+	stroke_connections.append(event.position - brush_image.get_size() * 0.5)
 	canvas_texture_rect_reference.texture.update(canvas_image)
 
 func canvas_input(event: InputEvent) -> void:
@@ -158,14 +158,19 @@ func draw_brush_strokes(strokes: Array) -> void:
 	canvas_image = Image.create_empty(canvas_image.get_width(), canvas_image.get_height(), false, Image.FORMAT_RGBA8)
 
 	for stroke in strokes:
+		var connections: Array = stroke[0]
+		var stroke_color: Color = stroke[1]
+		var stroke_size: int = stroke[2]
+
+		update_brush(stroke_color, stroke_size)
+
 		var point_index := 1
-		while point_index < len(stroke):
-			var start_connection: Array = stroke[point_index - 1]
-			var end_connection: Array = stroke[point_index]
-			create_line(start_connection[0], end_connection[0], end_connection[1])
+		while point_index < len(connections):
+			create_line(connections[point_index - 1], connections[point_index])
 
 			point_index += 1
 
+	update_brush(brush_color, brush_size)
 	canvas_texture_rect_reference.texture.update(canvas_image)
 
 func undo() -> void:
@@ -194,35 +199,35 @@ func _input(event: InputEvent) -> void:
 		return
 
 
-func update_brush() -> void:
+func update_brush(color: Color, new_size: int) -> void:
 	var gradient := GradientTexture2D.new()
 
-	gradient.width = brush_size
-	gradient.height = brush_size
+	gradient.width = new_size
+	gradient.height = new_size
 
 	gradient.fill = GradientTexture2D.FILL_RADIAL
 	gradient.fill_from = Vector2(0.6, 0.6)
 	gradient.fill_to = Vector2(1.0, 0.5)
 
-	var transparent_brush_color := brush_color
+	var transparent_brush_color := color
 	transparent_brush_color.a = 0.0
 
 	gradient.gradient = Gradient.new()
-	gradient.gradient.colors = [brush_color, transparent_brush_color]
+	gradient.gradient.colors = [color, transparent_brush_color]
 
 	brush_image = gradient.get_image()
 
 
 func change_brush_color(color: Color) -> void:
 	brush_color = color
-	update_brush()
+	update_brush(color, brush_size)
 
 func change_brush_size(new_size: int) -> void:
 	brush_size = new_size
-	update_brush()
+	update_brush(brush_color, new_size)
 
 
-func create_line(start_position: Vector2, end_position: Vector2, color: Color) -> void:
+func create_line(start_position: Vector2, end_position: Vector2) -> void:
 	var line_position := start_position
 
 	while line_position != end_position:
