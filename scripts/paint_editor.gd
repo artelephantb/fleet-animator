@@ -37,6 +37,7 @@ var removed_brushed_strokes := []
 var stroke_connections := []
 
 var brush_color := Color.BLACK
+var brush_size := 10
 
 
 func _ready() -> void:
@@ -55,8 +56,32 @@ func _ready() -> void:
 	h_box_container.add_child(color_picker_reference)
 	#endregion
 
+	var v_box_container := VBoxContainer.new()
+	v_box_container.set_anchors_preset(Control.PRESET_FULL_RECT)
+
+	#region Menu Bar: Brush Size
+	var brush_size_container := HBoxContainer.new()
+
+	var brush_size_label := Label.new()
+	brush_size_label.text = 'Size'
+
+	brush_size_container.add_child(brush_size_label)
+
+	var brush_size_spin_box := SpinBox.new()
+	brush_size_spin_box.set_value_no_signal(brush_size)
+	brush_size_spin_box.max_value = 10000.0
+	brush_size_spin_box.allow_greater = true
+
+	brush_size_spin_box.connect('value_changed', change_brush_size)
+
+	brush_size_container.add_child(brush_size_spin_box)
+
+	v_box_container.add_child(brush_size_container)
+	#endregion
+
 	var editor_container := PanelContainer.new()
 	editor_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	editor_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
 
 	#region Background Texture Rect
 	canvas_background_rect_reference = TextureRect.new()
@@ -86,7 +111,8 @@ func _ready() -> void:
 	canvas_background_rect_reference.add_child(canvas_texture_rect_reference)
 	#endregion
 
-	h_box_container.add_child(editor_container)
+	v_box_container.add_child(editor_container)
+	h_box_container.add_child(v_box_container)
 	add_child(h_box_container)
 
 
@@ -108,7 +134,7 @@ func handle_mouse_motion(event: InputEvent) -> void:
 	if stroke_connections:
 		create_line(stroke_connections[-1][0], event.position, brush_color)
 	else:
-		canvas_image.fill_rect(Rect2i(event.position.x, event.position.y, 10, 10), brush_color)
+		canvas_image.fill_rect(Rect2i(event.position.x, event.position.y, brush_size, brush_size), brush_color)
 
 	stroke_connections.append([event.position, brush_color])
 	canvas_texture_rect_reference.texture.update(canvas_image)
@@ -166,10 +192,13 @@ func _input(event: InputEvent) -> void:
 func change_brush_color(color: Color) -> void:
 	brush_color = color
 
+func change_brush_size(new_size: int) -> void:
+	brush_size = new_size
+
 
 func create_line(start_position: Vector2, end_position: Vector2, color: Color) -> void:
 	var line_position := start_position
 
 	while line_position != end_position:
-		canvas_image.fill_rect(Rect2i(line_position.x, line_position.y, 10, 10), color)
+		canvas_image.fill_rect(Rect2i(line_position.x, line_position.y, brush_size, brush_size), color)
 		line_position = line_position.move_toward(end_position, 1.0)
