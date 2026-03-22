@@ -106,12 +106,11 @@ func handle_mouse_motion(event: InputEvent) -> void:
 	if !is_painting: return
 
 	if stroke_connections:
-		create_line(stroke_connections[-1], event.position)
+		create_line(stroke_connections[-1][0], event.position, brush_color)
 	else:
 		canvas_image.fill_rect(Rect2i(event.position.x, event.position.y, 10, 10), brush_color)
 
-	stroke_connections.append(event.position)
-
+	stroke_connections.append([event.position, brush_color])
 	canvas_texture_rect_reference.texture.update(canvas_image)
 
 func canvas_input(event: InputEvent) -> void:
@@ -130,7 +129,10 @@ func draw_brush_strokes(strokes: Array) -> void:
 	for stroke in strokes:
 		var point_index := 1
 		while point_index < len(stroke):
-			create_line(stroke[point_index - 1], stroke[point_index])
+			var start_connection: Array = stroke[point_index - 1]
+			var end_connection: Array = stroke[point_index]
+			create_line(start_connection[0], end_connection[0], end_connection[1])
+
 			point_index += 1
 
 	canvas_texture_rect_reference.texture.update(canvas_image)
@@ -165,9 +167,9 @@ func change_brush_color(color: Color) -> void:
 	brush_color = color
 
 
-func create_line(start_position: Vector2, end_position: Vector2) -> void:
+func create_line(start_position: Vector2, end_position: Vector2, color: Color) -> void:
 	var line_position := start_position
 
 	while line_position != end_position:
-		canvas_image.fill_rect(Rect2i(line_position.x, line_position.y, 10, 10), brush_color)
+		canvas_image.fill_rect(Rect2i(line_position.x, line_position.y, 10, 10), color)
 		line_position = line_position.move_toward(end_position, 1.0)
