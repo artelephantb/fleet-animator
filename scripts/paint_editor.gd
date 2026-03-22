@@ -1,5 +1,5 @@
 @tool
-class_name PaintCanvas
+class_name PaintEditor
 extends Control
 
 
