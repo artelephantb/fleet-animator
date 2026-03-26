@@ -27,9 +27,9 @@ var selected_sprite_uid: String
 var selected_sprite_item: TreeItem
 
 var sprite_types := {
-	'texture_sprite': {
-		'icon': preload('res://icons/texture_sprite.svg'),
-		'scene': preload('res://scenes/sprites/TextureSprite.tscn')
+	'costume_sprite': {
+		'icon': preload('res://icons/costume_sprite.svg'),
+		'scene': preload('res://scenes/sprites/CostumeSprite.tscn')
 	}
 }
 
@@ -448,7 +448,7 @@ func load_project(project_location: String) -> void:
 	for sprite_uid in scene_content:
 		var sprite_data: Dictionary = scene_content[sprite_uid]
 
-		var created_sprite := create_sprite('texture_sprite', sprite_data.name, sprite_uid)
+		var created_sprite := create_sprite('costume_sprite', sprite_data.name, sprite_uid)
 		created_sprite._load(sprite_data)
 
 		animation_data[sprite_uid] = {

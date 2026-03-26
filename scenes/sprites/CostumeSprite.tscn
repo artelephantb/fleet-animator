@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://moqcecsn82fc"]
+
+[ext_resource type="Script" uid="uid://cru75g6hw8du5" path="res://scripts/sprites/costume_sprite.gd" id="1_7stij"]
+
+[node name="CostumeSprite" type="Sprite2D" unique_id=1329534560]
+script = ExtResource("1_7stij")
