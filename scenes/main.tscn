@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b73pof3xnvcnr" path="res://scenes/canvas.tscn" id="3_sugp2"]
 [ext_resource type="PackedScene" uid="uid://yicd4qsuk04k" path="res://scenes/windows/render_window.tscn" id="3_tefeu"]
 [ext_resource type="PackedScene" uid="uid://bqnq57sninp87" path="res://scenes/component_graph.tscn" id="7_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://cn5kv1psb6nm8" path="res://scenes/toolbar.tscn" id="7_trceg"]
 [ext_resource type="PackedScene" uid="uid://dcwp6i4s668nl" path="res://scenes/windows/item_list_window.tscn" id="8_85g3d"]
 [ext_resource type="PackedScene" uid="uid://blbk7sf6jstik" path="res://scenes/inspector_panel_container.tscn" id="8_choun"]
 [ext_resource type="PackedScene" uid="uid://b1xrvoxm3y8q0" path="res://scenes/windows/save_window.tscn" id="8_tipki"]
@@ -187,6 +188,13 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_behavior_recursive = 1
 script = ExtResource("3_jyhfs")
+
+[node name="Toolbar" parent="VBoxContainer/HSplitContainer/VSplitContainer/Control" unique_id=1711296862 instance=ExtResource("7_trceg")]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer" unique_id=1350626813]
 layout_mode = 2
