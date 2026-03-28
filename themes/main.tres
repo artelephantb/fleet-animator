@@ -1,5 +1,12 @@
 [gd_resource type="Theme" format=3 uid="uid://yy3xm4qiy0n6"]
 
+[ext_resource type="Texture2D" uid="uid://di7p57072iafy" path="res://icons/costume_sprite.svg" id="1_7d6gw"]
+[ext_resource type="Texture2D" uid="uid://bq8wi2ba585lb" path="res://icons/edit.svg" id="2_k5u3e"]
+[ext_resource type="Texture2D" uid="uid://cnv2tybh6mrc5" path="res://icons/play.svg" id="3_kx4sy"]
+[ext_resource type="Texture2D" uid="uid://drlmcn778fx07" path="res://icons/sprite.svg" id="4_hcg30"]
+[ext_resource type="Texture2D" uid="uid://y0f51cgp810w" path="res://icons/text_sprite.svg" id="5_nuec8"]
+[ext_resource type="Texture2D" uid="uid://tvkssydw5fwq" path="res://icons/translate.svg" id="6_k5u3e"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wc0q8"]
 bg_color = Color(0.38681397, 0.41179886, 0.45759523, 0.39215687)
 border_width_left = 1
@@ -124,6 +131,12 @@ HSeparator/styles/separator = SubResource("StyleBoxLine_1id7b")
 HSplitContainer/constants/autohide = 0
 HSplitContainer/constants/separation = 6
 HSplitContainer/styles/split_bar_background = SubResource("StyleBoxFlat_1id7b")
+Icons/icons/CostumeSprite = ExtResource("1_7d6gw")
+Icons/icons/Edit = ExtResource("2_k5u3e")
+Icons/icons/Play = ExtResource("3_kx4sy")
+Icons/icons/Sprite = ExtResource("4_hcg30")
+Icons/icons/TextSprite = ExtResource("5_nuec8")
+Icons/icons/Translate = ExtResource("6_k5u3e")
 MenuBar/styles/hover = SubResource("StyleBoxFlat_kx4sy")
 MenuBar/styles/normal = SubResource("StyleBoxFlat_k5u3e")
 MenuBar/styles/pressed = SubResource("StyleBoxFlat_hcg30")

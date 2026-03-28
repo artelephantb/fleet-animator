@@ -1,6 +1,8 @@
 extends Control
 
 
+@onready var toolbar_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/Control/Toolbar'
+
 @onready var sprite_tree_reference := $'VBoxContainer/HSplitContainer/SpritesPanelContainer/MarginContainer/VBoxContainer/SpriteTree'
 @onready var canvas_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/Control/Canvas'
 
@@ -60,6 +62,8 @@ func _ready() -> void:
 
 	ExtensionLoader.load_unpacked_extension('res://base_extensions/core')
 	print('Loaded core extension')
+
+	toolbar_reference.add_tool('Manipulate', get_theme_icon('Translate', 'Icons'))
 
 	for packed_user_extension in DirAccess.get_files_at(ExtensionLoader.extensions_path):
 		var extension_path := ExtensionLoader.extensions_path.path_join(packed_user_extension)
