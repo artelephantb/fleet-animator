@@ -15,7 +15,6 @@ maximize_disabled = true
 min_size = Vector2i(500, 400)
 content_scale_mode = 1
 content_scale_aspect = 4
-content_scale_factor = 1.6
 script = ExtResource("1_d5b1w")
 
 [node name="Background" type="PanelContainer" parent="." unique_id=85794231]
@@ -70,7 +69,6 @@ text = "Output File"
 
 [node name="FileSelector" parent="MarginContainer/VBoxContainer" unique_id=1703167137 instance=ExtResource("1_wl74n")]
 layout_mode = 2
-select_button_text = null
 filters = PackedStringArray("*.mp4")
 
 [node name="HSeparator3" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=510155177]

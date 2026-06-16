@@ -15,7 +15,6 @@ maximize_disabled = true
 min_size = Vector2i(1250, 1045)
 content_scale_mode = 1
 content_scale_aspect = 4
-content_scale_factor = 1.6
 script = ExtResource("1_gf5eh")
 
 [node name="Background" type="PanelContainer" parent="." unique_id=85794231]
