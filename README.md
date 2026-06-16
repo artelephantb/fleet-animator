@@ -1,16 +1,16 @@
 # Fleet Animator
-Fleet Animator is an animation application for creating motion graphics. Unlike other animation programs, Fleet Animator uses node graphs.
+Fleet Animator is an animation application for creating motion graphics, and soon to be made for making frame-by-frame and interpolated animation.
 
-## Sprites
-In many other animation programs, they usually use *layers*; but this is different from Fleet Animator, which uses sprites instead. Sprites can have positional information, scale information, or more. These properties control how the sprite acts and behaves.
+## Layers
+Layers mainly include the position, scale, and rotational transforms. These transforms can be done using the `Transform` tool, see `Toolset` section.
 
-### Sprites Panel
-Sprites are seen in the `Sprite Panel` on the left. Sprites can be created by pressing the `+ Sprite` button at the bottom of the panel. Clicking on a sprite in the panel will select the sprite. Sprites can be renamed by clicking on the selected sprite's name.
-
-### Inspector Panel
+## Inspector Panel
 A sprite's properties can be accessed and edited by using the `Inspector Panel` on the right. These properties will change depending on the selected sprite.
 
-### Components
+## Toolset
+The toolset is a set of tools to transform and change layers.
+
+## Components
 Animation of a sprite can be created by using *components*. Components are used at the `Component Graph` located at the bottom.
 
 Pressing the *Add Component* button shows a popup for adding a component. Double clicking one of these, or by pressing the *Select* button will create an instance of that component on the graph.

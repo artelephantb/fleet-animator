@@ -1,16 +1,16 @@
 extends Control
 
 
-@onready var toolbar_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/Control/Toolbar'
+@onready var toolbar_reference := $'VBoxContainer/HSplitContainer/Toolset'
 
-@onready var sprite_tree_reference := $'VBoxContainer/HSplitContainer/SpritesPanelContainer/MarginContainer/VBoxContainer/SpriteTree'
-@onready var canvas_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/Control/Canvas'
+@onready var sprite_tree_reference := $'VBoxContainer/HSplitContainer/RightContainer/LayersPanelContainer/MarginContainer/VBoxContainer/LayerTree'
+@onready var canvas_reference := $'VBoxContainer/HSplitContainer/MiddleContainer/Control/Canvas'
 
-@onready var inspector_panel_container_reference := $'VBoxContainer/HSplitContainer/InspectorPanelContainer'
+@onready var inspector_panel_container_reference := $'VBoxContainer/HSplitContainer/RightContainer/InspectorPanelContainer'
 
-@onready var sprite_control_gizmo_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/Control/SpriteControlGizmo'
+@onready var sprite_control_gizmo_reference := $'VBoxContainer/HSplitContainer/MiddleContainer/Control/SpriteControlGizmo'
 
-@onready var create_sprite_type_list_window_reference := $'CreateSpriteTypeListWindow'
+@onready var create_sprite_type_list_window_reference := $'CreateLayerTypeListWindow'
 @onready var render_window := $'VBoxContainer/TopBarPanelContainer/RightMarginContainer/HBoxContainer/RenderButton/RenderWindow'
 
 @onready var save_window := $'SaveWindow'
@@ -18,7 +18,7 @@ extends Control
 
 @onready var extensions_manager_window_reference := $'ExtensionsManagerWindow'
 
-@onready var components_graph_reference := $'VBoxContainer/HSplitContainer/VSplitContainer/PanelContainer/ManipulationComponentGraphEdit'
+@onready var components_graph_reference := $'VBoxContainer/HSplitContainer/MiddleContainer/PanelContainer/ManipulationComponentGraphEdit'
 
 @onready var root: TreeItem = sprite_tree_reference.create_item()
 
@@ -79,7 +79,7 @@ func _ready() -> void:
 	components_graph_reference.load_components()
 	extensions_manager_window_reference.reload_extensions()
 
-	create_sprite_type_list_window_reference.change_title('Create New Sprite')
+	create_sprite_type_list_window_reference.change_title('Create New Layer')
 	for sprite_type in sprite_types:
 		create_sprite_type_list_window_reference.add_item(sprite_type, sprite_type.capitalize(), sprite_types[sprite_type].icon)
 
@@ -190,11 +190,11 @@ func create_sprite(type: String, sprite_name: String, sprite_uid := str(randi_ra
 
 	return sprite
 
-func _on_create_sprite_button_pressed() -> void:
+func _on_create_layer_button_pressed() -> void:
 	create_sprite_type_list_window_reference.popup_centered()
 
 func _on_create_sprite_type_list_window_single_item_selected(type: String) -> void:
-	create_sprite(type, 'New Sprite')
+	create_sprite(type, 'New Layer')
 
 
 func save_components(sprite_uid: String) -> void:

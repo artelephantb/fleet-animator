@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://egqyqdii67k0" path="res://scripts/toolbar.gd" id="1_i3mxx"]
 
-[node name="Toolbar" type="PanelContainer" unique_id=1711296862]
+[node name="Toolset" type="PanelContainer" unique_id=1711296862]
 script = ExtResource("1_i3mxx")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1551234671]
@@ -12,5 +12,5 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="ToolsContainer" type="HBoxContainer" parent="MarginContainer" unique_id=586651131]
+[node name="ToolsContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1448605428]
 layout_mode = 2
