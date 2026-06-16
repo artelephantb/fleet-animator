@@ -173,7 +173,6 @@ layout_mode = 2
 
 [node name="ManipulationComponentGraphEdit" parent="VBoxContainer/HSplitContainer/MiddleContainer/PanelContainer" unique_id=1734273846 instance=ExtResource("7_o6xl0")]
 layout_mode = 2
-scroll_offset = Vector2(0, -7)
 right_disconnects = true
 
 [node name="RightContainer" type="VSplitContainer" parent="VBoxContainer/HSplitContainer" unique_id=269655798]

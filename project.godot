@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Fleet Animator"
-run/main_scene="uid://b0vgu5hlv0jdw"
+run/main_scene="uid://ccgptry2x78xg"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="fleet-animator"
 config/features=PackedStringArray("4.6", "GL Compatibility")

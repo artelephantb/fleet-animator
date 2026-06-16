@@ -411,6 +411,14 @@ func save_new_project(name: String, location: String) -> void:
 
 	save_sprites()
 
+	# For project index
+	var config := ConfigFile.new()
+	var err = config.load('user://projects.cfg')
+
+	config.set_value('projects', current_project_name, current_project_location)
+
+	config.save('user://projects.cfg')
+
 func _on_save_window_save_as(name: String, project_location: String) -> void:
 	save_new_project(name, project_location)
 
