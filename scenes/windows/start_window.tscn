@@ -44,7 +44,13 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="ExitConfirmationDialog" type="ConfirmationDialog" parent="." unique_id=1813688720]
+ok_button_text = "Exit"
+dialog_text = "Exit ALL editor windows?"
+
 [connection signal="pressed" from="PanelContainer/VBoxContainer/ProjectActions/NewButton" to="." method="_on_new_button_pressed"]
 [connection signal="item_activated" from="PanelContainer/VBoxContainer/VBoxContainer/ProjectsList" to="." method="_on_projects_list_item_activated"]
 [connection signal="item_clicked" from="PanelContainer/VBoxContainer/VBoxContainer/ProjectsList" to="." method="_on_projects_list_item_clicked"]
 [connection signal="item_selected" from="PanelContainer/VBoxContainer/VBoxContainer/ProjectsList" to="." method="_on_projects_list_item_selected"]
+[connection signal="canceled" from="ExitConfirmationDialog" to="." method="_on_exit_confirmation_dialog_canceled"]
+[connection signal="confirmed" from="ExitConfirmationDialog" to="." method="_on_exit_confirmation_dialog_confirmed"]
