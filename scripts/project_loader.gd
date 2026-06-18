@@ -1,8 +1,35 @@
 extends Node
 
 
-func create_new_project() -> void:
-	get_tree().change_scene_to_file('res://scenes/main.tscn')
+@onready var editor_scene := preload('res://scenes/main.tscn')
 
-func load_project(path: String) -> void:
-	pass
+
+func create_new_project_new_window() -> void:
+	var window := Window.new()
+	var editor := editor_scene.instantiate()
+
+	window.size = Vector2(1920, 1080)
+	window.close_requested.connect(func ():
+		window.queue_free()
+	)
+
+	window.add_child(editor)
+	get_tree().root.add_child(window)
+
+	window.move_to_center()
+
+func load_project_new_window(path: String) -> void:
+	var window := Window.new()
+	var editor := editor_scene.instantiate()
+
+	window.size = Vector2(1920, 1080)
+	window.close_requested.connect(func ():
+		window.queue_free()
+	)
+
+	window.add_child(editor)
+	get_tree().root.add_child(window)
+
+	window.move_to_center()
+
+	editor.load_project(path)

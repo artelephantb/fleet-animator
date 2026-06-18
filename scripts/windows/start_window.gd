@@ -7,6 +7,10 @@ var project_list: Array[String] = []
 
 
 func _ready() -> void:
+	var parent := get_parent()
+	if parent is Window:
+		parent.title = ProjectSettings.get_setting('application/config/name') + ' - Project Manager'
+
 	var config := ConfigFile.new()
 	config.load('user://projects.cfg')
 
@@ -15,7 +19,7 @@ func _ready() -> void:
 		projects_list_reference.add_item(project_name)
 
 func _on_new_button_pressed() -> void:
-	ProjectLoader.create_new_project()
+	ProjectLoader.create_new_project_new_window()
 
 func _on_projects_list_item_activated(index: int) -> void:
-	ProjectLoader.load_project(project_list[index])
+	ProjectLoader.load_project_new_window(project_list[index])

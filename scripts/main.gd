@@ -451,6 +451,10 @@ func load_project(project_location: String) -> void:
 
 	current_project_name = current_project_config.get_value('project', 'name')
 
+	var parent := get_parent()
+	if parent is Window:
+		parent.title = ProjectSettings.get_setting('application/config/name') + ' - ' + current_project_name
+
 	# Load scene
 	var file_access := FileAccess.open(project_location + '/res/scenes/main.json', FileAccess.READ)
 	var scene_content: Dictionary = JSON.parse_string(file_access.get_as_text())
