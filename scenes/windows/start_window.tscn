@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ccgptry2x78xg"]
 
 [ext_resource type="Script" uid="uid://b020da70go3fr" path="res://scripts/windows/start_window.gd" id="1_r0o84"]
+[ext_resource type="Script" uid="uid://fixpl0xouajm" path="res://scripts/windows/third_party_credits.gd" id="2_oxnbr"]
 
 [node name="StartWindow" type="Control" unique_id=953210629]
 layout_mode = 3
@@ -30,6 +31,10 @@ layout_mode = 2
 layout_mode = 2
 text = "New"
 
+[node name="ThirdPartyCreditsButton" type="Button" parent="PanelContainer/VBoxContainer/ProjectActions" unique_id=1951635516]
+layout_mode = 2
+text = "Third-party Credits"
+
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=878045296]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -48,9 +53,17 @@ size_flags_vertical = 3
 ok_button_text = "Exit"
 dialog_text = "Exit ALL editor windows?"
 
+[node name="ThirdPartyCreditsWindow" type="Window" parent="." unique_id=190447039]
+oversampling_override = 1.0
+visible = false
+script = ExtResource("2_oxnbr")
+metadata/_custom_type_script = "uid://fixpl0xouajm"
+
 [connection signal="pressed" from="PanelContainer/VBoxContainer/ProjectActions/NewButton" to="." method="_on_new_button_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/ProjectActions/ThirdPartyCreditsButton" to="." method="_on_third_party_button_pressed"]
 [connection signal="item_activated" from="PanelContainer/VBoxContainer/VBoxContainer/ProjectsList" to="." method="_on_projects_list_item_activated"]
 [connection signal="item_clicked" from="PanelContainer/VBoxContainer/VBoxContainer/ProjectsList" to="." method="_on_projects_list_item_clicked"]
 [connection signal="item_selected" from="PanelContainer/VBoxContainer/VBoxContainer/ProjectsList" to="." method="_on_projects_list_item_selected"]
 [connection signal="canceled" from="ExitConfirmationDialog" to="." method="_on_exit_confirmation_dialog_canceled"]
 [connection signal="confirmed" from="ExitConfirmationDialog" to="." method="_on_exit_confirmation_dialog_confirmed"]
+[connection signal="close_requested" from="ThirdPartyCreditsWindow" to="." method="_on_third_party_credits_window_close_requested"]

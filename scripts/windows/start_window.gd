@@ -4,6 +4,8 @@ extends Control
 @onready var projects_list_reference := $'PanelContainer/VBoxContainer/VBoxContainer/ProjectsList'
 @onready var exit_confirmation_reference := $'ExitConfirmationDialog'
 
+@onready var third_party_popup_reference := $'ThirdPartyCreditsWindow'
+
 var project_list: Array[String] = []
 
 
@@ -25,11 +27,20 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		exit_confirmation_reference.popup_centered()
 
+
 func _on_new_button_pressed() -> void:
 	ProjectLoader.create_new_project_new_window()
 
+func _on_third_party_button_pressed() -> void:
+	third_party_popup_reference.popup_centered()
+
+func _on_third_party_credits_window_close_requested() -> void:
+	third_party_popup_reference.hide()
+
+
 func _on_projects_list_item_activated(index: int) -> void:
 	ProjectLoader.load_project_new_window(project_list[index])
+
 
 func _on_exit_confirmation_dialog_canceled() -> void:
 	exit_confirmation_reference.hide()
