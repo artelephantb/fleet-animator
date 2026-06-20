@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://yicd4qsuk04k" path="res://scenes/windows/render_window.tscn" id="3_tefeu"]
 [ext_resource type="PackedScene" uid="uid://bqnq57sninp87" path="res://scenes/component_graph.tscn" id="7_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://cn5kv1psb6nm8" path="res://scenes/toolset.tscn" id="7_trceg"]
-[ext_resource type="PackedScene" uid="uid://dcwp6i4s668nl" path="res://scenes/windows/item_list_window.tscn" id="8_85g3d"]
 [ext_resource type="PackedScene" uid="uid://blbk7sf6jstik" path="res://scenes/inspector_panel_container.tscn" id="8_choun"]
 [ext_resource type="PackedScene" uid="uid://b1xrvoxm3y8q0" path="res://scenes/windows/save_window.tscn" id="8_tipki"]
 [ext_resource type="PackedScene" uid="uid://dp4wl2a7nbfhu" path="res://scenes/windows/load_window.tscn" id="11_ya4ey"]
@@ -173,7 +172,6 @@ layout_mode = 2
 
 [node name="ManipulationComponentGraphEdit" parent="VBoxContainer/HSplitContainer/MiddleContainer/PanelContainer" unique_id=1734273846 instance=ExtResource("7_o6xl0")]
 layout_mode = 2
-scroll_offset = Vector2(-120, 0)
 right_disconnects = true
 
 [node name="RightContainer" type="VSplitContainer" parent="VBoxContainer/HSplitContainer" unique_id=269655798]
@@ -207,7 +205,13 @@ script = ExtResource("2_0wfyh")
 layout_mode = 2
 text = "+ Layer"
 
-[node name="CreateLayerTypeListWindow" parent="." unique_id=1658129983 instance=ExtResource("8_85g3d")]
+[node name="PopupMenu" type="PopupMenu" parent="VBoxContainer/HSplitContainer/RightContainer/LayersPanelContainer/MarginContainer/VBoxContainer/CreateLayerButton" unique_id=1011061067]
+oversampling_override = 1.0
+size = Vector2i(174, 100)
+prefer_native_menu = true
+item_count = 1
+item_0/text = "Dynamic Layer"
+item_0/id = 0
 
 [node name="SaveWindow" parent="." unique_id=680731760 instance=ExtResource("8_tipki")]
 
@@ -225,6 +229,6 @@ text = "+ Layer"
 [connection signal="handle_pressed" from="VBoxContainer/HSplitContainer/MiddleContainer/Control/SpriteControlGizmo" to="." method="_on_sprite_control_gizmo_handle_pressed"]
 [connection signal="item_selected" from="VBoxContainer/HSplitContainer/RightContainer/LayersPanelContainer/MarginContainer/VBoxContainer/LayerTree" to="." method="_on_sprite_tree_item_selected"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/RightContainer/LayersPanelContainer/MarginContainer/VBoxContainer/CreateLayerButton" to="." method="_on_create_layer_button_pressed"]
-[connection signal="single_item_selected" from="CreateLayerTypeListWindow" to="." method="_on_create_sprite_type_list_window_single_item_selected"]
+[connection signal="id_pressed" from="VBoxContainer/HSplitContainer/RightContainer/LayersPanelContainer/MarginContainer/VBoxContainer/CreateLayerButton/PopupMenu" to="." method="_on_popup_menu_id_pressed"]
 [connection signal="save_as" from="SaveWindow" to="." method="_on_save_window_save_as"]
 [connection signal="load_project" from="LoadWindow" to="." method="_on_load_window_load_project"]

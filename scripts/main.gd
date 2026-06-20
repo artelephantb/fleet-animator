@@ -10,7 +10,8 @@ extends Control
 
 @onready var sprite_control_gizmo_reference := $'VBoxContainer/HSplitContainer/MiddleContainer/Control/SpriteControlGizmo'
 
-@onready var create_sprite_type_list_window_reference := $'CreateLayerTypeListWindow'
+@onready var new_layer_popup_menu := $'VBoxContainer/HSplitContainer/RightContainer/LayersPanelContainer/MarginContainer/VBoxContainer/CreateLayerButton/PopupMenu'
+
 @onready var render_window := $'VBoxContainer/TopBarPanelContainer/RightMarginContainer/HBoxContainer/RenderButton/RenderWindow'
 
 @onready var save_window := $'SaveWindow'
@@ -34,6 +35,10 @@ var sprite_types := {
 		'scene': preload('res://scenes/sprites/CostumeSprite.tscn')
 	}
 }
+
+var sprite_types_mappings := [
+	'costume_sprite'
+]
 
 var playing_animation := false
 
@@ -78,10 +83,6 @@ func _ready() -> void:
 
 	components_graph_reference.load_components()
 	extensions_manager_window_reference.reload_extensions()
-
-	create_sprite_type_list_window_reference.change_title('Create New Layer')
-	for sprite_type in sprite_types:
-		create_sprite_type_list_window_reference.add_item(sprite_type, sprite_type.capitalize(), sprite_types[sprite_type].icon)
 
 	part_temp_directory_location = ProjectSettings.globalize_path('user://part_temp')
 	DirAccess.make_dir_recursive_absolute(part_temp_directory_location)
@@ -191,10 +192,10 @@ func create_sprite(type: String, sprite_name: String, sprite_uid := str(randi_ra
 	return sprite
 
 func _on_create_layer_button_pressed() -> void:
-	create_sprite_type_list_window_reference.popup_centered()
+	new_layer_popup_menu.popup(Rect2(DisplayServer.mouse_get_position(), Vector2(0.0, 0.0)))
 
-func _on_create_sprite_type_list_window_single_item_selected(type: String) -> void:
-	create_sprite(type, 'New Layer')
+func _on_popup_menu_id_pressed(id: int) -> void:
+	create_sprite(sprite_types_mappings[id], 'New Layer')
 
 
 func save_components(sprite_uid: String) -> void:
