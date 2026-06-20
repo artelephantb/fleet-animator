@@ -107,7 +107,7 @@ func update_play_animation() -> void:
 			if component_uid not in animation_variables:
 				animation_variables[component_uid] = {}
 
-			var component_script = ExtensionLoader.components[component.type].script
+			var component_script = ExtensionLoader.components[component.id].script
 
 			var is_done: bool = component_script.run(
 				component_uid,
@@ -209,7 +209,7 @@ func save_components(sprite_uid: String) -> void:
 		if child is not GraphNode: continue
 
 		data.components[child.name] = {
-			'type': child.get_meta('type'),
+			'id': child.get_meta('id'),
 			'position_offset': child.position_offset,
 			'inputs': child.get_inputs()
 		}
@@ -228,7 +228,7 @@ func load_components(sprite_data: Dictionary) -> void:
 
 	for component_uid in components:
 		var component: Dictionary = components[component_uid]
-		components_graph_reference.add_component(component.type, component.inputs, component_uid, component.position_offset)
+		components_graph_reference.add_component(component.id, component.inputs, component_uid, component.position_offset)
 
 	for connection in connections:
 		components_graph_reference.connect_node(connection.from_node, connection.from_port, connection.to_node, connection.to_port, connection.keep_alive)
@@ -276,7 +276,7 @@ func play_animation() -> void:
 		for component_uid in data.components:
 			var component: Dictionary = data.components[component_uid]
 
-			if component.type == 'on_start_component':
+			if component.id == 0:
 				data.active_components.append(component_uid)
 
 	animation_variables.clear()
@@ -342,7 +342,7 @@ func render_animation(framerate: int, compression: int, output_path: String) -> 
 		for component_uid in data.components:
 			var component: Dictionary = data.components[component_uid]
 
-			if component.type == 'on_start_component':
+			if component.id == 0:
 				data.active_components.append(component_uid)
 
 	animation_variables.clear()

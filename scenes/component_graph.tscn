@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bqnq57sninp87"]
 
 [ext_resource type="Script" uid="uid://it3n53kdxl4s" path="res://scripts/component_graph.gd" id="1_r75bl"]
-[ext_resource type="PackedScene" uid="uid://dcwp6i4s668nl" path="res://scenes/windows/item_list_window.tscn" id="2_cqidu"]
 
 [node name="ManipulationComponentGraphEdit" type="GraphEdit" unique_id=1734273846]
 anchors_preset = 15
@@ -11,9 +10,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_r75bl")
 
-[node name="ComponentListWindow" parent="." unique_id=1658129983 instance=ExtResource("2_cqidu")]
+[node name="ComponentPopupMenu" type="PopupMenu" parent="." unique_id=1840029484]
+oversampling_override = 1.0
+search_bar_enabled = true
 
 [connection signal="connection_request" from="." to="." method="_on_connection_request"]
 [connection signal="delete_nodes_request" from="." to="." method="_on_delete_nodes_request"]
 [connection signal="disconnection_request" from="." to="." method="_on_disconnection_request"]
-[connection signal="single_item_selected" from="ComponentListWindow" to="." method="_on_component_list_window_single_item_selected"]
+[connection signal="id_pressed" from="ComponentPopupMenu" to="." method="_on_component_popup_menu_id_pressed"]

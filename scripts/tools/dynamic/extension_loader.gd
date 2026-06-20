@@ -2,7 +2,7 @@ extends Node
 
 
 var extensions := {}
-var components := {}
+var components := []
 
 var extensions_path := ProjectSettings.globalize_path('user://extensions')
 
@@ -37,13 +37,11 @@ func load_unpacked_extension(path: String) -> void:
 			var script_path := path.path_join(script)
 			var loaded_script = load(script_path)
 
-			var component_id: String = script_path.get_file().get_basename()
-
-			components[component_id] = {
+			components.append({
 				'name': loaded_script.component_name,
 				'description': loaded_script.component_description,
 				'script': loaded_script
-			}
+			})
 
 func load_packed_extension(path: String) -> void:
 	var zip_reader := ZIPReader.new()
@@ -73,10 +71,8 @@ func load_packed_extension(path: String) -> void:
 			var script_path := temp_script_file.get_path()
 			var loaded_script = load(script_path)
 
-			var component_id: String = script.get_file().get_basename()
-
-			components[component_id] = {
+			components.append({
 				'name': loaded_script.component_name,
 				'description': loaded_script.component_description,
 				'script': loaded_script
-			}
+			})
