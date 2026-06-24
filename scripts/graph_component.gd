@@ -25,16 +25,16 @@ func add_label(text: String) -> void:
 	label.text = text
 	add_child(label)
 
-func add_float_property(id: StringName, default := 0.0) -> void:
+func add_float_property(id: StringName, default := 0.0, min := -10000.0, max := 10000.0, allow_lesser := true, allow_greater := true) -> void:
 	var spin_box := SpinBox.new()
 	spin_box.name = id
 
 	spin_box.value = default
-	spin_box.min_value = -10000.0
-	spin_box.max_value = 10000.0
+	spin_box.min_value = min
+	spin_box.max_value = max
 	spin_box.step = 0.01
-	spin_box.allow_greater = true
-	spin_box.allow_lesser = true
+	spin_box.allow_lesser = allow_lesser
+	spin_box.allow_greater = allow_greater
 
 	add_child(spin_box)
 
