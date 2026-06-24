@@ -24,6 +24,7 @@ config/icon="res://icon.svg"
 ProjectLoader="*uid://xyt3kogill8l"
 ExtensionLoader="*uid://bxmtpaxk3p7v5"
 ImageTools="*uid://bcdpiefcwsq4v"
+AnimationEngine="*uid://c8v7e5e2c71ge"
 
 [display]
 

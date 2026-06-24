@@ -13,8 +13,10 @@ func _ready() -> void:
 
 func load_components() -> void:
 	component_popup_menu.clear()
-	for id in len(ExtensionLoader.components):
-		component_popup_menu.add_item(ExtensionLoader.components[id].name, id)
+	for catagory_id in AnimationEngine.component_catagories:
+		var catagory = AnimationEngine.component_catagories[catagory_id]
+		for name_id in catagory.component_names:
+			component_popup_menu.add_item(catagory.component_names[name_id])
 
 
 func _on_connection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:

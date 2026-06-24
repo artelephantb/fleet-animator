@@ -2,8 +2,6 @@ extends Node
 
 
 var extensions := {}
-var components := []
-
 var extensions_path := ProjectSettings.globalize_path('user://extensions')
 
 
@@ -34,14 +32,7 @@ func load_unpacked_extension(path: String) -> void:
 	var components_list = config_file.get_value('requirements', 'components')
 	if components_list != null:
 		for script in components_list:
-			var script_path := path.path_join(script)
-			var loaded_script = load(script_path)
-
-			components.append({
-				'name': loaded_script.component_name,
-				'description': loaded_script.component_description,
-				'script': loaded_script
-			})
+			AnimationEngine.register_catagory_script(path.path_join(script))
 
 func load_packed_extension(path: String) -> void:
 	var zip_reader := ZIPReader.new()
@@ -68,11 +59,4 @@ func load_packed_extension(path: String) -> void:
 			temp_script_file.store_buffer(zip_reader.read_file(script))
 			temp_script_file.close()
 
-			var script_path := temp_script_file.get_path()
-			var loaded_script = load(script_path)
-
-			components.append({
-				'name': loaded_script.component_name,
-				'description': loaded_script.component_description,
-				'script': loaded_script
-			})
+			AnimationEngine.register_catagory_script(temp_script_file.get_path())
