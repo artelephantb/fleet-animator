@@ -209,7 +209,8 @@ func save_components(sprite_uid: String) -> void:
 		if child is not GraphNode: continue
 
 		data.components[child.name] = {
-			'id': child.get_meta('id'),
+			'catagory': child.catagory,
+			'type': child.type,
 			'position_offset': child.position_offset,
 			'inputs': child.get_inputs()
 		}
@@ -228,7 +229,7 @@ func load_components(sprite_data: Dictionary) -> void:
 
 	for component_uid in components:
 		var component: Dictionary = components[component_uid]
-		components_graph_reference.add_component(component.id, component.inputs, component_uid, component.position_offset)
+		components_graph_reference.add_component(component.catagory, component.type, component.inputs, component_uid, component.position_offset)
 
 	for connection in connections:
 		components_graph_reference.connect_node(connection.from_node, connection.from_port, connection.to_node, connection.to_port, connection.keep_alive)

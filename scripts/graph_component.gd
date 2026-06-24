@@ -13,3 +13,6 @@ func _init(catagory: StringName, type: StringName) -> void:
 
 func set_inputs(inputs: Dictionary) -> void:
 	pass
+
+func get_inputs() -> Dictionary:
+	return {}
