@@ -25,6 +25,12 @@ func add_label(text: String) -> void:
 	label.text = text
 	add_child(label)
 
+func add_runtime_connection(has_left := true, has_right := true) -> void:
+	var label := Label.new()
+	label.text = 'Runtime'
+	add_child(label)
+	set_slot(get_child_count() - 1, has_left, 0, Color.GREEN, has_right, 0, Color.GREEN)
+
 func add_float_property(id: StringName, default := 0.0, min := -10000.0, max := 10000.0, allow_lesser := true, allow_greater := true) -> void:
 	var spin_box := SpinBox.new()
 	spin_box.name = id
@@ -37,6 +43,7 @@ func add_float_property(id: StringName, default := 0.0, min := -10000.0, max := 
 	spin_box.allow_greater = allow_greater
 
 	add_child(spin_box)
+	set_slot(get_child_count() - 1, true, 3, Color.BLUE, false, 0, Color.BLACK)
 
 func add_vector2_property(id: StringName, default := Vector2(0.0, 0.0)) -> void:
 	var container := VBoxContainer.new()

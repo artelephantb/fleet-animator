@@ -35,21 +35,26 @@ var component_bindings := {
 
 func looks_recieve_signal(component: GraphComponent):
 	component.title = 'On Receiving Signal'
+	component.add_runtime_connection(false)
 
 func looks_change_position(component: GraphComponent):
 	component.title = 'Change Position'
+	component.add_runtime_connection()
 	component.add_vector2_property('Position')
 	component.add_label('Across Frames')
 	component.add_float_property('AcrossFrames', 1.0, 1.0, 10000.0, false)
 
 func looks_change_scale(component: GraphComponent):
 	component.title = 'Change Scale'
+	component.add_runtime_connection()
 
 func looks_change_rotation(component: GraphComponent):
 	component.title = 'Change Rotation'
+	component.add_runtime_connection()
 
 func looks_wait_frames(component: GraphComponent):
 	component.title = 'Wait Frames'
+	component.add_runtime_connection()
 	component.add_label('Frames')
 	component.add_float_property('Frames', 60.0, 1.0, 10000.0, false)
 
