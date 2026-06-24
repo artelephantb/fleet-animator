@@ -38,6 +38,9 @@ func looks_recieve_signal(component: GraphComponent):
 
 func looks_change_position(component: GraphComponent):
 	component.title = 'Change Position'
+	component.add_vector2_property('Position')
+	component.add_label('Across Frames')
+	component.add_float_property('AcrossFrames', 0.0)
 
 func looks_change_scale(component: GraphComponent):
 	component.title = 'Change Scale'
@@ -47,8 +50,8 @@ func looks_change_rotation(component: GraphComponent):
 
 func looks_wait_frames(component: GraphComponent):
 	component.title = 'Wait Frames'
-	component.add_label('Across Frames')
-	component.add_float_property('AcrossFrames', 0.0)
+	component.add_label('Frames')
+	component.add_float_property('Frames', 60.0)
 
 
 func recieve_signal():
