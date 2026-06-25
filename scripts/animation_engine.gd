@@ -9,7 +9,7 @@ var component_catagories := {}
 
 func _process(delta: float) -> void:
 	for process_uid in processes:
-		processes[process_uid].update()
+		processes[process_uid].update(delta)
 
 func register_animation_process() -> AnimationProcess:
 	var uid := str(randi_range(-10000, 10000))

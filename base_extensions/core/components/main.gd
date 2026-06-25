@@ -65,20 +65,21 @@ func looks_wait_frames(component: GraphComponent):
 	component.add_float_property('Frames', 60.0, 1.0, 10000.0, false)
 
 
-func animation_started():
+func animation_started(path: ComponentPath):
 	print('Hello, World!')
+	path.finished_compnent()
 
-func recieve_signal():
+func recieve_signal(path: ComponentPath):
 	pass
 
-func change_position():
+func change_position(path: ComponentPath):
 	pass
 
-func change_scale():
+func change_scale(path: ComponentPath):
 	pass
 
-func change_rotation():
+func change_rotation(path: ComponentPath):
 	pass
 
-func wait_frames():
+func wait_frames(path: ComponentPath):
 	pass
