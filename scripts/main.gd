@@ -37,6 +37,8 @@ var sprite_types_mappings := [
 	'costume_sprite'
 ]
 
+var animation_process := AnimationEngine.register_animation_process()
+
 var animation_variables := {} # DEPRECATED
 
 var playing_animation := false # DEPRECATED
@@ -86,6 +88,9 @@ func _ready() -> void:
 	part_temp_directory_location = ProjectSettings.globalize_path('user://part_temp')
 	DirAccess.make_dir_recursive_absolute(part_temp_directory_location)
 	part_temp_directory = DirAccess.open(part_temp_directory_location)
+
+func _exit_tree() -> void:
+	AnimationEngine.unregister_animation_process(animation_process)
 
 
 func update_play_animation() -> void: # DEPRECATED
@@ -178,11 +183,7 @@ func create_sprite(type: String, sprite_name: String, sprite_uid := str(randi_ra
 	new_sprite_item.set_meta('uid', sprite_uid)
 	new_sprite_item.set_meta('type', type)
 
-	AnimationEngine.animation_data[sprite_uid] = {
-		'components': {},
-		'active_components': [],
-		'connections': []
-	}
+	animation_process.set_layer_data(sprite_uid)
 
 	var sprite = sprite_type_info.scene.instantiate()
 	sprite.name = sprite_uid
@@ -198,23 +199,20 @@ func _on_popup_menu_id_pressed(id: int) -> void:
 
 
 func save_components(sprite_uid: String) -> void:
-	var data := {
-		'components': {},
-		'active_components': [],
-		'connections': components_graph_reference.get_connection_list()
-	}
+	var components := {}
+	var connections: Array = components_graph_reference.get_connection_list()
 
 	for child in components_graph_reference.get_children():
 		if child is not GraphNode: continue
 
-		data.components[child.name] = {
+		components[child.name] = {
 			'catagory': child.catagory,
 			'type': child.type,
 			'position_offset': child.position_offset,
 			'inputs': child.get_inputs()
 		}
 
-	AnimationEngine.animation_data[sprite_uid] = data
+	animation_process.set_layer_data(sprite_uid, components, connections)
 
 func load_components(sprite_data: Dictionary) -> void:
 	# Remove previous components
@@ -251,7 +249,7 @@ func _on_sprite_tree_item_selected() -> void:
 		save_components(selected_sprite_uid)
 
 	selected_sprite_uid = item_uid
-	load_components(AnimationEngine.animation_data[item_uid])
+	load_components(animation_process.get_layer_data(item_uid))
 
 	sprite_control_gizmo_reference.selected_node = selected_node
 
@@ -286,9 +284,9 @@ func play_animation() -> void: # DEPRECATED
 	playing_animation = true
 
 func _on_play_button_pressed() -> void:
-	AnimationEngine.stop_animation()
+	animation_process.stop()
 	save_components(selected_sprite_uid)
-	AnimationEngine.spawn_all_of_type('main', 'animation_started')
+	animation_process.spawn_all_of_type('main', 'animation_started')
 
 
 func _on_project_popup_menu_id_pressed(id: int) -> void:
@@ -430,7 +428,7 @@ func _on_save_window_save_as(name: String, project_location: String) -> void:
 func clear_workspace() -> void:
 	selected_sprite_item = null
 	selected_sprite_uid = ''
-	AnimationEngine.animation_data = {}
+	animation_process.clear_data()
 
 	canvas_reference.clear()
 
@@ -471,11 +469,11 @@ func load_project(project_location: String) -> void:
 		var created_sprite := create_sprite('costume_sprite', sprite_data.name, sprite_uid)
 		created_sprite._load(sprite_data)
 
-		AnimationEngine.animation_data[sprite_uid] = {
-			'components': CurveTools.json_to_dictionary(sprite_data.animation.components),
-			'active_components': [],
-			'connections': sprite_data.animation.connections
-		}
+		animation_process.set_layer_data(
+			sprite_uid,
+			CurveTools.json_to_dictionary(sprite_data.animation.components),
+			sprite_data.animation.connections
+		)
 
 func _on_load_window_load_project(project_name: String, project_location: String) -> void:
 	load_project(project_location)
