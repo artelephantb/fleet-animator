@@ -3,7 +3,7 @@ class_name AnimationProcess
 
 var index: int
 
-var animation_data := {}
+var layers := {}
 var paths: Array[ComponentPath] = []
 
 
@@ -12,16 +12,16 @@ func _init(index: int) -> void:
 
 
 func clear_data() -> void:
-	animation_data = {}
+	layers = {}
 
 func set_layer_data(layer_uid: StringName, components := {}, connections := []) -> void:
-	animation_data[layer_uid] = {
+	layers[layer_uid] = {
 		'components': components,
 		'connections': connections
 	}
 
 func get_layer_data(layer_uid: StringName) -> Dictionary:
-	return animation_data[layer_uid]
+	return layers[layer_uid]
 
 
 func stop() -> void:
@@ -35,8 +35,8 @@ func spawn_path(layer_uid: StringName, component_uid: StringName) -> void:
 	paths.append(path)
 
 func spawn_all_of_type(catagory: StringName, type: StringName) -> void:
-	for layer_uid in animation_data:
-		var layer_data = animation_data[layer_uid]
+	for layer_uid in layers:
+		var layer_data = layers[layer_uid]
 		for component_uid in layer_data.components:
 			var component_data = layer_data.components[component_uid]
 
