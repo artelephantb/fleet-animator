@@ -1,14 +1,18 @@
 class_name AnimationProcess
 
 
-var index: int
+var uid: StringName
 
 var layers := {}
 var paths: Array[ComponentPath] = []
 
 
-func _init(index: int) -> void:
-	self.index = index
+func _init(uid: StringName) -> void:
+	self.uid = uid
+
+func update() -> void:
+	for path in paths:
+		print(path)
 
 
 func clear_data() -> void:

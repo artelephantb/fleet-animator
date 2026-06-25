@@ -3,22 +3,22 @@ extends Node
 signal signal_emitted
 
 
-var processes: Array[AnimationProcess] = []
+var processes: Dictionary[StringName, AnimationProcess] = {}
 var component_catagories := {}
 
 
 func _process(delta: float) -> void:
-	for process in processes:
-		for path in process.paths:
-			print(path)
+	for process_uid in processes:
+		processes[process_uid].update()
 
 func register_animation_process() -> AnimationProcess:
-	var process := AnimationProcess.new(len(processes))
-	processes.append(process)
+	var uid := str(randi_range(-10000, 10000))
+	var process := AnimationProcess.new(uid)
+	processes[uid] = process
 	return process
 
 func unregister_animation_process(process: AnimationProcess) -> void:
-	processes.remove_at(process.index)
+	processes.erase(process.uid)
 
 
 func register_catagory_script(path: String) -> void:
