@@ -32,6 +32,6 @@ func finished_component() -> void:
 		path.layer_data_reference = layer_data_reference
 		path.paths_reference = paths_reference
 		path.component_uid = connection.to_node
-		path.component_data = layer_data_reference.components[component_uid]
+		path.component_data = layer_data_reference.components[path.component_uid]
 
 		paths_reference.append(path)

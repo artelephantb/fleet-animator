@@ -73,7 +73,8 @@ func recieve_signal(path: ComponentPath):
 	pass
 
 func change_position(path: ComponentPath):
-	pass
+	print('Hello, Again!')
+	path.finished_component()
 
 func change_scale(path: ComponentPath):
 	pass
