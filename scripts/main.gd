@@ -23,9 +23,6 @@ extends Control
 
 @onready var root: TreeItem = sprite_tree_reference.create_item()
 
-var animation_data := {}
-var animation_variables := {}
-
 var selected_sprite_uid: String
 var selected_sprite_item: TreeItem
 
@@ -40,7 +37,9 @@ var sprite_types_mappings := [
 	'costume_sprite'
 ]
 
-var playing_animation := false
+var animation_variables := {} # DEPRECATED
+
+var playing_animation := false # DEPRECATED
 
 var part_temp_directory: DirAccess
 var part_temp_directory_location: String
@@ -48,7 +47,7 @@ var part_temp_directory_location: String
 var rendering_animation := false
 var animation_output_path: String
 
-var animation_frame := 0
+var animation_frame := 0 # DEPRECATED
 
 var animation_framerate := '60'
 var animation_compression := '18'
@@ -89,11 +88,11 @@ func _ready() -> void:
 	part_temp_directory = DirAccess.open(part_temp_directory_location)
 
 
-func update_play_animation() -> void:
+func update_play_animation() -> void: # DEPRECATED
 	var finnished_sprites := 0
 
-	for sprite_uid in animation_data:
-		var data: Dictionary = animation_data[sprite_uid]
+	for sprite_uid in AnimationEngine.animation_data:
+		var data: Dictionary = AnimationEngine.animation_data[sprite_uid]
 
 		if len(data.active_components) == 0:
 			finnished_sprites += 1
@@ -133,11 +132,11 @@ func update_play_animation() -> void:
 			data.active_components.remove_at(index - removed_amount)
 			removed_amount += 1
 
-	if finnished_sprites == len(animation_data):
+	if finnished_sprites == len(AnimationEngine.animation_data):
 		sprite_control_gizmo_reference.disabled = false
 		playing_animation = false
 
-func update_render_animation() -> void:
+func update_render_animation() -> void: # DEPRECATED
 	update_play_animation()
 
 	if animation_output_path:
@@ -179,7 +178,7 @@ func create_sprite(type: String, sprite_name: String, sprite_uid := str(randi_ra
 	new_sprite_item.set_meta('uid', sprite_uid)
 	new_sprite_item.set_meta('type', type)
 
-	animation_data[sprite_uid] = {
+	AnimationEngine.animation_data[sprite_uid] = {
 		'components': {},
 		'active_components': [],
 		'connections': []
@@ -215,7 +214,7 @@ func save_components(sprite_uid: String) -> void:
 			'inputs': child.get_inputs()
 		}
 
-	animation_data[sprite_uid] = data
+	AnimationEngine.animation_data[sprite_uid] = data
 
 func load_components(sprite_data: Dictionary) -> void:
 	# Remove previous components
@@ -252,7 +251,7 @@ func _on_sprite_tree_item_selected() -> void:
 		save_components(selected_sprite_uid)
 
 	selected_sprite_uid = item_uid
-	load_components(animation_data[item_uid])
+	load_components(AnimationEngine.animation_data[item_uid])
 
 	sprite_control_gizmo_reference.selected_node = selected_node
 
@@ -265,14 +264,15 @@ func _on_render_button_pressed() -> void:
 	render_window.popup_centered()
 
 
-func play_animation() -> void:
+func play_animation() -> void: # DEPRECATED
 	if playing_animation or rendering_animation: return
 
 	if selected_sprite_uid:
 		save_components(selected_sprite_uid)
 
-	for sprite_uid in animation_data:
-		var data: Dictionary = animation_data[sprite_uid]
+	for sprite_uid in AnimationEngine.animation_data:
+		print(AnimationEngine.animation_data)
+		var data: Dictionary = AnimationEngine.animation_data[sprite_uid]
 
 		for component_uid in data.components:
 			var component: Dictionary = data.components[component_uid]
@@ -286,7 +286,9 @@ func play_animation() -> void:
 	playing_animation = true
 
 func _on_play_button_pressed() -> void:
-	AnimationEngine.start_all_of_type('main', 'animation_started')
+	AnimationEngine.stop_animation()
+	save_components(selected_sprite_uid)
+	AnimationEngine.spawn_all_of_type('main', 'animation_started')
 
 
 func _on_project_popup_menu_id_pressed(id: int) -> void:
@@ -337,8 +339,8 @@ func render_animation(framerate: int, compression: int, output_path: String) -> 
 	if selected_sprite_uid:
 		save_components(selected_sprite_uid)
 
-	for sprite_uid in animation_data:
-		var data: Dictionary = animation_data[sprite_uid]
+	for sprite_uid in AnimationEngine.animation_data:
+		var data: Dictionary = AnimationEngine.animation_data[sprite_uid]
 
 		for component_uid in data.components:
 			var component: Dictionary = data.components[component_uid]
@@ -369,7 +371,7 @@ func save_sprites() -> void:
 		var sprite: Node = canvas_reference.get_sprite(sprite_uid)
 		var sprite_properties: Dictionary = sprite._save(current_project_location)
 
-		var sprite_animation_data: Dictionary = animation_data[sprite_uid]
+		var sprite_animation_data: Dictionary = AnimationEngine.animation_data[sprite_uid]
 
 		sprites[sprite_uid] = {
 			'name': sprite_item.get_text(0),
@@ -428,7 +430,7 @@ func _on_save_window_save_as(name: String, project_location: String) -> void:
 func clear_workspace() -> void:
 	selected_sprite_item = null
 	selected_sprite_uid = ''
-	animation_data = {}
+	AnimationEngine.animation_data = {}
 
 	canvas_reference.clear()
 
@@ -469,7 +471,7 @@ func load_project(project_location: String) -> void:
 		var created_sprite := create_sprite('costume_sprite', sprite_data.name, sprite_uid)
 		created_sprite._load(sprite_data)
 
-		animation_data[sprite_uid] = {
+		AnimationEngine.animation_data[sprite_uid] = {
 			'components': CurveTools.json_to_dictionary(sprite_data.animation.components),
 			'active_components': [],
 			'connections': sprite_data.animation.connections
