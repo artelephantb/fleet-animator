@@ -11,6 +11,8 @@ extends HBoxContainer
 var x_spin_box_reference := SpinBox.new()
 var y_spin_box_reference := SpinBox.new()
 
+var default := Vector2(0.0, 0.0)
+
 
 func _ready() -> void:
 	var name_label := Label.new()

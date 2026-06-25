@@ -14,10 +14,24 @@ func _init(catagory: StringName, type: StringName) -> void:
 
 
 func set_inputs(inputs: Dictionary) -> void:
-	pass
+	for child in get_children():
+		if (
+			child is NumberProperty
+			or child is Vector2Property
+		):
+			child.value = inputs.get(child.name, child.default)
 
 func get_inputs() -> Dictionary:
-	return {}
+	var inputs := {}
+
+	for child in get_children():
+		if (
+			child is NumberProperty
+			or child is Vector2Property
+		):
+			inputs[child.name] = child.value
+
+	return inputs
 
 
 func add_label(text: String) -> void:
@@ -35,7 +49,7 @@ func add_float_property(id: StringName, default := 0.0, min := -10000.0, max := 
 	var property := NumberProperty.new()
 	property.name = id
 
-	property.value = default
+	property.default = default
 	property.min_value = min
 	property.max_value = max
 	property.allow_lesser = allow_lesser
@@ -48,7 +62,7 @@ func add_vector2_property(id: StringName, default := Vector2(0.0, 0.0)) -> void:
 	var property := Vector2Property.new()
 
 	property.name = id
-	property.value = default
+	property.default = default
 
 	add_child(property)
 	set_slot(get_child_count() - 1, true, 5, Color.PURPLE, false, 0, Color.BLACK)

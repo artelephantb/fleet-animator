@@ -32,6 +32,8 @@ extends HBoxContainer
 
 var spin_box_reference := SpinBox.new()
 
+var default := 0.0
+
 
 func _ready() -> void:
 	var name_label := Label.new()

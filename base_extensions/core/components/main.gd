@@ -66,14 +66,13 @@ func looks_wait_frames(component: GraphComponent):
 
 
 func animation_started(path: ComponentPath):
-	print('Hello, World!')
 	path.finished_component()
 
 func recieve_signal(path: ComponentPath):
 	pass
 
 func change_position(path: ComponentPath):
-	print('Hello, Again!')
+	print(path.component_data)
 	path.finished_component()
 
 func change_scale(path: ComponentPath):
