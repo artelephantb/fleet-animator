@@ -1,6 +1,7 @@
 static var id = 'main'
 
 static var component_ids: PackedStringArray = [
+	'animation_started',
 	'recieve_signal',
 	'change_position',
 	'change_scale',
@@ -9,6 +10,7 @@ static var component_ids: PackedStringArray = [
 ]
 
 static var component_names := {
+	'animation_started': 'On Animation Started',
 	'recieve_signal': 'On Receiving Signal',
 	'change_position': 'Change Position',
 	'change_scale': 'Change Scale',
@@ -17,6 +19,7 @@ static var component_names := {
 }
 
 var component_looks := {
+	'animation_started': looks_animation_started,
 	'recieve_signal': looks_recieve_signal,
 	'change_position': looks_change_position,
 	'change_scale': looks_change_scale,
@@ -25,6 +28,7 @@ var component_looks := {
 }
 
 var component_bindings := {
+	'animation_started': animation_started,
 	'recieve_signal': recieve_signal,
 	'change_position': change_position,
 	'change_scale': change_scale,
@@ -32,6 +36,10 @@ var component_bindings := {
 	'wait_frames': wait_frames
 }
 
+
+func looks_animation_started(component: GraphComponent):
+	component.title = 'On Animation Started'
+	component.add_runtime_connection(false)
 
 func looks_recieve_signal(component: GraphComponent):
 	component.title = 'On Receiving Signal'
@@ -56,6 +64,9 @@ func looks_wait_frames(component: GraphComponent):
 	component.add_runtime_connection()
 	component.add_float_property('Frames', 60.0, 1.0, 10000.0, false)
 
+
+func animation_started():
+	pass
 
 func recieve_signal():
 	pass

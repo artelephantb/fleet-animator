@@ -286,7 +286,7 @@ func play_animation() -> void:
 	playing_animation = true
 
 func _on_play_button_pressed() -> void:
-	play_animation()
+	AnimationEngine.start_all_of_type('main', 'animation_started')
 
 
 func _on_project_popup_menu_id_pressed(id: int) -> void:
