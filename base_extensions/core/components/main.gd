@@ -67,7 +67,7 @@ func looks_wait_frames(component: GraphComponent):
 
 func animation_started(path: ComponentPath):
 	print('Hello, World!')
-	path.finished_compnent()
+	path.finished_component()
 
 func recieve_signal(path: ComponentPath):
 	pass

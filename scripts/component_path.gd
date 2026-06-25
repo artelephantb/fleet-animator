@@ -1,9 +1,13 @@
 class_name ComponentPath
 
 
-var current_component_data: Dictionary
-var current_component_uid: StringName
-var layer_uid: StringName
+var layer_data_reference: Dictionary
+var paths_reference: Array
+
+var component_uid: StringName
+var component_data: Dictionary
+
+var path_index: int
 
 var variables := {}
 
@@ -18,5 +22,16 @@ func get_or_add_var(name: StringName, default = null):
 	return variables.get_or_add(name, default)
 
 
-func finished_compnent() -> void:
-	print('Finished Component')
+func finished_component() -> void:
+	paths_reference.remove_at(path_index)
+
+	for connection in layer_data_reference.connections:
+		if connection.from_node != component_uid: continue
+
+		var path := ComponentPath.new()
+		path.layer_data_reference = layer_data_reference
+		path.paths_reference = paths_reference
+		path.component_uid = connection.to_node
+		path.component_data = layer_data_reference.components[component_uid]
+
+		paths_reference.append(path)

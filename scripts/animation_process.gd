@@ -12,7 +12,7 @@ func _init(uid: StringName) -> void:
 
 func update(delta: float) -> void:
 	for path in paths:
-		var binding = AnimationEngine.component_catagories[path.current_component_data.catagory].component_bindings.get(path.current_component_data.type)
+		var binding = AnimationEngine.component_catagories[path.component_data.catagory].component_bindings.get(path.component_data.type)
 		binding.call(path)
 
 
@@ -33,11 +33,13 @@ func stop() -> void:
 	paths.clear()
 
 
-func spawn_path(layer_uid: StringName, component_uid: StringName, component_data: Dictionary) -> void:
+func spawn_path(layer_data: Dictionary, component_uid: StringName, component_data: Dictionary) -> void:
 	var path := ComponentPath.new()
-	path.layer_uid = layer_uid
-	path.current_component_uid = component_uid
-	path.current_component_data = component_data
+	path.layer_data_reference = layer_data
+	path.paths_reference = paths
+	path.component_uid = component_uid
+	path.component_data = component_data
+	path.path_index = len(paths)
 	paths.append(path)
 
 func spawn_all_of_type(catagory: StringName, type: StringName) -> void:
@@ -49,4 +51,4 @@ func spawn_all_of_type(catagory: StringName, type: StringName) -> void:
 			if component_data.catagory != catagory: continue
 			if component_data.type != type: continue
 
-			spawn_path(layer_uid, component_uid, component_data)
+			spawn_path(layer_data, component_uid, component_data)
