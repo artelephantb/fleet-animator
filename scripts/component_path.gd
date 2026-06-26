@@ -1,6 +1,8 @@
 class_name ComponentPath
 
 
+var layer_reference: Node
+
 var layer_data_reference: Dictionary
 var paths_reference: Array
 
@@ -29,6 +31,7 @@ func finished_component() -> void:
 		if connection.from_node != component_uid: continue
 
 		var path := ComponentPath.new()
+		path.layer_reference = layer_reference
 		path.layer_data_reference = layer_data_reference
 		path.paths_reference = paths_reference
 		path.component_uid = connection.to_node

@@ -23,8 +23,8 @@ func create_texture_sprite(sprite_uid: String, texture: Texture2D, start_positio
 
 	return new_sprite
 
-func get_sprite(sprite_uid: String) -> Node:
-	return sub_viewport_reference.get_node(sprite_uid)
+func get_layer(layer_uid: String) -> Node:
+	return sub_viewport_reference.get_node(layer_uid)
 
 
 func clear() -> void:

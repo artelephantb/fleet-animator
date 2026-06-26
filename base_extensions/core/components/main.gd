@@ -72,7 +72,7 @@ func recieve_signal(path: ComponentPath):
 	pass
 
 func change_position(path: ComponentPath):
-	print(path.component_data)
+	path.layer_reference.position = path.component_data.inputs.Position
 	path.finished_component()
 
 func change_scale(path: ComponentPath):

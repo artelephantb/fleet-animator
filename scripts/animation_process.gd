@@ -6,14 +6,16 @@ var uid: StringName
 var layers := {}
 var paths: Array[ComponentPath] = []
 
+var canvas_reference: Node
+
 
 func _init(uid: StringName) -> void:
 	self.uid = uid
 
 func update(delta: float) -> void:
 	for path in paths:
-		var binding = AnimationEngine.component_catagories[path.component_data.catagory].component_bindings.get(path.component_data.type)
-		binding.call(path)
+		var callable = AnimationEngine.component_catagories[path.component_data.catagory].component_bindings.get(path.component_data.type)
+		callable.call(path)
 
 
 func clear_data() -> void:
@@ -33,8 +35,9 @@ func stop() -> void:
 	paths.clear()
 
 
-func spawn_path(layer_data: Dictionary, component_uid: StringName, component_data: Dictionary) -> void:
+func spawn_path(layer_uid: StringName, layer_data: Dictionary, component_uid: StringName, component_data: Dictionary) -> void:
 	var path := ComponentPath.new()
+	path.layer_reference = canvas_reference.get_layer(layer_uid)
 	path.layer_data_reference = layer_data
 	path.paths_reference = paths
 	path.component_uid = component_uid
@@ -51,4 +54,4 @@ func spawn_all_of_type(catagory: StringName, type: StringName) -> void:
 			if component_data.catagory != catagory: continue
 			if component_data.type != type: continue
 
-			spawn_path(layer_data, component_uid, component_data)
+			spawn_path(layer_uid, layer_data, component_uid, component_data)

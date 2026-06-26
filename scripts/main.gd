@@ -66,6 +66,8 @@ var current_project_config: ConfigFile
 func _ready() -> void:
 	DisplayServer.window_set_window_buttons_offset(Vector2i(34, 34))
 
+	animation_process.canvas_reference = canvas_reference
+
 	ExtensionLoader.load_unpacked_extension('res://base_extensions/core')
 	print('Loaded core extension')
 
@@ -238,7 +240,7 @@ func _on_sprite_tree_item_selected() -> void:
 
 	selected_sprite_item = sprite_tree_reference.get_selected()
 	var item_uid: String = selected_sprite_item.get_meta('uid')
-	var selected_node: Node2D = canvas_reference.get_sprite(item_uid)
+	var selected_node: Node2D = canvas_reference.get_layer(item_uid)
 
 	# Allow name editing separately from this function
 	get_tree().create_timer(0.0).timeout.connect(func():
