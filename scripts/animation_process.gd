@@ -44,7 +44,7 @@ func spawn_path(layer_uid: StringName, layer_data: Dictionary, component_uid: St
 	path.component_uid = component_uid
 	path.component_data = component_data
 
-	var path_uid := str(randi())
+	var path_uid := Randomizer.generate_uid()
 	path.path_uid = path_uid
 	paths[path_uid] = path
 

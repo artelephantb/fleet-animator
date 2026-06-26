@@ -42,7 +42,7 @@ func _on_create_component_button_pressed() -> void:
 	component_popup_menu.popup(Rect2(DisplayServer.mouse_get_position(), Vector2(0.0, 0.0)))
 
 
-func add_component(catagory: StringName, type: StringName, inputs := {}, component_uid := str(randi_range(-1000000, 1000000)), position_offset := Vector2(0.0, 0.0)) -> void:
+func add_component(catagory: StringName, type: StringName, inputs := {}, component_uid := Randomizer.generate_uid(), position_offset := Vector2(0.0, 0.0)) -> void:
 	var new_component := GraphComponent.new(catagory, type)
 
 	new_component.name = component_uid
@@ -57,6 +57,6 @@ func _on_component_popup_menu_id_pressed(id: int) -> void:
 		component_catagory_mappings[id],
 		component_id_mappings[id],
 		{},
-		str(randi_range(-1000000, 1000000)),
+		Randomizer.generate_uid(),
 		scroll_offset + size * 0.5
 	)

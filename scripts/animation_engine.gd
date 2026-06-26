@@ -12,7 +12,7 @@ func _process(delta: float) -> void:
 		processes[process_uid].update(delta)
 
 func register_animation_process() -> AnimationProcess:
-	var uid := str(randi_range(-10000, 10000))
+	var uid := Randomizer.generate_uid()
 	var process := AnimationProcess.new(uid)
 	processes[uid] = process
 	return process

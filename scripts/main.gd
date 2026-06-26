@@ -174,7 +174,7 @@ func _process(delta: float) -> void:
 	elif playing_animation: update_play_animation()
 
 
-func create_sprite(type: String, sprite_name: String, sprite_uid := str(randi_range(-1000000, 1000000))) -> Node:
+func create_sprite(type: String, sprite_name: String, sprite_uid := Randomizer.generate_uid()) -> Node:
 	var sprite_type_info: Dictionary = sprite_types[type]
 
 	var new_sprite_item: TreeItem = sprite_tree_reference.create_item(root)

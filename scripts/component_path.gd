@@ -27,7 +27,7 @@ func finished_component() -> void:
 		path.component_uid = connection.to_node
 		path.component_data = layer_data_reference.components[path.component_uid]
 
-		var uid := str(randi())
+		var uid := Randomizer.generate_uid()
 		path.path_uid = uid
 
 		paths_reference[uid] = path
