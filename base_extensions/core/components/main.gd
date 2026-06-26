@@ -55,6 +55,9 @@ func looks_change_position(component: GraphComponent):
 func looks_change_scale(component: GraphComponent):
 	component.title = 'Change Scale'
 	component.add_runtime_connection()
+	component.add_vector2_property('Scale', Vector2(1.0, 1.0))
+	component.add_float_property('AcrossFrames', 100.0, 1.0, 10000.0, false)
+	component.add_curve_editor_property('Curve')
 
 func looks_change_rotation(component: GraphComponent):
 	component.title = 'Change Rotation'
@@ -86,7 +89,17 @@ func change_position(path: ComponentPath):
 		path.finished_component()
 
 func change_scale(path: ComponentPath):
-	pass
+	var x: float = path.variables.get_or_add('x', 0.0)
+	var og_scale: Vector2 = path.variables.get_or_add('og_scale', path.layer_reference.scale)
+
+	x += 1.0 / path.component_data.inputs.AcrossFrames
+	path.variables['x'] = x
+	var y: float = path.component_data.inputs.Curve.sample(x)
+
+	path.layer_reference.scale = og_scale.lerp(path.component_data.inputs.Scale, y)
+
+	if x >= path.component_data.inputs.Curve.sample(1.0):
+		path.finished_component()
 
 func change_rotation(path: ComponentPath):
 	pass
