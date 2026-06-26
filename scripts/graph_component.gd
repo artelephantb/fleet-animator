@@ -20,6 +20,8 @@ func set_inputs(inputs: Dictionary) -> void:
 			or child is Vector2Property
 		):
 			child.value = inputs.get(child.name, child.default)
+		elif child is CurveEditorProperty:
+			child.set_curve(inputs.get(child.name, child.default))
 
 func get_inputs() -> Dictionary:
 	var inputs := {}
@@ -30,6 +32,8 @@ func get_inputs() -> Dictionary:
 			or child is Vector2Property
 		):
 			inputs[child.name] = child.value
+		elif child is CurveEditorProperty:
+			inputs[child.name] = child.get_curve()
 
 	return inputs
 
@@ -66,3 +70,8 @@ func add_vector2_property(id: StringName, default := Vector2(0.0, 0.0)) -> void:
 
 	add_child(property)
 	set_slot(get_child_count() - 1, true, 5, Color.PURPLE, false, 0, Color.BLACK)
+
+func add_curve_editor_property(id: StringName) -> void:
+	var property := CurveEditorProperty.new()
+	property.name = id
+	add_child(property)

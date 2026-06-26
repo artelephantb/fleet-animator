@@ -14,16 +14,6 @@ var path_index: int
 var variables := {}
 
 
-func set_variable(name: StringName, value) -> void:
-	variables[name] = value
-
-func get_variable(name: StringName):
-	return variables[name]
-
-func get_or_add_var(name: StringName, default = null):
-	return variables.get_or_add(name, default)
-
-
 func finished_component() -> void:
 	paths_reference.remove_at(path_index)
 

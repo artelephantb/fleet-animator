@@ -49,7 +49,8 @@ func looks_change_position(component: GraphComponent):
 	component.title = 'Change Position'
 	component.add_runtime_connection()
 	component.add_vector2_property('Position')
-	component.add_float_property('AcrossFrames', 1.0, 1.0, 10000.0, false)
+	component.add_float_property('AcrossFrames', 100.0, 1.0, 10000.0, false)
+	component.add_curve_editor_property('Curve')
 
 func looks_change_scale(component: GraphComponent):
 	component.title = 'Change Scale'
@@ -72,8 +73,17 @@ func recieve_signal(path: ComponentPath):
 	pass
 
 func change_position(path: ComponentPath):
-	path.layer_reference.position = path.component_data.inputs.Position
-	path.finished_component()
+	var x: float = path.variables.get_or_add('x', 0.0)
+	var og_pos: Vector2 = path.variables.get_or_add('og_pos', path.layer_reference.position)
+
+	x += 1.0 / path.component_data.inputs.AcrossFrames
+	path.variables['x'] = x
+	var y: float = path.component_data.inputs.Curve.sample(x)
+
+	path.layer_reference.position = og_pos.lerp(path.component_data.inputs.Position, y)
+
+	if x >= path.component_data.inputs.Curve.sample(1.0):
+		path.finished_component()
 
 func change_scale(path: ComponentPath):
 	pass
