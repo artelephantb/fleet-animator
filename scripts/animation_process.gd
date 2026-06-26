@@ -4,7 +4,7 @@ class_name AnimationProcess
 var uid: StringName
 
 var layers := {}
-var paths: Array[ComponentPath] = []
+var paths: Dictionary[StringName, ComponentPath] = {}
 
 var canvas_reference: Node
 
@@ -13,7 +13,8 @@ func _init(uid: StringName) -> void:
 	self.uid = uid
 
 func update(delta: float) -> void:
-	for path in paths:
+	for path_uid in paths:
+		var path := paths[path_uid]
 		var callable = AnimationEngine.component_catagories[path.component_data.catagory].component_bindings.get(path.component_data.type)
 		callable.call(path)
 
@@ -42,8 +43,10 @@ func spawn_path(layer_uid: StringName, layer_data: Dictionary, component_uid: St
 	path.paths_reference = paths
 	path.component_uid = component_uid
 	path.component_data = component_data
-	path.path_index = len(paths)
-	paths.append(path)
+
+	var path_uid := str(randi())
+	path.path_uid = path_uid
+	paths[path_uid] = path
 
 func spawn_all_of_type(catagory: StringName, type: StringName) -> void:
 	for layer_uid in layers:

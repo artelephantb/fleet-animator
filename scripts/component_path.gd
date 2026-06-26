@@ -4,18 +4,18 @@ class_name ComponentPath
 var layer_reference: Node
 
 var layer_data_reference: Dictionary
-var paths_reference: Array
+var paths_reference: Dictionary
 
 var component_uid: StringName
 var component_data: Dictionary
 
-var path_index: int
+var path_uid: StringName
 
 var variables := {}
 
 
 func finished_component() -> void:
-	paths_reference.remove_at(path_index)
+	paths_reference.erase(path_uid)
 
 	for connection in layer_data_reference.connections:
 		if connection.from_node != component_uid: continue
@@ -27,4 +27,7 @@ func finished_component() -> void:
 		path.component_uid = connection.to_node
 		path.component_data = layer_data_reference.components[path.component_uid]
 
-		paths_reference.append(path)
+		var uid := str(randi())
+		path.path_uid = uid
+
+		paths_reference[uid] = path
