@@ -72,6 +72,9 @@ func looks_change_scale(component: GraphComponent):
 func looks_change_rotation(component: GraphComponent):
 	component.title = 'Change Rotation'
 	component.add_runtime_connection()
+	component.add_float_property('Rotation', 90.0, 0.0, 360.0, false)
+	component.add_float_property('AcrossFrames', 100.0, 1.0, 10000.0, false)
+	component.add_curve_editor_property('Curve')
 
 func looks_wait_frames(component: GraphComponent):
 	component.title = 'Wait Frames'
@@ -119,7 +122,17 @@ func change_scale(path: ComponentPath, process: AnimationProcess):
 		path.finished_component()
 
 func change_rotation(path: ComponentPath, process: AnimationProcess):
-	pass
+	var x: float = path.variables.get_or_add('x', 0.0)
+	var og_rot: float = path.variables.get_or_add('og_rot', path.layer_reference.rotation_degrees)
+
+	x += 1.0 / path.component_data.inputs.AcrossFrames
+	path.variables['x'] = x
+	var y: float = path.component_data.inputs.Curve.sample(x)
+
+	path.layer_reference.rotation_degrees = lerpf(og_rot, path.component_data.inputs.Rotation, y)
+
+	if x >= path.component_data.inputs.Curve.sample(1.0):
+		path.finished_component()
 
 func wait_frames(path: ComponentPath, process: AnimationProcess):
 	var current: int = path.variables.get_or_add('current', path.component_data.inputs.Frames + 1)
