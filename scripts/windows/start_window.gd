@@ -19,7 +19,9 @@ func _ready() -> void:
 	var config := ConfigFile.new()
 	config.load('user://projects.cfg')
 
-	for project_name in config.get_section_keys('projects'):
+	var section_keys := config.get_section_keys('projects')
+	section_keys.reverse()
+	for project_name in section_keys:
 		project_list.append(config.get_value('projects', project_name))
 		projects_list_reference.add_item(project_name)
 
