@@ -92,7 +92,7 @@ func change_scale(path: ComponentPath):
 	var x: float = path.variables.get_or_add('x', 0.0)
 	var og_scale: Vector2 = path.variables.get_or_add('og_scale', path.layer_reference.scale)
 
-	x += 1 / path.component_data.inputs.AcrossFrames
+	x += 1.0 / path.component_data.inputs.AcrossFrames
 	path.variables['x'] = x
 	var y: float = path.component_data.inputs.Curve.sample(x)
 

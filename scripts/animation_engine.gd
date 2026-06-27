@@ -7,10 +7,6 @@ var processes: Dictionary[StringName, AnimationProcess] = {}
 var component_catagories := {}
 
 
-func _process(delta: float) -> void:
-	for process_uid in processes:
-		processes[process_uid].update(delta)
-
 func register_animation_process() -> AnimationProcess:
 	var uid := Randomizer.generate_uid()
 	var process := AnimationProcess.new(uid)

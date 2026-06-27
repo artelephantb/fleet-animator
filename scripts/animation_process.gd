@@ -15,6 +15,7 @@ func _init(uid: StringName) -> void:
 func update(delta: float) -> void:
 	for path_uid in paths:
 		var path := paths[path_uid]
+
 		var callable = AnimationEngine.component_catagories[path.component_data.catagory].component_bindings.get(path.component_data.type)
 		callable.call(path)
 

@@ -39,9 +39,7 @@ var sprite_types_mappings := [
 
 var animation_process := AnimationEngine.register_animation_process()
 
-var animation_variables := {} # DEPRECATED
-
-var playing_animation := false # DEPRECATED
+var playing_animation := false
 
 var part_temp_directory: DirAccess
 var part_temp_directory_location: String
@@ -49,7 +47,7 @@ var part_temp_directory_location: String
 var rendering_animation := false
 var animation_output_path: String
 
-var animation_frame := 0 # DEPRECATED
+var animation_frame := 0
 
 var animation_framerate := '60'
 var animation_compression := '18'
@@ -95,61 +93,15 @@ func _exit_tree() -> void:
 	AnimationEngine.unregister_animation_process(animation_process)
 
 
-func update_play_animation() -> void: # DEPRECATED
-	var finnished_sprites := 0
-
-	for sprite_uid in AnimationEngine.animation_data:
-		var data: Dictionary = AnimationEngine.animation_data[sprite_uid]
-
-		if len(data.active_components) == 0:
-			finnished_sprites += 1
-
-		var to_remove := []
-
-		for component_index in len(data.active_components):
-			var component_uid: String = data.active_components[component_index]
-			var component: Dictionary = data.components[component_uid]
-
-			if component_uid not in animation_variables:
-				animation_variables[component_uid] = {}
-
-			var component_script = ExtensionLoader.components[component.id].script
-
-			var is_done: bool = component_script.run(
-				component_uid,
-				canvas_reference.get_sprite(sprite_uid),
-				component.inputs,
-				animation_variables[component_uid]
-			)
-
-			if !is_done: continue
-
-			# When component finnished
-			for connection_index in len(data.connections):
-				var connection: Dictionary = data.connections[connection_index]
-				if connection.from_node != component_uid: continue
-
-				data.active_components.append(connection.to_node)
-
-			to_remove.append(component_index)
-
-		# Remove old components
-		var removed_amount := 0
-		for index in to_remove:
-			data.active_components.remove_at(index - removed_amount)
-			removed_amount += 1
-
-	if finnished_sprites == len(AnimationEngine.animation_data):
-		sprite_control_gizmo_reference.disabled = false
-		playing_animation = false
-
-func update_render_animation() -> void: # DEPRECATED
-	update_play_animation()
+func update_render_animation(delta: float) -> void:
+	animation_process.update(delta)
 
 	if animation_output_path:
 		canvas_reference.sub_viewport_reference.get_texture().get_image().save_png(part_temp_directory_location + '/%s.png' % animation_frame)
 
 	animation_frame += 1
+
+	if len(animation_process.paths) == 0: playing_animation = false
 
 	if playing_animation: return
 	rendering_animation = false
@@ -170,8 +122,8 @@ func update_render_animation() -> void: # DEPRECATED
 		], [], true)
 
 func _process(delta: float) -> void:
-	if rendering_animation: update_render_animation()
-	elif playing_animation: update_play_animation()
+	if rendering_animation: update_render_animation(delta)
+	elif playing_animation: animation_process.update(delta)
 
 
 func create_sprite(type: String, sprite_name: String, sprite_uid := Randomizer.generate_uid()) -> Node:
@@ -263,32 +215,12 @@ func _on_sprite_tree_item_selected() -> void:
 func _on_render_button_pressed() -> void:
 	render_window.popup_centered()
 
-
-func play_animation() -> void: # DEPRECATED
-	if playing_animation or rendering_animation: return
-
-	if selected_sprite_uid:
-		save_components(selected_sprite_uid)
-
-	for sprite_uid in AnimationEngine.animation_data:
-		print(AnimationEngine.animation_data)
-		var data: Dictionary = AnimationEngine.animation_data[sprite_uid]
-
-		for component_uid in data.components:
-			var component: Dictionary = data.components[component_uid]
-
-			if component.id == 0:
-				data.active_components.append(component_uid)
-
-	animation_variables.clear()
-	sprite_control_gizmo_reference.disabled = true
-
-	playing_animation = true
-
 func _on_play_button_pressed() -> void:
 	animation_process.stop()
 	save_components(selected_sprite_uid)
 	animation_process.spawn_all_of_type('main', 'animation_started')
+
+	playing_animation = true
 
 
 func _on_project_popup_menu_id_pressed(id: int) -> void:
@@ -303,7 +235,10 @@ func _on_project_popup_menu_id_pressed(id: int) -> void:
 func _on_animation_popup_menu_id_pressed(id: int) -> void:
 	match id:
 		0:
-			play_animation()
+			animation_process.stop()
+			save_components(selected_sprite_uid)
+			animation_process.spawn_all_of_type('main', 'animation_started')
+			playing_animation = true
 		1:
 			render_window.popup_centered()
 
@@ -323,15 +258,14 @@ func remove_recursive_directory(directory: String) -> void:
 
 
 func render_animation(framerate: int, compression: int, output_path: String) -> void:
-	if playing_animation or rendering_animation: return
+	remove_recursive_directory(part_temp_directory.get_current_dir())
+	DirAccess.make_dir_recursive_absolute(part_temp_directory_location)
 
+	animation_process.stop()
 	animation_frame = 0
 
 	animation_framerate = str(framerate)
 	animation_compression = str(compression)
-
-	remove_recursive_directory(part_temp_directory.get_current_dir())
-	DirAccess.make_dir_recursive_absolute(part_temp_directory_location)
 
 	if FileAccess.file_exists(output_path):
 		DirAccess.remove_absolute(output_path)
@@ -339,21 +273,11 @@ func render_animation(framerate: int, compression: int, output_path: String) -> 
 	if selected_sprite_uid:
 		save_components(selected_sprite_uid)
 
-	for sprite_uid in AnimationEngine.animation_data:
-		var data: Dictionary = AnimationEngine.animation_data[sprite_uid]
-
-		for component_uid in data.components:
-			var component: Dictionary = data.components[component_uid]
-
-			if component.id == 0:
-				data.active_components.append(component_uid)
-
-	animation_variables.clear()
-	sprite_control_gizmo_reference.disabled = true
-
 	animation_output_path = output_path
 	rendering_animation = true
 	playing_animation = true
+
+	animation_process.spawn_all_of_type('main', 'animation_started')
 
 func _on_render_window_render(framerate: int, compression: int, output_path: String) -> void:
 	if !output_path: return
