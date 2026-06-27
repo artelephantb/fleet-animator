@@ -3,6 +3,8 @@ extends PanelContainer
 
 @onready var tools_container := $'MarginContainer/ToolsContainer'
 
+var selected_tool: String
+
 
 func add_tool(text := '', icon = null) -> void:
 	var tool_button := Button.new()
@@ -15,6 +17,7 @@ func add_tool(text := '', icon = null) -> void:
 
 	if tools_container.get_child_count() == 0:
 		tool_button.button_pressed = true
+		selected_tool = tool_button.name
 
 	tools_container.add_child(tool_button)
 
@@ -33,3 +36,5 @@ func _on_tool_toggled(toggled_on: bool, tool_node: Button) -> void:
 		child.set_block_signals(true)
 		child.button_pressed = false
 		child.set_block_signals(false)
+
+	selected_tool = tool_node.name
