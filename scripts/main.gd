@@ -292,10 +292,10 @@ func save_sprites() -> void:
 	for sprite_item in sprite_tree_reference.get_root().get_children():
 		var sprite_uid = sprite_item.get_meta('uid')
 
-		var sprite: Node = canvas_reference.get_sprite(sprite_uid)
+		var sprite: Node = canvas_reference.get_layer(sprite_uid)
 		var sprite_properties: Dictionary = sprite._save(current_project_location)
 
-		var sprite_animation_data: Dictionary = AnimationEngine.animation_data[sprite_uid]
+		var sprite_animation_data: Dictionary = animation_process.layers[sprite_uid]
 
 		sprites[sprite_uid] = {
 			'name': sprite_item.get_text(0),
