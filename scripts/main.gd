@@ -445,6 +445,13 @@ func _input(event: InputEvent) -> void:
 	elif Input.is_action_just_pressed('project_load'):
 		load_window.popup_centered()
 
+	elif Input.is_action_just_pressed('screenshot_workspace'):
+		var viewport = get_viewport()
+		if viewport:
+			viewport.get_texture().get_image().save_png('user://screenshot.png')
+		else:
+			printerr('Unable to screenshot workspace')
+
 func _on_top_bar_panel_container_gui_input(event: InputEvent) -> void:
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		DisplayServer.window_start_drag()
