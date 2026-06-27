@@ -2,6 +2,7 @@ static var id = 'main'
 
 static var component_ids: PackedStringArray = [
 	'animation_started',
+	'broadcast_signal',
 	'recieve_signal',
 	'change_position',
 	'change_scale',
@@ -11,6 +12,7 @@ static var component_ids: PackedStringArray = [
 
 static var component_names := {
 	'animation_started': 'On Animation Started',
+	'broadcast_signal': 'Broadcast Signal',
 	'recieve_signal': 'On Receiving Signal',
 	'change_position': 'Change Position',
 	'change_scale': 'Change Scale',
@@ -20,6 +22,7 @@ static var component_names := {
 
 var component_looks := {
 	'animation_started': looks_animation_started,
+	'broadcast_signal': looks_broadcast_signal,
 	'recieve_signal': looks_recieve_signal,
 	'change_position': looks_change_position,
 	'change_scale': looks_change_scale,
@@ -29,6 +32,7 @@ var component_looks := {
 
 var component_bindings := {
 	'animation_started': animation_started,
+	'broadcast_signal': broadcast_signal,
 	'recieve_signal': recieve_signal,
 	'change_position': change_position,
 	'change_scale': change_scale,
@@ -41,9 +45,15 @@ func looks_animation_started(component: GraphComponent):
 	component.title = 'On Animation Started'
 	component.add_runtime_connection(false)
 
+func looks_broadcast_signal(component: GraphComponent):
+	component.title = 'Broadcast Signal'
+	component.add_runtime_connection()
+	component.add_child(LineEditProperty.new('Signal', 'my_signal'))
+
 func looks_recieve_signal(component: GraphComponent):
 	component.title = 'On Receiving Signal'
 	component.add_runtime_connection(false)
+	component.add_child(LineEditProperty.new('Signal', 'my_signal'))
 
 func looks_change_position(component: GraphComponent):
 	component.title = 'Change Position'
@@ -69,13 +79,20 @@ func looks_wait_frames(component: GraphComponent):
 	component.add_float_property('Frames', 60.0, 1.0, 10000.0, false)
 
 
-func animation_started(path: ComponentPath):
+func animation_started(path: ComponentPath, process: AnimationProcess):
 	path.finished_component()
 
-func recieve_signal(path: ComponentPath):
-	pass
+func broadcast_signal(path: ComponentPath, process: AnimationProcess):
+	process.spawn_all_of_type('main', 'recieve_signal', { 'from': path.component_data.inputs.Signal })
+	path.finished_component()
 
-func change_position(path: ComponentPath):
+func recieve_signal(path: ComponentPath, process: AnimationProcess):
+	if path.variables.get('from') != path.component_data.inputs.Signal:
+		path.force_destruction()
+		return
+	path.finished_component()
+
+func change_position(path: ComponentPath, process: AnimationProcess):
 	var x: float = path.variables.get_or_add('x', 0.0)
 	var og_pos: Vector2 = path.variables.get_or_add('og_pos', path.layer_reference.position)
 
@@ -88,7 +105,7 @@ func change_position(path: ComponentPath):
 	if x >= path.component_data.inputs.Curve.sample(1.0):
 		path.finished_component()
 
-func change_scale(path: ComponentPath):
+func change_scale(path: ComponentPath, process: AnimationProcess):
 	var x: float = path.variables.get_or_add('x', 0.0)
 	var og_scale: Vector2 = path.variables.get_or_add('og_scale', path.layer_reference.scale)
 
@@ -101,10 +118,10 @@ func change_scale(path: ComponentPath):
 	if x >= path.component_data.inputs.Curve.sample(1.0):
 		path.finished_component()
 
-func change_rotation(path: ComponentPath):
+func change_rotation(path: ComponentPath, process: AnimationProcess):
 	pass
 
-func wait_frames(path: ComponentPath):
+func wait_frames(path: ComponentPath, process: AnimationProcess):
 	var current: int = path.variables.get_or_add('current', path.component_data.inputs.Frames + 1)
 	current -= 1
 	path.variables['current'] = current

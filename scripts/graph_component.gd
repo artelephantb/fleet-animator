@@ -22,6 +22,10 @@ func set_inputs(inputs: Dictionary) -> void:
 			child.value = inputs.get(child.name, child.default)
 		elif child is CurveEditorProperty:
 			child.set_curve(inputs.get(child.name, child.default))
+		else:
+			var callable = child.get('set_value')
+			if callable:
+				inputs[child.name] = callable.call(inputs.get(child.name, child.default))
 
 func get_inputs() -> Dictionary:
 	var inputs := {}
@@ -34,6 +38,10 @@ func get_inputs() -> Dictionary:
 			inputs[child.name] = child.value
 		elif child is CurveEditorProperty:
 			inputs[child.name] = child.get_curve()
+		else:
+			var callable = child.get('get_value')
+			if callable:
+				inputs[child.name] = callable.call()
 
 	return inputs
 

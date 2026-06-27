@@ -17,7 +17,7 @@ func update(delta: float) -> void:
 		var path := paths[path_uid]
 
 		var callable = AnimationEngine.component_catagories[path.component_data.catagory].component_bindings.get(path.component_data.type)
-		callable.call(path)
+		callable.call(path, self)
 
 
 func clear_data() -> void:
@@ -37,19 +37,20 @@ func stop() -> void:
 	paths.clear()
 
 
-func spawn_path(layer_uid: StringName, layer_data: Dictionary, component_uid: StringName, component_data: Dictionary) -> void:
+func spawn_path(layer_uid: StringName, layer_data: Dictionary, component_uid: StringName, component_data: Dictionary, variables := {}) -> void:
 	var path := ComponentPath.new()
 	path.layer_reference = canvas_reference.get_layer(layer_uid)
 	path.layer_data_reference = layer_data
 	path.paths_reference = paths
 	path.component_uid = component_uid
 	path.component_data = component_data
+	path.variables = variables
 
 	var path_uid := Randomizer.generate_uid()
 	path.path_uid = path_uid
 	paths[path_uid] = path
 
-func spawn_all_of_type(catagory: StringName, type: StringName) -> void:
+func spawn_all_of_type(catagory: StringName, type: StringName, variables := {}) -> void:
 	for layer_uid in layers:
 		var layer_data = layers[layer_uid]
 		for component_uid in layer_data.components:
@@ -58,4 +59,4 @@ func spawn_all_of_type(catagory: StringName, type: StringName) -> void:
 			if component_data.catagory != catagory: continue
 			if component_data.type != type: continue
 
-			spawn_path(layer_uid, layer_data, component_uid, component_data)
+			spawn_path(layer_uid, layer_data, component_uid, component_data, variables)

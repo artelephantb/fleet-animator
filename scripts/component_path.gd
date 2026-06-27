@@ -31,3 +31,6 @@ func finished_component() -> void:
 		path.path_uid = uid
 
 		paths_reference[uid] = path
+
+func force_destruction() -> void:
+	paths_reference.erase(path_uid)
