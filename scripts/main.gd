@@ -454,5 +454,6 @@ func _input(event: InputEvent) -> void:
 
 func _on_top_bar_panel_container_gui_input(event: InputEvent) -> void:
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		DisplayServer.window_start_drag()
-		return
+		var window = get_parent()
+		if window is not Window: return
+		DisplayServer.window_start_drag(window.get_window_id())
