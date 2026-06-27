@@ -1,3 +1,5 @@
+![Screenshot of the animator workspace](./screenshot.png)
+
 # Fleet Animator
 Fleet Animator is an animation application for creating motion graphics, and soon to be made for making frame-by-frame and interpolated animation.
 
