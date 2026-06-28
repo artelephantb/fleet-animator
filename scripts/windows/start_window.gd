@@ -25,6 +25,8 @@ func _ready() -> void:
 		project_list.append(config.get_value('projects', project_name))
 		projects_list_reference.add_item(project_name)
 
+	if !OS.has_feature('macos'): $'VBoxContainer/TopBarPanel'.hide()
+
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		exit_confirmation_reference.popup_centered()
