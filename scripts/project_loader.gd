@@ -8,6 +8,7 @@ func create_new_project_new_window() -> void:
 	var window := Window.new()
 	var editor := editor_scene.instantiate()
 
+	window.extend_to_title = true
 	window.size = Vector2(1920, 1080)
 	window.close_requested.connect(func ():
 		window.queue_free()

@@ -49,3 +49,7 @@ func _on_exit_confirmation_dialog_canceled() -> void:
 
 func _on_exit_confirmation_dialog_confirmed() -> void:
 	get_tree().quit()
+
+
+func _on_top_bar_panel_gui_input(event: InputEvent) -> void:
+	DisplayServer.window_start_drag()
