@@ -62,8 +62,6 @@ var current_project_config: ConfigFile
 
 
 func _ready() -> void:
-	DisplayServer.window_set_window_buttons_offset(Vector2i(34, 34))
-
 	animation_process.canvas_reference = canvas_reference
 
 	ExtensionLoader.load_unpacked_extension('res://base_extensions/core')

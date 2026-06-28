@@ -25,6 +25,8 @@ func _ready() -> void:
 		project_list.append(config.get_value('projects', project_name))
 		projects_list_reference.add_item(project_name)
 
+	if !OS.has_feature('macos'): $'VBoxContainer/TopBarPanel'.hide()
+
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		exit_confirmation_reference.popup_centered()
@@ -49,3 +51,7 @@ func _on_exit_confirmation_dialog_canceled() -> void:
 
 func _on_exit_confirmation_dialog_confirmed() -> void:
 	get_tree().quit()
+
+
+func _on_top_bar_panel_gui_input(event: InputEvent) -> void:
+	DisplayServer.window_start_drag()
