@@ -6,63 +6,44 @@
    height="128"
    viewBox="0 0 40 40"
    version="1.1"
-   id="svg4"
+   id="svg2"
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:cc="http://creativecommons.org/ns#">
   <defs
-     id="defs4">
+     id="defs1">
     <linearGradient
-       id="linearGradient6">
+       id="linearGradient2">
       <stop
-         style="stop-color:#3b9cff"
+         style="stop-color:#0090ff;stop-opacity:1;"
          offset="0"
-         id="stop1" />
+         id="stop2" />
       <stop
          style="stop-color:#0054ee;stop-opacity:1;"
          offset="1"
-         id="stop2" />
+         id="stop5" />
     </linearGradient>
     <linearGradient
-       id="linearGradient3">
-      <stop
-         style="stop-color:#3b9cff"
-         offset="0"
-         id="stop3" />
-      <stop
-         style="stop-color:#0054ee"
-         offset="1"
-         id="stop4" />
-    </linearGradient>
-    <linearGradient
-       xlink:href="#linearGradient3"
-       id="linearGradient4"
-       x1="15.122475"
-       y1="-1.7778249"
-       x2="9.0792236"
-       y2="32.495152"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(5.784319,2.9357828)" />
-    <linearGradient
-       xlink:href="#linearGradient6"
+       xlink:href="#linearGradient2"
        id="linearGradient5"
+       x1="16"
+       y1="0"
+       x2="16"
+       y2="32"
        gradientUnits="userSpaceOnUse"
-       x1="-5.3000007"
-       y1="15.358665"
-       x2="29.501703"
-       y2="15.358665"
-       gradientTransform="translate(10.648751,7.7946964)" />
+       gradientTransform="translate(4,4)" />
   </defs>
-  <path
-     style="fill:url(#linearGradient4);stroke-width:5.9375;paint-order:markers stroke fill"
-     d="M 3.6341241,7.8443356 C -1.4804113,13.928337 -1.5885367,28.751143 5.8365423,31.58694 17.816233,36.162242 39.184446,17.139766 34.020751,5.4016806 29.929008,-3.899648 10.17293,0.06609123 3.6341241,7.8443356 Z"
-     id="path3" />
-  <path
-     style="fill:url(#linearGradient5);fill-opacity:1;stroke-width:5.9375;paint-order:markers stroke fill"
-     d="M 35.563173,11.266667 C 23.285589,7.7330155 0.42547384,26.803546 6.837551,36.641266 c 3.919835,6.014001 26.520986,5.153848 32.491788,-12.604099 1.534834,-4.564799 0.49879,-11.54299 -3.766166,-12.7705 z"
-     id="path3-3" />
+  <rect
+     style="display:inline;fill:url(#linearGradient5)"
+     width="32"
+     height="32"
+     x="4"
+     y="4"
+     rx="6"
+     filter="url(#shadow)"
+     id="rect1" />
   <g
      transform="translate(7,4)"
      id="g1"
@@ -82,7 +63,7 @@
        id="path2-0" />
   </g>
   <metadata
-     id="metadata4">
+     id="metadata1">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
