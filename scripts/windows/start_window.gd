@@ -1,7 +1,7 @@
 extends Control
 
 
-@onready var projects_list_reference := $'PanelContainer/VBoxContainer/VBoxContainer/ProjectsList'
+@onready var projects_list_reference := $'VBoxContainer/PanelContainer/VBoxContainer/VBoxContainer/ProjectsList'
 @onready var exit_confirmation_reference := $'ExitConfirmationDialog'
 
 @onready var third_party_popup_reference := $'ThirdPartyCreditsWindow'
