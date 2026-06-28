@@ -67,7 +67,6 @@ func _ready() -> void:
 	animation_process.canvas_reference = canvas_reference
 
 	ExtensionLoader.load_unpacked_extension('res://base_extensions/core')
-	print('Loaded core extension')
 
 	toolbar_reference.add_tool('Transform', get_theme_icon('Translate', 'Icons'))
 	# toolbar_reference.add_tool('Draw', get_theme_icon('Edit', 'Icons'))

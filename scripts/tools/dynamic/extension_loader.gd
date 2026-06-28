@@ -19,6 +19,7 @@ func get_extension_info(path: String) -> Dictionary:
 
 
 func load_unpacked_extension(path: String) -> void:
+	print('Trying to load unpacked extension: ', path)
 	var config_path := path.path_join('extension.cfg')
 
 	var config_file := ConfigFile.new()
@@ -34,7 +35,10 @@ func load_unpacked_extension(path: String) -> void:
 		for script in components_list:
 			AnimationEngine.register_catagory_script(path.path_join(script))
 
+	print('Loaded packed extension: ', path)
+
 func load_packed_extension(path: String) -> void:
+	print('Trying to load packed extension: ', path)
 	var zip_reader := ZIPReader.new()
 	zip_reader.open(path)
 
@@ -60,3 +64,5 @@ func load_packed_extension(path: String) -> void:
 			temp_script_file.close()
 
 			AnimationEngine.register_catagory_script(temp_script_file.get_path())
+
+	print('Loaded packed extension: ', path)
